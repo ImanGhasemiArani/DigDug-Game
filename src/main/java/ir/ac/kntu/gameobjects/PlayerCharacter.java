@@ -32,7 +32,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         setYPosition(getYPosition() - GameData.GAP/10);
         if (getYPosition() == tempMoveHelper) {
             animationOfMovement.stop();
-            GameData.setGameControlOn();
+            GameData.gameControlOn();
             GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.PLAYER_CHARACTER;
         }
     }));
@@ -41,7 +41,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         setYPosition(getYPosition() + GameData.GAP/10);
         if (getYPosition() == tempMoveHelper) {
             animationOfMovement.stop();
-            GameData.setGameControlOn();
+            GameData.gameControlOn();
             GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.PLAYER_CHARACTER;
         }
     }));
@@ -50,7 +50,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         setXPosition(getXPosition() - GameData.GAP/10);
         if (getXPosition() == tempMoveHelper) {
             animationOfMovement.stop();
-            GameData.setGameControlOn();
+            GameData.gameControlOn();
             GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.PLAYER_CHARACTER;
         }
     }));
@@ -59,7 +59,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         setXPosition(getXPosition() + GameData.GAP/10);
         if (getXPosition() == tempMoveHelper) {
             animationOfMovement.stop();
-            GameData.setGameControlOn();
+            GameData.gameControlOn();
             GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.PLAYER_CHARACTER;
         }
     }));
@@ -148,7 +148,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.EMPTY_BLOCK;
         tempMoveHelper = result;
         t.setCycleCount(10);
-        GameData.setGameControlOff();
+        GameData.gameControlOff();
         t.play();
         animationOfMovement.play();
     }

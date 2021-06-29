@@ -25,7 +25,7 @@ public class AudioBuilder {
             audioInputStream = AudioSystem.getAudioInputStream(soundFile);
             audio = AudioSystem.getClip();
             audio.open(audioInputStream);
-            audio.start();
+//            audio.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ignored) {
         }
     }

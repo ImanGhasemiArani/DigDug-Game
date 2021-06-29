@@ -20,7 +20,7 @@ import javafx.scene.control.Label;
 
 public class GameAriaBuilder {
 
-    private Player currentPlayer;
+    private final Player currentPlayer;
     private final StackPane gameAria;
     private MapBuilder mapBuilder;
     private static AnchorPane gameMap;
@@ -28,6 +28,8 @@ public class GameAriaBuilder {
     private final VBox gameInformationAria;
     private Label timer;
     private static PlayerCharacter playerCharacter;
+    private static Label score;
+    private final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), e-> timer.setText(String.format("%.2f",(Double.parseDouble(timer.getText()) + 0.01)))));
 
     public GameAriaBuilder(Player player) {
         currentPlayer = player;
@@ -95,7 +97,7 @@ public class GameAriaBuilder {
         Label scoreLabel = new Label("Score");
         scoreLabel.setPrefWidth(120);
         scoreLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 30px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-        Label score = new Label("0");
+        score = new Label("0");
         score.setPrefWidth(120);
         score.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 35px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         VBox vBox1 = new VBox(scoreLabel,score);
@@ -112,7 +114,8 @@ public class GameAriaBuilder {
 
         gameInformationAria.getChildren().addAll(stopMenuIcon,vBox,vBox1,healthBar,roundLabel);
 
-
+        stopMenuIcon.setOnMouseEntered(e-> stopMenuIcon.setOpacity(0.6));
+        stopMenuIcon.setOnMouseExited(e-> stopMenuIcon.setOpacity(1));
         stopMenuIcon.setOnMouseClicked(e-> {
             if (GameData.isStopControl()) {
                 GameStarter.showOrRemoveStopMenu();
@@ -129,16 +132,16 @@ public class GameAriaBuilder {
         }
     }
 
-    private final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), e-> timer.setText(String.format("%.2f",(Double.parseDouble(timer.getText()) + 0.01)))));
 
-    private final Thread threadForTimer = new Thread(() -> {
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-    });
-
+    private Thread threadForTimer() {
+        return new Thread(() -> {
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.play();
+        });
+    }
 
     public void startThreadForTimer() {
-        threadForTimer.start();
+        threadForTimer().start();
     }
 
     public void stopTimer() {
@@ -149,9 +152,16 @@ public class GameAriaBuilder {
         timeline.play();
     }
 
+    public static Label getScore() {
+        return score;
+    }
 
     public static PlayerCharacter getPlayerCharacter() {
         return playerCharacter;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public StackPane getGameAria() {

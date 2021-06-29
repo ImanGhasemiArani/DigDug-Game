@@ -54,6 +54,7 @@ public class Block extends Parent {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
         GameData.MAP_DATA[y][x] = GameData.EMPTY_BLOCK;
+        GameData.increaseScore(50);
     }
 
     private void remove() {

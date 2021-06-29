@@ -2,11 +2,15 @@ package ir.ac.kntu.model;
 
 import ir.ac.kntu.gamedata.GameData;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
+
+    private int rank;
 
     private final String playerName;
 
-    private int highScore;
+    private Integer highScore;
 
     private int health;
 
@@ -18,6 +22,7 @@ public class Player {
 
     public Player(String playerName) {
         this.playerName = playerName;
+        rank = GameData.PLAYERS.size() + 1;
         highScore = 0;
         assignedNewHealth();
         numberOfGames = 0;
@@ -55,7 +60,7 @@ public class Player {
         return playerName;
     }
 
-    public int getHighScore() {
+    public Integer getHighScore() {
         return highScore;
     }
 
@@ -77,5 +82,13 @@ public class Player {
 
     public void setCurrentRound(int currentRound) {
         this.currentRound = currentRound;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public int getRank() {
+        return rank;
     }
 }

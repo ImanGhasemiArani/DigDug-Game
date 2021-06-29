@@ -1,25 +1,28 @@
 package ir.ac.kntu.gamedata;
 
+import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gameobjects.Block;
 import ir.ac.kntu.model.GameStatus;
 import ir.ac.kntu.model.Player;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class GameData {
 
     public static final File MAP_1 = new File("src/main/resources/maps/map_1.txt");
 
-    public static final ArrayList<Player> PLAYERS = new ArrayList<>();
+    public static ArrayList<Player> PLAYERS = new ArrayList<>();
 
     private static GameStatus gameStatus = GameStatus.STOP;
 
     private static boolean gameControl = false;
 
     private static boolean stopControl = false;
+
+    private static int currentScore = 0;
 
     public final static int FIRST_HEALTH_OF_PLAYER = 3;
 
@@ -49,23 +52,24 @@ public class GameData {
 
     public final static Block[][] BLOCKS = new Block[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
 
+
     public static int calculateRealXY(int fake) {
         return fake * GAP;
     }
 
     public static ArrayList<Player> players() {
-        return (ArrayList<Player>) PLAYERS.clone();
+        return (ArrayList<Player>) sortPlayers().clone();
     }
 
     public static void addPlayer(Player newPlayer) {
         PLAYERS.add(newPlayer);
     }
 
-    public static void setGameControlOn() {
+    public static void gameControlOn() {
         gameControl = true;
     }
 
-    public static void setGameControlOff() {
+    public static void gameControlOff() {
         gameControl = false;
     }
 
@@ -83,7 +87,7 @@ public class GameData {
         gameControl = true;
     }
 
-    public static GameStatus getGameStatus() {
+    public static GameStatus gameStatus() {
         return gameStatus;
     }
 
@@ -103,6 +107,14 @@ public class GameData {
         stopControl = false;
     }
 
+    public static int getCurrentScore() {
+        return currentScore;
+    }
+
+    public static void increaseScore(int value) {
+        currentScore += value;
+        GameAriaBuilder.getScore().setText("" + currentScore);
+    }
 
     public static int[][] importMap(String fileURLAddress) {
         try {
@@ -129,6 +141,43 @@ public class GameData {
             }
             System.out.println();
         }
+    }
+
+    public static void saveOrUpdatePlayersToFile() {
+        File playersFile = new File("src/main/java/ir/ac/kntu/playersFile");
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(playersFile);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(PLAYERS);
+            objectOutputStream.close();
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void readOrImportFileToPlayers() {
+        File playersFile = new File("src/main/java/ir/ac/kntu/playersFile");
+        if (playersFile.exists()) {
+            try {
+                FileInputStream fileInputStream = new FileInputStream(playersFile);
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+                PLAYERS = (ArrayList<Player>) objectInputStream.readObject();
+                objectInputStream.close();
+                fileInputStream.close();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static ArrayList<Player> sortPlayers() {
+        PLAYERS.sort(Comparator.comparing(Player::getHighScore).reversed());
+        for (Player p : PLAYERS) {
+            p.setRank(PLAYERS.indexOf(p) +1);
+        }
+        return PLAYERS;
     }
 
 }

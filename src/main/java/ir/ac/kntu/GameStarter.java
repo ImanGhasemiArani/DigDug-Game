@@ -12,8 +12,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
@@ -29,13 +29,13 @@ import javafx.util.Duration;
 
 public class GameStarter extends Application {
 
+    private final static Stage STAGE = new Stage();
+
     private final static StackPane MAIN = new StackPane();
 
     public final static Scene SCENE = new Scene(MAIN, 1000, 850, Color.rgb(0,0,0));
 
-    private static Stage stage;
-
-    private Player player;
+    private static Player player;
 
     private static StackPane game;
 
@@ -46,41 +46,35 @@ public class GameStarter extends Application {
     }
 
     public void start(Stage st){
-        stage = new Stage();
-
 
         MAIN.setStyle("-fx-border-width: 0 0 5 0;");
         MAIN.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-
+//        STAGE.setFullScreen(true);
+        STAGE.setResizable(false);
+        STAGE.setFullScreenExitHint("");
+        STAGE.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        STAGE.setTitle("DigDig");
+        STAGE.setScene(SCENE);
 //        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("DigDig");
 
-        stage.setFullScreen(true);
-        stage.setResizable(false);
-        stage.setFullScreenExitHint("");
-        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        stage.setScene(SCENE);
-
+        GameData.readOrImportFileToPlayers();
         gameMenu();
+
+        continueGamePage();
 
 //        Player newPlayer = new Player("Iman");
 //        GameData.addPlayer(newPlayer);
 //        player = newPlayer;
-//        main.getChildren().clear();
+//        MAIN.getChildren().clear();
 //        creatingGameAria.start();
 
-        stage.show();
+        STAGE.show();
     }
 
-    public static void changeScene(Pane pane) {
-        stage.setScene(new Scene(pane));
-        stage.show();
-    }
+    public static void gameMenu() {
 
-    public void gameMenu() {
-
-        MAIN.getChildren().removeAll(MAIN.getChildren());
+        MAIN.getChildren().clear();
         ImageView digDugLogo = new ImageView(new Image("assets/digDugText.png"));
         digDugLogo.setFitWidth(470);
         digDugLogo.setFitHeight(80);
@@ -108,12 +102,13 @@ public class GameStarter extends Application {
         mouseEnterExitLabelOptionAction(exitLabel);
 
         newPlayerLabel.setOnMouseClicked(e-> newPlayerPage());
+        continueLabel.setOnMouseClicked(e-> continueGamePage());
         gameGuideLabel.setOnMouseClicked(e-> gameGuidePage());
-        exitLabel.setOnMouseClicked(e-> stage.close());
+        exitLabel.setOnMouseClicked(e-> STAGE.close());
     }
 
-    private void newPlayerPage() {
-        MAIN.getChildren().removeAll(MAIN.getChildren());
+    private static void newPlayerPage() {
+        MAIN.getChildren().clear();
 
         TextField playerNameTextField = new TextField();
         playerNameTextField.setPromptText("write your name");
@@ -152,35 +147,38 @@ public class GameStarter extends Application {
                 player = newPlayer;
                 MAIN.getChildren().clear();
                 playCountDownTimer();
-                creatingGameAria.start();
+                creatingGameAria().start();
+
             }
         });
 
-
     }
 
-    private Thread creatingGameAria = new Thread( () -> {
-        currentGameAriaBuilder = new GameAriaBuilder(player);
-        GameData.setGameControlOff();
-        game = new StackPane(currentGameAriaBuilder.getGameAria());
-        game.setOpacity(0.1);
+    private static Thread creatingGameAria() {
+        return new Thread( () -> {
+            currentGameAriaBuilder = new GameAriaBuilder(player);
+            GameData.gameControlOff();
+            GameData.stopControlOff();
+            game = new StackPane(currentGameAriaBuilder.getGameAria());
+            game.setOpacity(0.1);
 
+            Timeline helper = new Timeline(new KeyFrame(Duration.seconds(6),e->{
+                game.setOpacity(1);
+                GameData.runGame();
+                GameData.gameControlOn();
+                GameData.stopControlOn();
+                currentGameAriaBuilder.startThreadForTimer();
+            }));
+            Timeline mainLine = new Timeline(new KeyFrame(Duration.ONE,e-> {
+                MAIN.getChildren().add(game);
+                helper.play();
+            }));
 
-        Timeline helper = new Timeline(new KeyFrame(Duration.seconds(6),e->{
-            game.setOpacity(1);
-            GameData.runGame();
-            GameData.setGameControlOn();
-            GameData.stopControlOn();
-            currentGameAriaBuilder.startThreadForTimer();
-        }));
-        Timeline mainLine = new Timeline(new KeyFrame(Duration.ONE,e-> {
-            MAIN.getChildren().add(game);
-            helper.play();
-        }));
-        mainLine.play();
-    });
+            mainLine.play();
+        });
+    }
 
-    private void playCountDownTimer() {
+    private static void playCountDownTimer() {
         Arc arcOuter = new Arc();
         arcOuter.setRadiusX(150);
         arcOuter.setRadiusY(150);
@@ -226,8 +224,80 @@ public class GameStarter extends Application {
         countDown.play();
     }
 
-    private void gameGuidePage() {
-        MAIN.getChildren().removeAll(MAIN.getChildren());
+    private static void continueGamePage() {
+        MAIN.getChildren().clear();
+
+        Label backLabel = new Label("Back");
+        backLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+
+        Label newGameLabel = new Label("New Game");
+        newGameLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+
+        Label continueGameLabel = new Label("Continue");
+        continueGameLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+
+        HBox hBox = new HBox(backLabel,newGameLabel,continueGameLabel);
+        hBox.setSpacing(165);
+        hBox.setAlignment(Pos.CENTER_RIGHT);
+        VBox vBox = new VBox(createTableList(),hBox);
+        vBox.setMinSize(562,600);
+        vBox.setMaxSize(562,600);
+        vBox.setSpacing(20);
+        vBox.setAlignment(Pos.CENTER);
+
+        MAIN.getChildren().add(vBox);
+
+        mouseEnterExitLabelOptionAction(backLabel);
+
+        backLabel.setOnMouseClicked(e-> gameMenu());
+
+
+    }
+
+    private static TableView<Player> createTableList() {
+        TableView<Player> playersList = new TableView<Player>();
+        playersList.setEditable(false);
+        Label placeholderLabel = new Label("No Player");
+        placeholderLabel.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 20px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        playersList.setPlaceholder(placeholderLabel);
+        playersList.setMinSize(562,500);
+        playersList.setMaxSize(562,500);
+        playersList.setStyle("-fx-background-radius: 50px;-fx-background-color: GRAY;");
+
+        TableColumn<Player,String> rankColumn = new TableColumn<>("Rank");
+        rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
+        rankColumn.setReorderable(false);
+        rankColumn.setSortable(false);
+        rankColumn.setStyle("-fx-border-width: 0px;-fx-background-color: BLACK;-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        rankColumn.setMaxWidth(60);
+        rankColumn.setMinWidth(60);
+
+        TableColumn<Player,String> playerNameColumn = new TableColumn<>("Player's Name");
+        playerNameColumn.setCellValueFactory(new PropertyValueFactory<>("playerName"));
+        playerNameColumn.setReorderable(false);
+        playerNameColumn.setSortable(false);
+        playerNameColumn.setStyle("-fx-border-width: 0px;-fx-background-color: BLACK;-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        playerNameColumn.setMaxWidth(300);
+        playerNameColumn.setMinWidth(300);
+
+        TableColumn<Player,String> highScore = new TableColumn<>("High Score");
+        highScore.setCellValueFactory(new PropertyValueFactory<>("highScore"));
+        highScore.setReorderable(false);
+        highScore.setSortable(false);
+        highScore.setStyle("-fx-border-width: 0px;-fx-background-color: BLACK;-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        highScore.setMaxWidth(200);
+        highScore.setMinWidth(200);
+
+        playersList.getColumns().addAll(rankColumn,playerNameColumn,highScore);
+        playersList.getItems().addAll(GameData.players());
+
+        TableView.TableViewSelectionModel<Player> selectionModel = playersList.getSelectionModel();
+
+        return playersList;
+    }
+
+    private static void gameGuidePage() {
+        MAIN.getChildren().clear();
         Label movementLabel = new Label("Movement");
         movementLabel.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         ImageView arrowsKey = new ImageView(new Image("assets/arrowsKey.png"));
@@ -269,7 +339,6 @@ public class GameStarter extends Application {
     }
 
     private static void stopMenu() {
-        // stop all object in game
         StackPane stopMenu = new StackPane();
         Label resumeLabel = new Label("Resume Game");
         resumeLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
@@ -291,8 +360,25 @@ public class GameStarter extends Application {
         mouseEnterExitLabelOptionAction(exitLabel);
 
         resumeLabel.setOnMouseClicked(e-> showOrRemoveStopMenu());
+        exitToMainMenuLabel.setOnMouseClicked(e-> {
+            saveGame();
+            MAIN.getChildren().clear();
+            gameMenu();
+
+        });
+        exitLabel.setOnMouseClicked(e-> {
+            saveGame();
+            STAGE.close();
+        });
+
 
         MAIN.getChildren().add(stopMenu);
+    }
+
+    private static void saveGame() {
+        currentGameAriaBuilder.getCurrentPlayer().updateHighScore(GameData.getCurrentScore());
+        currentGameAriaBuilder.getCurrentPlayer().setLastSavedMapData(GameData.MAP_DATA);
+        GameData.saveOrUpdatePlayersToFile();
     }
 
     private static void stopGame() {
@@ -308,7 +394,7 @@ public class GameStarter extends Application {
     }
 
     public static void showOrRemoveStopMenu() {
-        if (GameData.getGameStatus().equals(GameStatus.STOP)) {
+        if (GameData.gameStatus().equals(GameStatus.STOP)) {
             MAIN.getChildren().remove(MAIN.getChildren().size()-1);
             resumeGame();
         } else {
@@ -327,7 +413,7 @@ public class GameStarter extends Application {
     }
 
     public static Stage getStage() {
-        return stage;
+        return STAGE;
     }
 
     public static StackPane getMain() {
