@@ -7,14 +7,11 @@ import javafx.scene.Group;
 
 public class MapBuilder {
 
-    private int[][] mapData;
-
     private Group group;
-
     private PlayerCharacter playerCharacter;
 
     public MapBuilder(int[][] mapData) {
-        this.mapData = mapData;
+        GameData.assignCurrentMapData(mapData);
         group = new Group();
         group.setLayoutX(GameData.START_X_GAME_ACTION_ARIA);
         group.setLayoutY(GameData.START_Y_GAME_ACTION_ARIA);
@@ -22,13 +19,13 @@ public class MapBuilder {
     }
 
     private void createObjects() {
-        for (int i = 0; i < mapData.length; i++) {
-            for (int j = 0; j < mapData[0].length; j++) {
-                switch (mapData[i][j]) {
-                    case 1:
+        for (int i = 0; i < GameData.MAP_DATA.length; i++) {
+            for (int j = 0; j < GameData.MAP_DATA[0].length; j++) {
+                switch (GameData.MAP_DATA[i][j]) {
+                    case GameData.BLOCK:
                         group.getChildren().add(new Block(j,i));
                         break;
-                    case 2:
+                    case GameData.PLAYER_CHARACTER:
                         playerCharacter = new PlayerCharacter(j,i);
                         group.getChildren().add(playerCharacter);
                         break;

@@ -11,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 import javafx.scene.control.Label;
@@ -20,7 +19,7 @@ import javafx.scene.control.Label;
 
 public class GameAriaBuilder {
 
-    private final Player currentPlayer;
+    private Player currentPlayer = null;
     private final StackPane gameAria;
     private MapBuilder mapBuilder;
     private static AnchorPane gameMap;
@@ -29,7 +28,10 @@ public class GameAriaBuilder {
     private Label timer;
     private static PlayerCharacter playerCharacter;
     private static Label score;
-    private final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), e-> timer.setText(String.format("%.2f",(Double.parseDouble(timer.getText()) + 0.01)))));
+    private final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), e-> {
+        timer.setText(String.format("%.2f",(Double.parseDouble(timer.getText()) + 0.01)));
+        currentPlayer.setTime(Double.parseDouble(timer.getText()));
+    }));
 
     public GameAriaBuilder(Player player) {
         currentPlayer = player;
@@ -53,9 +55,10 @@ public class GameAriaBuilder {
     }
 
     private void addObjectToGameMap() {
-        mapBuilder = new MapBuilder(GameData.importMap(GameData.MAP_1.toString()));
+        mapBuilder = new MapBuilder(currentPlayer.getLastSavedMapData());
         gameMap.getChildren().addAll(mapBuilder.getGroup().getChildren());
         playerCharacter = mapBuilder.getPlayerCharacter();
+//        GameData.resetScore(currentPlayer.getScore());
         GameKeyControlHandler.getInstance().attachEventHandlers();
     }
 
@@ -64,7 +67,7 @@ public class GameAriaBuilder {
         Label timeLabel = new Label("Time: ");
         timeLabel.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 22px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         timeLabel.setPrefHeight(60);
-        timer = new Label("0");
+        timer = new Label("" + currentPlayer.getTime());
         timer.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 22px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         timer.setPrefHeight(60);
         timer.setPrefWidth(100);
@@ -97,7 +100,8 @@ public class GameAriaBuilder {
         Label scoreLabel = new Label("Score");
         scoreLabel.setPrefWidth(120);
         scoreLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 30px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-        score = new Label("0");
+        score = new Label("" + currentPlayer.getScore());
+        GameData.resetScore(currentPlayer.getScore());
         score.setPrefWidth(120);
         score.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 35px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         VBox vBox1 = new VBox(scoreLabel,score);

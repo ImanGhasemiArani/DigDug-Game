@@ -30,15 +30,10 @@ import javafx.util.Duration;
 public class GameStarter extends Application {
 
     private final static Stage STAGE = new Stage();
-
     private final static StackPane MAIN = new StackPane();
-
     public final static Scene SCENE = new Scene(MAIN, 1000, 850, Color.rgb(0,0,0));
-
     private static Player player;
-
     private static StackPane game;
-
     private static GameAriaBuilder currentGameAriaBuilder;
 
     public static void main(String[] args) {
@@ -61,13 +56,13 @@ public class GameStarter extends Application {
         GameData.readOrImportFileToPlayers();
         gameMenu();
 
-        continueGamePage();
+//        continueGamePage();
 
-//        Player newPlayer = new Player("Iman");
-//        GameData.addPlayer(newPlayer);
-//        player = newPlayer;
-//        MAIN.getChildren().clear();
-//        creatingGameAria.start();
+        Player newPlayer = new Player("Iman");
+        GameData.addPlayer(newPlayer);
+        player = newPlayer;
+        MAIN.getChildren().clear();
+        creatingGameAria().start();
 
         STAGE.show();
     }
@@ -142,9 +137,8 @@ public class GameStarter extends Application {
 
         startLabel.setOnMouseClicked(e -> {
             if (!playerNameTextField.getText().trim().equals("")) {
-                Player newPlayer = new Player(playerNameTextField.getText().trim());
-                GameData.addPlayer(newPlayer);
-                player = newPlayer;
+                player = new Player(playerNameTextField.getText().trim());
+                GameData.addPlayer(player);
                 MAIN.getChildren().clear();
                 playCountDownTimer();
                 creatingGameAria().start();
@@ -226,49 +220,68 @@ public class GameStarter extends Application {
 
     private static void continueGamePage() {
         MAIN.getChildren().clear();
-
+        TableView<Player> tableView = createTableList();
+        Label selectedPlayer = new Label("Selected Player: ");
+        selectedPlayer.setStyle("-fx-text-fill: Wheat;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        selectedPlayer.setMinWidth(562);
         Label backLabel = new Label("Back");
         backLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-
         Label newGameLabel = new Label("New Game");
         newGameLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-
         Label continueGameLabel = new Label("Continue");
         continueGameLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-
         HBox hBox = new HBox(backLabel,newGameLabel,continueGameLabel);
         hBox.setSpacing(165);
         hBox.setAlignment(Pos.CENTER_RIGHT);
-        VBox vBox = new VBox(createTableList(),hBox);
-        vBox.setMinSize(562,600);
-        vBox.setMaxSize(562,600);
+        VBox vBox = new VBox(tableView,selectedPlayer,hBox);
+        vBox.setMinSize(622,600);
+        vBox.setMaxSize(622,600);
         vBox.setSpacing(20);
         vBox.setAlignment(Pos.CENTER);
-
         MAIN.getChildren().add(vBox);
-
+        newGameLabel.setDisable(true);
+        continueGameLabel.setDisable(true);
+        tableView.setOnMouseClicked(e->{
+            if (tableView.getSelectionModel().getSelectedItem() != null)  {
+                selectedPlayer.setText("Selected Player:\t\t" + tableView.getSelectionModel().getSelectedItem().getPlayerName());
+                newGameLabel.setDisable(false);
+                continueGameLabel.setDisable(false);
+            }
+        });
+        newGameLabel.setOnMouseClicked(e-> {
+            player = tableView.getSelectionModel().getSelectedItem();
+            player.assignNewGame();
+            MAIN.getChildren().clear();
+            playCountDownTimer();
+            creatingGameAria().start();
+        });
+        continueGameLabel.setOnMouseClicked(e-> {
+            player = tableView.getSelectionModel().getSelectedItem();
+            MAIN.getChildren().clear();
+            playCountDownTimer();
+            creatingGameAria().start();
+        });
         mouseEnterExitLabelOptionAction(backLabel);
-
+        mouseEnterExitLabelOptionAction(newGameLabel);
+        mouseEnterExitLabelOptionAction(continueGameLabel);
         backLabel.setOnMouseClicked(e-> gameMenu());
-
-
     }
 
     private static TableView<Player> createTableList() {
-        TableView<Player> playersList = new TableView<Player>();
+        TableView<Player> playersList = new TableView<>();
         playersList.setEditable(false);
         Label placeholderLabel = new Label("No Player");
         placeholderLabel.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 20px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         playersList.setPlaceholder(placeholderLabel);
-        playersList.setMinSize(562,500);
-        playersList.setMaxSize(562,500);
+        playersList.setMinSize(622,500);
+        playersList.setMaxSize(622,500);
         playersList.setStyle("-fx-background-radius: 50px;-fx-background-color: GRAY;");
 
         TableColumn<Player,String> rankColumn = new TableColumn<>("Rank");
         rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
         rankColumn.setReorderable(false);
         rankColumn.setSortable(false);
-        rankColumn.setStyle("-fx-border-width: 0px;-fx-background-color: BLACK;-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        rankColumn.setStyle("-fx-border-width: 0px;-fx-background-color: Black;-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         rankColumn.setMaxWidth(60);
         rankColumn.setMinWidth(60);
 
@@ -276,7 +289,7 @@ public class GameStarter extends Application {
         playerNameColumn.setCellValueFactory(new PropertyValueFactory<>("playerName"));
         playerNameColumn.setReorderable(false);
         playerNameColumn.setSortable(false);
-        playerNameColumn.setStyle("-fx-border-width: 0px;-fx-background-color: BLACK;-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        playerNameColumn.setStyle("-fx-border-width: 0px;-fx-background-color: Black;-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         playerNameColumn.setMaxWidth(300);
         playerNameColumn.setMinWidth(300);
 
@@ -284,14 +297,20 @@ public class GameStarter extends Application {
         highScore.setCellValueFactory(new PropertyValueFactory<>("highScore"));
         highScore.setReorderable(false);
         highScore.setSortable(false);
-        highScore.setStyle("-fx-border-width: 0px;-fx-background-color: BLACK;-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        highScore.setStyle("-fx-border-width: 0px;-fx-background-color: Black;-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         highScore.setMaxWidth(200);
         highScore.setMinWidth(200);
 
-        playersList.getColumns().addAll(rankColumn,playerNameColumn,highScore);
-        playersList.getItems().addAll(GameData.players());
+        TableColumn<Player,String> countColumn = new TableColumn<>("NoG");
+        countColumn.setCellValueFactory(new PropertyValueFactory<>("numberOfGames"));
+        countColumn.setReorderable(false);
+        countColumn.setSortable(false);
+        countColumn.setStyle("-fx-border-width: 0px;-fx-background-color: Black;-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        countColumn.setMaxWidth(60);
+        countColumn.setMinWidth(60);
 
-        TableView.TableViewSelectionModel<Player> selectionModel = playersList.getSelectionModel();
+        playersList.getColumns().addAll(rankColumn,playerNameColumn,highScore,countColumn);
+        playersList.getItems().addAll(GameData.players());
 
         return playersList;
     }
@@ -377,7 +396,8 @@ public class GameStarter extends Application {
 
     private static void saveGame() {
         currentGameAriaBuilder.getCurrentPlayer().updateHighScore(GameData.getCurrentScore());
-        currentGameAriaBuilder.getCurrentPlayer().setLastSavedMapData(GameData.MAP_DATA);
+        currentGameAriaBuilder.getCurrentPlayer().updateScore();
+        currentGameAriaBuilder.getCurrentPlayer().saveOrUpdateLastSavedData();
         GameData.saveOrUpdatePlayersToFile();
     }
 
