@@ -104,6 +104,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         standImage = upStandImage;
         runImage = upRunImage;
         changeImageToCreateAnimation();
+        digging();
         if ( getYPosition() - GameData.GAP >= 0 &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP -1 ][ getXPosition()/GameData.GAP ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getYPosition() - GameData.GAP,tUp);
@@ -116,6 +117,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         standImage = downStandImage;
         runImage = downRunImage;
         changeImageToCreateAnimation();
+        digging();
         if ( getYPosition() + GameData.GAP + playerCharacter.getFitHeight() <= GameData.END_Y_GAME_ACTION_ARIA &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP +1 ][ getXPosition()/GameData.GAP ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getYPosition() + GameData.GAP,tDown);
@@ -127,6 +129,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         standImage = leftStandImage;
         runImage = leftRunImage;
         changeImageToCreateAnimation();
+        digging();
         if ( getXPosition() - GameData.GAP >= 0 &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP -1 ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getXPosition() - GameData.GAP,tLeft);
@@ -138,6 +141,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         standImage = rightStandImage;
         runImage = rightRunImage;
         changeImageToCreateAnimation();
+        digging();
         if ( getXPosition() + GameData.GAP + playerCharacter.getFitWidth() <= GameData.END_X_GAME_ACTION_ARIA &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP +1 ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getXPosition() + GameData.GAP,tRight);

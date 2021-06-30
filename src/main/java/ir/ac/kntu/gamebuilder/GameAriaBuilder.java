@@ -107,7 +107,7 @@ public class GameAriaBuilder {
         VBox vBox1 = new VBox(scoreLabel,score);
         vBox1.setAlignment(Pos.TOP_RIGHT);
 
-        HBox healthBar = new HBox();
+        VBox healthBar = new VBox();
         healthBar.setAlignment(Pos.TOP_RIGHT);
         healthBar.setPadding(new Insets(100,25,100,0));
         showHealthOrUpdate(healthBar);
@@ -128,11 +128,20 @@ public class GameAriaBuilder {
 
     }
 
-    private void showHealthOrUpdate(HBox hBox) {
-        hBox.getChildren().clear();
+    private void showHealthOrUpdate(VBox vBox) {
+        vBox.getChildren().clear();
+        HBox temp = new HBox();
+        vBox.getChildren().add(temp);
+        temp.setAlignment(Pos.TOP_RIGHT);
         for (int i = 0; i < currentPlayer.getHealth(); i++) {
+            if (i % 3 == 0) {
+                HBox hBox = new HBox();
+                vBox.getChildren().add(hBox);
+                hBox.setAlignment(Pos.TOP_RIGHT);
+                temp = hBox;
+            }
             ImageView imageView = new ImageView(new Image("assets/heart.png"));
-            hBox.getChildren().add(imageView);
+            temp.getChildren().add(imageView);
         }
     }
 

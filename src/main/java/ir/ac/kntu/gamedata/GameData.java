@@ -24,6 +24,7 @@ public class GameData {
     public final static int EMPTY_BLOCK = 0;
     public final static int BLOCK = 1;
     public final static int PLAYER_CHARACTER = 2;
+    public final static int STONE = 3;
     public final static int GAP = 40;
     public final static int SIZE_OF_GAME_ACTION_ARIA = 18;
     public final static int REAL_SIZE_OF_GAME_ACTION_ARIA = SIZE_OF_GAME_ACTION_ARIA * GAP;
