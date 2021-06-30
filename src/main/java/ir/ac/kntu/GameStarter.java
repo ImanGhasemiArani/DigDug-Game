@@ -332,12 +332,12 @@ public class GameStarter extends Application {
         aKey.setFitHeight(81);
         VBox shoot = new VBox(shootLabel,aKey);
         shoot.setSpacing(20);
-        Label digLabel = new Label("Dig");
-        digLabel.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-        ImageView dKey = new ImageView(new Image("assets/dKey.png"));
+        Label stopGame = new Label("Stop Game");
+        stopGame.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        ImageView dKey = new ImageView(new Image("assets/EscKey.png"));
         dKey.setFitWidth(80);
         dKey.setFitHeight(84);
-        VBox dig = new VBox(digLabel,dKey);
+        VBox dig = new VBox(stopGame,dKey);
         dig.setSpacing(20);
         Label backLabel = new Label("Back");
         backLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
