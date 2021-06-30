@@ -20,8 +20,19 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     private final Image upRunImage = new Image("assets/upRun.png");
     private final Image downStandImage = new Image("assets/downStand.png");
     private final Image downRunImage = new Image("assets/downRun.png");
+    private final Image digRightImage = new Image("assets/digRight.png");
+    private final Image dig2RightImage = new Image("assets/dig2Right.png");
+    private final Image digLeftImage = new Image("assets/digLeft.png");
+    private final Image dig2LeftImage = new Image("assets/dig2Left.png");
+    private final Image digUpImage = new Image("assets/digUp.png");
+    private final Image dig2UpImage = new Image("assets/dig2Up.png");
+    private final Image digDownImage = new Image("assets/digDown.png");
+    private final Image dig2DownImage = new Image("assets/dig2Down.png");
+
     private Image standImage = rightStandImage;
     private Image runImage = rightRunImage;
+    private Image digImage = digRightImage;
+
     private final ImageView playerCharacter = new ImageView(standImage);
     private Timeline animationOfMovement;
     private int tempMoveHelper;
@@ -173,24 +184,32 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
             case UP:
                 if ( (getYPosition())/GameData.GAP -1 >=0 &&
                         GameData.MAP_DATA[(getYPosition())/GameData.GAP -1 ][getXPosition()/GameData.GAP] == GameData.BLOCK) {
+                    standImage = digUpImage;
+                    runImage = dig2UpImage;
                     GameData.getBlockInSpecificFakeXY(getXPosition()/GameData.GAP,(getYPosition())/GameData.GAP -1).destroy();
                 }
                 break;
             case DOWN:
                 if ((getYPosition())/GameData.GAP +1 < GameData.SIZE_OF_GAME_ACTION_ARIA &&
                         GameData.MAP_DATA[(getYPosition())/GameData.GAP +1 ][getXPosition()/GameData.GAP] == GameData.BLOCK) {
+                    standImage = digDownImage;
+                    runImage = dig2DownImage;
                     GameData.getBlockInSpecificFakeXY(getXPosition()/GameData.GAP,(getYPosition())/GameData.GAP +1).destroy();
                 }
                 break;
             case LEFT:
                 if ( (getXPosition())/GameData.GAP -1 >=0 &&
                         GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP -1 ] == GameData.BLOCK) {
+                    standImage = digLeftImage;
+                    runImage = dig2LeftImage;
                     GameData.getBlockInSpecificFakeXY(getXPosition()/GameData.GAP -1,(getYPosition())/GameData.GAP ).destroy();
                 }
                 break;
             case RIGHT:
                 if ( (getXPosition())/GameData.GAP +1 < GameData.SIZE_OF_GAME_ACTION_ARIA &&
                         GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP +1 ] == GameData.BLOCK) {
+                    standImage = digRightImage;
+                    runImage = dig2RightImage;
                     GameData.getBlockInSpecificFakeXY(getXPosition()/GameData.GAP +1,(getYPosition())/GameData.GAP ).destroy();
                 }
                 break;
@@ -236,6 +255,10 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
             default:
                 break;
         }
+    }
+
+    public void shoot() {
+
     }
 
     @Override
