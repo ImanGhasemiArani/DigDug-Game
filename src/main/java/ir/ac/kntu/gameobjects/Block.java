@@ -9,6 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+import java.util.Map;
+
 public class Block extends Parent implements NotMovingGameObject{
 
     private final ImageView block;

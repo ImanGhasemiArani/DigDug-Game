@@ -4,6 +4,7 @@ import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.gameobjects.*;
 import javafx.scene.Group;
 
+
 public class MapBuilder {
 
     private Group group;
@@ -33,9 +34,6 @@ public class MapBuilder {
                     case GameData.PLAYER_CHARACTER:
                         xP = j;
                         yP = i;
-                        break;
-                    case GameData.MUSHROOM:
-                        group.getChildren().add(new Mushroom(j,i));
                         break;
                     default:
                         break;

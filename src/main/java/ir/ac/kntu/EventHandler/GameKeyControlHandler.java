@@ -23,11 +23,6 @@ public class GameKeyControlHandler {
                 GameAriaBuilder.getPlayerCharacter().move(Direction.DOWN.valueOfCustomize(k.getCode().toString()));
             }
         });
-//        GameStarter.scene.setOnKeyReleased(k -> {
-//            if (k.getCode().equals(KeyCode.UP) || k.getCode().equals(KeyCode.DOWN) || k.getCode().equals(KeyCode.LEFT) || k.getCode().equals(KeyCode.RIGHT) ) {
-//                GameAriaBuilder.getPlayerCharacter().stopMove();
-//            }
-//        });
     }
 
 }

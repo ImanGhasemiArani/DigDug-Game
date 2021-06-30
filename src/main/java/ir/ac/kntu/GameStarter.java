@@ -162,6 +162,7 @@ public class GameStarter extends Application {
                 GameData.gameControlOn();
                 GameData.stopControlOn();
                 currentGameAriaBuilder.startThreadForTimer();
+                currentGameAriaBuilder.startThreadRandomObject();
             }));
             Timeline mainLine = new Timeline(new KeyFrame(Duration.ONE,e-> {
                 MAIN.getChildren().add(game);
@@ -404,12 +405,14 @@ public class GameStarter extends Application {
     private static void stopGame() {
         GameData.stopGame();
         currentGameAriaBuilder.stopTimer();
+        currentGameAriaBuilder.stopRandomTask();
         game.setOpacity(0.1);
     }
 
     private static void resumeGame() {
         GameData.runGame();
         currentGameAriaBuilder.resumeTimer();
+        currentGameAriaBuilder.resumeRandomTask();
         game.setOpacity(1);
     }
 

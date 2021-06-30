@@ -2,15 +2,12 @@ package ir.ac.kntu.gamedata;
 
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gameobjects.Block;
-import ir.ac.kntu.gameobjects.NotMovingGameObject;
 import ir.ac.kntu.gameobjects.RandomObject;
 import ir.ac.kntu.model.GameStatus;
 import ir.ac.kntu.model.Player;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class GameData {
@@ -27,8 +24,9 @@ public class GameData {
     public final static int BLOCK = 1;
     public final static int PLAYER_CHARACTER = 2;
     public final static int STONE = 3;
-    public final static int HEART = 5;
-    public final static int MUSHROOM = 4;
+    public final static int HEART = 4;
+    public final static int MUSHROOM = 5;
+    public final static int SNIPER = 6;
     public final static int GAP = 40;
     public final static int SIZE_OF_GAME_ACTION_ARIA = 18;
     public final static int REAL_SIZE_OF_GAME_ACTION_ARIA = SIZE_OF_GAME_ACTION_ARIA * GAP;

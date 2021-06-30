@@ -44,7 +44,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         if (getYPosition() == tempMoveHelper) {
             animationOfMovement.stop();
             GameData.gameControlOn();
-            GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.PLAYER_CHARACTER;
+            updatePositionXY();
         }
     }));
 
@@ -53,7 +53,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         if (getYPosition() == tempMoveHelper) {
             animationOfMovement.stop();
             GameData.gameControlOn();
-            GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.PLAYER_CHARACTER;
+            updatePositionXY();
         }
     }));
 
@@ -62,7 +62,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         if (getXPosition() == tempMoveHelper) {
             animationOfMovement.stop();
             GameData.gameControlOn();
-            GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.PLAYER_CHARACTER;
+            updatePositionXY();
         }
     }));
 
@@ -71,13 +71,17 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         if (getXPosition() == tempMoveHelper) {
             animationOfMovement.stop();
             GameData.gameControlOn();
-            GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.PLAYER_CHARACTER;
+            updatePositionXY();
         }
     }));
 
     private void creteAnimationOfMovementTimeLine() {
         animationOfMovement = new Timeline(new KeyFrame(Duration.millis(80),e-> changeImageToCreateAnimation()));
         animationOfMovement.setCycleCount(Timeline.INDEFINITE);
+    }
+
+    private void updatePositionXY() {
+        GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.PLAYER_CHARACTER;
     }
 
     @Override
@@ -108,7 +112,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         runImage = upRunImage;
         changeImageToCreateAnimation();
         digging();
-        useHeart();
+        useRandomObject();
         if ( getYPosition() - GameData.GAP >= 0 &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP -1 ][ getXPosition()/GameData.GAP ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getYPosition() - GameData.GAP,tUp);
@@ -122,7 +126,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         runImage = downRunImage;
         changeImageToCreateAnimation();
         digging();
-        useHeart();
+        useRandomObject();
         if ( getYPosition() + GameData.GAP + playerCharacter.getFitHeight() <= GameData.END_Y_GAME_ACTION_ARIA &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP +1 ][ getXPosition()/GameData.GAP ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getYPosition() + GameData.GAP,tDown);
@@ -135,7 +139,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         runImage = leftRunImage;
         changeImageToCreateAnimation();
         digging();
-        useHeart();
+        useRandomObject();
         if ( getXPosition() - GameData.GAP >= 0 &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP -1 ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getXPosition() - GameData.GAP,tLeft);
@@ -148,7 +152,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         runImage = rightRunImage;
         changeImageToCreateAnimation();
         digging();
-        useHeart();
+        useRandomObject();
         if ( getXPosition() + GameData.GAP + playerCharacter.getFitWidth() <= GameData.END_X_GAME_ACTION_ARIA &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP +1 ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getXPosition() + GameData.GAP,tRight);
@@ -195,29 +199,37 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         }
     }
 
-    public void useHeart() {
+    public void useRandomObject() {
         switch (lastDirection) {
             case UP:
                 if ( (getYPosition())/GameData.GAP -1 >=0 &&
-                        GameData.MAP_DATA[(getYPosition())/GameData.GAP -1 ][getXPosition()/GameData.GAP] == GameData.HEART) {
+                        (GameData.MAP_DATA[(getYPosition())/GameData.GAP -1 ][getXPosition()/GameData.GAP] == GameData.HEART ||
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP -1 ][getXPosition()/GameData.GAP] == GameData.MUSHROOM ||
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP -1 ][getXPosition()/GameData.GAP] == GameData.SNIPER)) {
                     GameData.getNotMovingGameObjectsInSpecificFakeXY(getXPosition()/GameData.GAP,(getYPosition())/GameData.GAP -1).use();
                 }
                 break;
             case DOWN:
                 if ((getYPosition())/GameData.GAP +1 < GameData.SIZE_OF_GAME_ACTION_ARIA &&
-                        GameData.MAP_DATA[(getYPosition())/GameData.GAP +1 ][getXPosition()/GameData.GAP] == GameData.HEART) {
+                        (GameData.MAP_DATA[(getYPosition())/GameData.GAP +1 ][getXPosition()/GameData.GAP] == GameData.HEART ||
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP +1 ][getXPosition()/GameData.GAP] == GameData.MUSHROOM ||
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP +1 ][getXPosition()/GameData.GAP] == GameData.SNIPER)) {
                     GameData.getNotMovingGameObjectsInSpecificFakeXY(getXPosition()/GameData.GAP,(getYPosition())/GameData.GAP +1).use();
                 }
                 break;
             case LEFT:
                 if ( (getXPosition())/GameData.GAP -1 >=0 &&
-                        GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP -1 ] == GameData.HEART) {
+                        (GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP -1 ] == GameData.HEART ||
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP -1 ] == GameData.MUSHROOM ||
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP -1 ] == GameData.SNIPER)) {
                     GameData.getNotMovingGameObjectsInSpecificFakeXY(getXPosition()/GameData.GAP -1,(getYPosition())/GameData.GAP ).use();
                 }
                 break;
             case RIGHT:
                 if ( (getXPosition())/GameData.GAP +1 < GameData.SIZE_OF_GAME_ACTION_ARIA &&
-                        GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP +1 ] == GameData.HEART) {
+                        (GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP +1 ] == GameData.HEART ||
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP +1 ] == GameData.MUSHROOM ||
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP +1 ] == GameData.SNIPER)) {
                     GameData.getNotMovingGameObjectsInSpecificFakeXY(getXPosition()/GameData.GAP +1,(getYPosition())/GameData.GAP ).use();
                 }
                 break;

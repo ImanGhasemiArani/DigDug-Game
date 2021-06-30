@@ -3,7 +3,10 @@ package ir.ac.kntu.gamebuilder;
 import ir.ac.kntu.EventHandler.GameKeyControlHandler;
 import ir.ac.kntu.GameStarter;
 import ir.ac.kntu.gamedata.GameData;
+import ir.ac.kntu.gameobjects.Heart;
+import ir.ac.kntu.gameobjects.Mushroom;
 import ir.ac.kntu.gameobjects.PlayerCharacter;
+import ir.ac.kntu.gameobjects.Sniper;
 import ir.ac.kntu.model.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.util.Duration;
 import javafx.scene.control.Label;
 
+import java.util.Random;
 
 
 public class GameAriaBuilder {
@@ -32,6 +36,26 @@ public class GameAriaBuilder {
     private final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), e-> {
         timer.setText(String.format("%.2f",(Double.parseDouble(timer.getText()) + 0.01)));
         currentPlayer.setTime(Double.parseDouble(timer.getText()));
+    }));
+    private final Timeline randomTask = new Timeline(new KeyFrame(Duration.seconds(15),e-> {
+        int x;
+        int y;
+        do {
+            x = new Random().nextInt(GameData.MAP_DATA.length);
+            y = new Random().nextInt(GameData.MAP_DATA[0].length);
+        }while (GameData.MAP_DATA[y][x] != GameData.EMPTY_BLOCK);
+        switch (new Random().nextInt(3)) {
+            case 0:
+                gameMap.getChildren().add(new Heart(x,y));
+                break;
+            case 1:
+                gameMap.getChildren().add(new Mushroom(x,y));
+                break;
+            case 2:
+                gameMap.getChildren().add(new Sniper(x,y));
+            default:
+                break;
+        }
     }));
 
     public GameAriaBuilder(Player player) {
@@ -146,6 +170,24 @@ public class GameAriaBuilder {
         }
     }
 
+    private Thread creatingThreadForRandomObject() {
+        return new Thread( () -> {
+            randomTask.setCycleCount(Timeline.INDEFINITE);
+            randomTask.play();
+        });
+    }
+
+    public void startThreadRandomObject() {
+        creatingThreadForRandomObject().start();
+    }
+
+    public void stopRandomTask() {
+        randomTask.stop();
+    }
+
+    public void resumeRandomTask() {
+        randomTask.play();
+    }
 
     private Thread threadForTimer() {
         return new Thread(() -> {
