@@ -2,6 +2,8 @@ package ir.ac.kntu.gamedata;
 
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gameobjects.Block;
+import ir.ac.kntu.gameobjects.NotMovingGameObject;
+import ir.ac.kntu.gameobjects.RandomObject;
 import ir.ac.kntu.model.GameStatus;
 import ir.ac.kntu.model.Player;
 
@@ -25,6 +27,8 @@ public class GameData {
     public final static int BLOCK = 1;
     public final static int PLAYER_CHARACTER = 2;
     public final static int STONE = 3;
+    public final static int HEART = 5;
+    public final static int MUSHROOM = 4;
     public final static int GAP = 40;
     public final static int SIZE_OF_GAME_ACTION_ARIA = 18;
     public final static int REAL_SIZE_OF_GAME_ACTION_ARIA = SIZE_OF_GAME_ACTION_ARIA * GAP;
@@ -34,6 +38,7 @@ public class GameData {
     public final static int END_Y_GAME_ACTION_ARIA = REAL_SIZE_OF_GAME_ACTION_ARIA;
     public final static int[][] MAP_DATA = new int[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     public final static Block[][] BLOCKS = new Block[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
+    public final static RandomObject[][] NOT_MOVING_GAME_OBJECTS = new RandomObject[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
 
 
     public static int calculateRealXY(int fake) {
@@ -58,6 +63,10 @@ public class GameData {
 
     public static Block getBlockInSpecificFakeXY(int x, int y) {
         return BLOCKS[x][y];
+    }
+
+    public static RandomObject getNotMovingGameObjectsInSpecificFakeXY(int x, int y) {
+        return NOT_MOVING_GAME_OBJECTS[x][y];
     }
 
     public static void stopGame() {

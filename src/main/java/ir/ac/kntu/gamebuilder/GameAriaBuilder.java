@@ -19,7 +19,7 @@ import javafx.scene.control.Label;
 
 public class GameAriaBuilder {
 
-    private Player currentPlayer = null;
+    private static Player currentPlayer = null;
     private final StackPane gameAria;
     private MapBuilder mapBuilder;
     private static AnchorPane gameMap;
@@ -28,6 +28,7 @@ public class GameAriaBuilder {
     private Label timer;
     private static PlayerCharacter playerCharacter;
     private static Label score;
+    private static VBox healthBar;
     private final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), e-> {
         timer.setText(String.format("%.2f",(Double.parseDouble(timer.getText()) + 0.01)));
         currentPlayer.setTime(Double.parseDouble(timer.getText()));
@@ -107,10 +108,10 @@ public class GameAriaBuilder {
         VBox vBox1 = new VBox(scoreLabel,score);
         vBox1.setAlignment(Pos.TOP_RIGHT);
 
-        VBox healthBar = new VBox();
+        healthBar = new VBox();
         healthBar.setAlignment(Pos.TOP_RIGHT);
         healthBar.setPadding(new Insets(100,25,100,0));
-        showHealthOrUpdate(healthBar);
+        showHealthOrUpdate();
 
         Label roundLabel = new Label("Round " + currentPlayer.getCurrentRound());
         roundLabel.setPrefWidth(120);
@@ -128,15 +129,15 @@ public class GameAriaBuilder {
 
     }
 
-    private void showHealthOrUpdate(VBox vBox) {
-        vBox.getChildren().clear();
+    public static void showHealthOrUpdate() {
+        healthBar.getChildren().clear();
         HBox temp = new HBox();
-        vBox.getChildren().add(temp);
+        healthBar.getChildren().add(temp);
         temp.setAlignment(Pos.TOP_RIGHT);
         for (int i = 0; i < currentPlayer.getHealth(); i++) {
             if (i % 3 == 0) {
                 HBox hBox = new HBox();
-                vBox.getChildren().add(hBox);
+                healthBar.getChildren().add(hBox);
                 hBox.setAlignment(Pos.TOP_RIGHT);
                 temp = hBox;
             }
@@ -173,7 +174,7 @@ public class GameAriaBuilder {
         return playerCharacter;
     }
 
-    public Player getCurrentPlayer() {
+    public static Player getCurrentPlayer() {
         return currentPlayer;
     }
 

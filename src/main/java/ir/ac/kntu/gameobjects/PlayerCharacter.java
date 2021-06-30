@@ -24,12 +24,23 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     private Image runImage = rightRunImage;
     private final ImageView playerCharacter = new ImageView(standImage);
     private Timeline animationOfMovement;
-    private Direction lastDirection;
-
     private int tempMoveHelper;
+    private Direction lastDirection;
+    private int speedTemp;
+    private int speed;
+
+    public PlayerCharacter(int x,int y) {
+        playerCharacter.setFitWidth(GameData.GAP);
+        playerCharacter.setFitHeight(GameData.GAP);
+        setPosition(GameData.calculateRealXY(x),GameData.calculateRealXY(y));
+        getChildren().add(playerCharacter);
+        speedTemp = speed = 1;
+        lastDirection = Direction.RIGHT;
+        creteAnimationOfMovementTimeLine();
+    }
 
     private Timeline tUp = new Timeline(new KeyFrame(Duration.millis(50),e->{
-        setYPosition(getYPosition() - GameData.GAP/10);
+        setYPosition(getYPosition() - speedTemp *GameData.GAP/10);
         if (getYPosition() == tempMoveHelper) {
             animationOfMovement.stop();
             GameData.gameControlOn();
@@ -38,7 +49,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     }));
 
     private Timeline tDown = new Timeline(new KeyFrame(Duration.millis(50),e->{
-        setYPosition(getYPosition() + GameData.GAP/10);
+        setYPosition(getYPosition() + speedTemp *GameData.GAP/10);
         if (getYPosition() == tempMoveHelper) {
             animationOfMovement.stop();
             GameData.gameControlOn();
@@ -47,7 +58,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     }));
 
     private Timeline tLeft = new Timeline(new KeyFrame(Duration.millis(50),e->{
-        setXPosition(getXPosition() - GameData.GAP/10);
+        setXPosition(getXPosition() - speedTemp *GameData.GAP/10);
         if (getXPosition() == tempMoveHelper) {
             animationOfMovement.stop();
             GameData.gameControlOn();
@@ -56,22 +67,13 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     }));
 
     private Timeline tRight = new Timeline(new KeyFrame(Duration.millis(50),e->{
-        setXPosition(getXPosition() + GameData.GAP/10);
+        setXPosition(getXPosition() + speedTemp *GameData.GAP/10);
         if (getXPosition() == tempMoveHelper) {
             animationOfMovement.stop();
             GameData.gameControlOn();
             GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.PLAYER_CHARACTER;
         }
     }));
-
-    public PlayerCharacter(int x,int y) {
-        playerCharacter.setFitWidth(GameData.GAP);
-        playerCharacter.setFitHeight(GameData.GAP);
-        setPosition(GameData.calculateRealXY(x),GameData.calculateRealXY(y));
-        getChildren().add(playerCharacter);
-        lastDirection = Direction.RIGHT;
-        creteAnimationOfMovementTimeLine();
-    }
 
     private void creteAnimationOfMovementTimeLine() {
         animationOfMovement = new Timeline(new KeyFrame(Duration.millis(80),e-> changeImageToCreateAnimation()));
@@ -80,6 +82,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
 
     @Override
     public void move(Direction direction) {
+        speedTemp = speed;
         switch (direction) {
             case UP:
                 moveUp();
@@ -105,6 +108,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         runImage = upRunImage;
         changeImageToCreateAnimation();
         digging();
+        useHeart();
         if ( getYPosition() - GameData.GAP >= 0 &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP -1 ][ getXPosition()/GameData.GAP ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getYPosition() - GameData.GAP,tUp);
@@ -118,6 +122,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         runImage = downRunImage;
         changeImageToCreateAnimation();
         digging();
+        useHeart();
         if ( getYPosition() + GameData.GAP + playerCharacter.getFitHeight() <= GameData.END_Y_GAME_ACTION_ARIA &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP +1 ][ getXPosition()/GameData.GAP ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getYPosition() + GameData.GAP,tDown);
@@ -130,6 +135,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         runImage = leftRunImage;
         changeImageToCreateAnimation();
         digging();
+        useHeart();
         if ( getXPosition() - GameData.GAP >= 0 &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP -1 ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getXPosition() - GameData.GAP,tLeft);
@@ -142,6 +148,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         runImage = rightRunImage;
         changeImageToCreateAnimation();
         digging();
+        useHeart();
         if ( getXPosition() + GameData.GAP + playerCharacter.getFitWidth() <= GameData.END_X_GAME_ACTION_ARIA &&
                 GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP +1 ] == GameData.EMPTY_BLOCK) {
             moveHelperMethod(getXPosition() + GameData.GAP,tRight);
@@ -151,7 +158,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     private void moveHelperMethod(int result,Timeline t) {
         GameData.MAP_DATA[ getYPosition()/GameData.GAP ][ getXPosition()/GameData.GAP ] = GameData.EMPTY_BLOCK;
         tempMoveHelper = result;
-        t.setCycleCount(10);
+        t.setCycleCount(10/ speedTemp);
         GameData.gameControlOff();
         t.play();
         animationOfMovement.play();
@@ -188,6 +195,37 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         }
     }
 
+    public void useHeart() {
+        switch (lastDirection) {
+            case UP:
+                if ( (getYPosition())/GameData.GAP -1 >=0 &&
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP -1 ][getXPosition()/GameData.GAP] == GameData.HEART) {
+                    GameData.getNotMovingGameObjectsInSpecificFakeXY(getXPosition()/GameData.GAP,(getYPosition())/GameData.GAP -1).use();
+                }
+                break;
+            case DOWN:
+                if ((getYPosition())/GameData.GAP +1 < GameData.SIZE_OF_GAME_ACTION_ARIA &&
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP +1 ][getXPosition()/GameData.GAP] == GameData.HEART) {
+                    GameData.getNotMovingGameObjectsInSpecificFakeXY(getXPosition()/GameData.GAP,(getYPosition())/GameData.GAP +1).use();
+                }
+                break;
+            case LEFT:
+                if ( (getXPosition())/GameData.GAP -1 >=0 &&
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP -1 ] == GameData.HEART) {
+                    GameData.getNotMovingGameObjectsInSpecificFakeXY(getXPosition()/GameData.GAP -1,(getYPosition())/GameData.GAP ).use();
+                }
+                break;
+            case RIGHT:
+                if ( (getXPosition())/GameData.GAP +1 < GameData.SIZE_OF_GAME_ACTION_ARIA &&
+                        GameData.MAP_DATA[(getYPosition())/GameData.GAP][getXPosition()/GameData.GAP +1 ] == GameData.HEART) {
+                    GameData.getNotMovingGameObjectsInSpecificFakeXY(getXPosition()/GameData.GAP +1,(getYPosition())/GameData.GAP ).use();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     @Override
     public void stopMove() {
 //        move(0.0,Direction.RIGHT);
@@ -197,6 +235,14 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     @Override
     public void remove() {
 
+    }
+
+    public void increaseSpeed() {
+        this.speed = 2;
+    }
+
+    public void decreaseSpeed() {
+        this.speed = 1;
     }
 
     private void changeImageToCreateAnimation() {

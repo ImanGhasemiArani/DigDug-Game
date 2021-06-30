@@ -52,7 +52,7 @@ public class Block extends Parent implements NotMovingGameObject{
         timeline = new Timeline(new KeyFrame(Duration.millis(20),e->{
             block.setOpacity(block.getOpacity()-0.1);
             if (block.getOpacity() <= 0) {
-                this.remove();
+                remove();
             }
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);

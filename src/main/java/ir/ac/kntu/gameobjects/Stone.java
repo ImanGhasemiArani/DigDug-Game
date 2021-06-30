@@ -22,7 +22,7 @@ public class Stone extends Parent implements NotMovingGameObject{
         y = yy;
         stone = new ImageView(new Image("assets/stone.png"));
         stone.setFitHeight(GameData.GAP);
-        stone.setFitWidth(50);
+        stone.setFitWidth(GameData.GAP + 10);
         appear();
         firstMove = true;
         Timeline moveAnimation = new Timeline(new KeyFrame(Duration.millis(300),e-> {
@@ -74,4 +74,5 @@ public class Stone extends Parent implements NotMovingGameObject{
     public void destroy() {
         // this object is not removable
     }
+
 }
