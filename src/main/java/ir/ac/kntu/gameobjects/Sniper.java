@@ -11,8 +11,7 @@ import javafx.util.Duration;
 
 public class Sniper extends Parent implements NotMovingGameObject,RandomObject{
 
-    private final ImageView mushroom
-            ;
+    private final ImageView mushroom;
     private int x;
     private int y;
     private Timeline timer = new Timeline(new KeyFrame(Duration.seconds(10),e->{
