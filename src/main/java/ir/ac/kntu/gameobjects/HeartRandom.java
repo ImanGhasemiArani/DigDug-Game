@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class Heart extends Parent implements NotMovingGameObject,RandomObject{
+public class HeartRandom extends Parent implements NotMovingGameObject,RandomObject{
 
     private final ImageView heart;
     private int x;
@@ -18,16 +18,12 @@ public class Heart extends Parent implements NotMovingGameObject,RandomObject{
         destroy();
     }));
 
-    public Heart(int xx, int yy) {
+    public HeartRandom(int xx, int yy) {
         x = xx;
         y = yy;
         heart = new ImageView(new Image("assets/heart.png"));
         heart.setOpacity(0);
         appear();
-
-
-
-
     }
 
     @Override

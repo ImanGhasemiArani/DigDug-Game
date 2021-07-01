@@ -3,10 +3,8 @@ package ir.ac.kntu.gamebuilder;
 import ir.ac.kntu.EventHandler.GameKeyControlHandler;
 import ir.ac.kntu.GameStarter;
 import ir.ac.kntu.gamedata.GameData;
-import ir.ac.kntu.gameobjects.Heart;
-import ir.ac.kntu.gameobjects.Mushroom;
-import ir.ac.kntu.gameobjects.PlayerCharacter;
-import ir.ac.kntu.gameobjects.Sniper;
+import ir.ac.kntu.gameobjects.*;
+import ir.ac.kntu.model.Direction;
 import ir.ac.kntu.model.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -38,6 +36,7 @@ public class GameAriaBuilder {
         currentPlayer.setTime(Double.parseDouble(timer.getText()));
     }));
     private final Timeline randomTask = new Timeline(new KeyFrame(Duration.seconds(15),e-> {
+//        gameMap.getChildren().add(new Bullet(Direction.RIGHT,3,120,120));
         int x;
         int y;
         do {
@@ -46,13 +45,13 @@ public class GameAriaBuilder {
         }while (GameData.MAP_DATA[y][x] != GameData.EMPTY_BLOCK);
         switch (new Random().nextInt(3)) {
             case 0:
-                gameMap.getChildren().add(new Heart(x,y));
+                gameMap.getChildren().add(new HeartRandom(x,y));
                 break;
             case 1:
-                gameMap.getChildren().add(new Mushroom(x,y));
+                gameMap.getChildren().add(new MushroomRandom(x,y));
                 break;
             case 2:
-                gameMap.getChildren().add(new Sniper(x,y));
+                gameMap.getChildren().add(new SniperRandom(x,y));
             default:
                 break;
         }

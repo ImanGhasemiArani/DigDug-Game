@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class Sniper extends Parent implements NotMovingGameObject,RandomObject{
+public class MushroomRandom extends Parent implements NotMovingGameObject,RandomObject{
 
     private final ImageView mushroom;
     private int x;
@@ -18,10 +18,10 @@ public class Sniper extends Parent implements NotMovingGameObject,RandomObject{
         destroy();
     }));
 
-    public Sniper(int xx, int yy) {
+    public MushroomRandom(int xx, int yy) {
         x = xx;
         y = yy;
-        mushroom = new ImageView(new Image("assets/sniper.png"));
+        mushroom = new ImageView(new Image("assets/mushroom.png"));
         mushroom.setOpacity(0);
         appear();
     }
@@ -31,7 +31,7 @@ public class Sniper extends Parent implements NotMovingGameObject,RandomObject{
         mushroom.setX(GameData.calculateRealXY(x)+5);
         mushroom.setY(GameData.calculateRealXY(y)+5);
         getChildren().add(mushroom);
-        GameData.MAP_DATA[y][x] = GameData.SNIPER;
+        GameData.MAP_DATA[y][x] = GameData.MUSHROOM;
         GameData.NOT_MOVING_GAME_OBJECTS[x][y] = this;
         Timeline t1 = new Timeline(new KeyFrame(Duration.millis(100),e->{
             mushroom.setOpacity(mushroom.getOpacity() + 0.1);
@@ -63,10 +63,10 @@ public class Sniper extends Parent implements NotMovingGameObject,RandomObject{
     @Override
     public void use() {
         remove();
-//        GameAriaBuilder.getPlayerCharacter().increaseSpeed();
-//        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),e->{
-//            GameAriaBuilder.getPlayerCharacter().decreaseSpeed();
-//        }));
-//        timeline.play();
+        GameAriaBuilder.getPlayerCharacter().increaseSpeed();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),e->{
+            GameAriaBuilder.getPlayerCharacter().decreaseSpeed();
+        }));
+        timeline.play();
     }
 }

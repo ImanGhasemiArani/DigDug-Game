@@ -9,32 +9,32 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class Mushroom extends Parent implements NotMovingGameObject,RandomObject{
+public class SniperRandom extends Parent implements NotMovingGameObject,RandomObject{
 
-    private final ImageView mushroom;
+    private final ImageView sniper;
     private int x;
     private int y;
     private Timeline timer = new Timeline(new KeyFrame(Duration.seconds(10),e->{
         destroy();
     }));
 
-    public Mushroom(int xx, int yy) {
+    public SniperRandom(int xx, int yy) {
         x = xx;
         y = yy;
-        mushroom = new ImageView(new Image("assets/mushroom.png"));
-        mushroom.setOpacity(0);
+        sniper = new ImageView(new Image("assets/sniper.png"));
+        sniper.setOpacity(0);
         appear();
     }
 
     @Override
     public void appear() {
-        mushroom.setX(GameData.calculateRealXY(x)+5);
-        mushroom.setY(GameData.calculateRealXY(y)+5);
-        getChildren().add(mushroom);
-        GameData.MAP_DATA[y][x] = GameData.MUSHROOM;
+        sniper.setX(GameData.calculateRealXY(x)+5);
+        sniper.setY(GameData.calculateRealXY(y)+5);
+        getChildren().add(sniper);
+        GameData.MAP_DATA[y][x] = GameData.SNIPER;
         GameData.NOT_MOVING_GAME_OBJECTS[x][y] = this;
         Timeline t1 = new Timeline(new KeyFrame(Duration.millis(100),e->{
-            mushroom.setOpacity(mushroom.getOpacity() + 0.1);
+            sniper.setOpacity(sniper.getOpacity() + 0.1);
         }));
         t1.setCycleCount(10);
         t1.play();
@@ -45,8 +45,8 @@ public class Mushroom extends Parent implements NotMovingGameObject,RandomObject
     @Override
     public void destroy() {
         Timeline t2 = new Timeline(new KeyFrame(Duration.millis(100),e->{
-            mushroom.setOpacity(mushroom.getOpacity() - 0.1);
-            if (mushroom.getOpacity() <= 0.1) {
+            sniper.setOpacity(sniper.getOpacity() - 0.1);
+            if (sniper.getOpacity() <= 0.1) {
                 remove();
             }
         }));
@@ -63,9 +63,9 @@ public class Mushroom extends Parent implements NotMovingGameObject,RandomObject
     @Override
     public void use() {
         remove();
-        GameAriaBuilder.getPlayerCharacter().increaseSpeed();
+        GameAriaBuilder.getPlayerCharacter().increaseRangeOfBullets();
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),e->{
-            GameAriaBuilder.getPlayerCharacter().decreaseSpeed();
+            GameAriaBuilder.getPlayerCharacter().decreaseRangeOfBullets();
         }));
         timeline.play();
     }

@@ -54,15 +54,19 @@ public class GameStarter extends Application {
 //        stage.initStyle(StageStyle.UNDECORATED);
 
         GameData.readOrImportFileToPlayers();
-        gameMenu();
+        try {
+            gameMenu();
 
 //        continueGamePage();
 
-        Player newPlayer = new Player("Iman");
-        GameData.addPlayer(newPlayer);
-        player = newPlayer;
-        MAIN.getChildren().clear();
-        creatingGameAria().start();
+            Player newPlayer = new Player("Iman");
+            GameData.addPlayer(newPlayer);
+            player = newPlayer;
+            MAIN.getChildren().clear();
+            creatingGameAria().start();
+        } catch (Exception ignored) {
+        }
+
 
         STAGE.show();
     }

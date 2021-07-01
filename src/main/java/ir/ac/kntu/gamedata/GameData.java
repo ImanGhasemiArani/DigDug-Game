@@ -16,6 +16,7 @@ public class GameData {
     private static ArrayList<Player> players = new ArrayList<>();
     private static GameStatus gameStatus = GameStatus.STOP;
     private static boolean gameControl = false;
+    private static boolean shootControl = true;
     private static boolean stopControl = false;
     private static int currentScore = 0;
     public final static int FIRST_HEALTH_OF_PLAYER = 3;
@@ -95,6 +96,18 @@ public class GameData {
 
     public static void stopControlOff() {
         stopControl = false;
+    }
+
+    public static void shootControlOn() {
+        shootControl = true;
+    }
+
+    public static void shootControlOff() {
+        shootControl = false;
+    }
+
+    public static boolean isShootControl() {
+        return shootControl;
     }
 
     public static int getCurrentScore() {

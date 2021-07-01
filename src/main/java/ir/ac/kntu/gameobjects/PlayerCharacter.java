@@ -39,6 +39,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     private Direction lastDirection;
     private int speedTemp;
     private int speed;
+    private int rangeOfBullets;
 
     public PlayerCharacter(int x,int y) {
         playerCharacter.setFitWidth(GameData.GAP);
@@ -46,6 +47,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         setPosition(GameData.calculateRealXY(x),GameData.calculateRealXY(y));
         getChildren().add(playerCharacter);
         speedTemp = speed = 1;
+        rangeOfBullets = 3;
         lastDirection = Direction.RIGHT;
         creteAnimationOfMovementTimeLine();
     }
@@ -258,7 +260,8 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     }
 
     public void shoot() {
-
+        GameData.shootControlOff();
+        new Bullet(lastDirection,rangeOfBullets,(getXPosition()),getYPosition());
     }
 
     @Override
@@ -278,6 +281,14 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
 
     public void decreaseSpeed() {
         this.speed = 1;
+    }
+
+    public void increaseRangeOfBullets() {
+        rangeOfBullets = 5;
+    }
+
+    public void decreaseRangeOfBullets() {
+        rangeOfBullets = 3;
     }
 
     private void changeImageToCreateAnimation() {
