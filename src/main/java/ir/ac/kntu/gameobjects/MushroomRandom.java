@@ -1,5 +1,6 @@
 package ir.ac.kntu.gameobjects;
 
+import ir.ac.kntu.audio.AudioBuilder;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import javafx.animation.KeyFrame;
@@ -62,6 +63,7 @@ public class MushroomRandom extends Parent implements NotMovingGameObject,Random
 
     @Override
     public void use() {
+        AudioBuilder.playUseRandomAudio();
         remove();
         GameAriaBuilder.getPlayerCharacter().increaseSpeed();
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),e->{

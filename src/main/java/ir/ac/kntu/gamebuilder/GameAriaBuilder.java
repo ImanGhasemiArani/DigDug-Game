@@ -36,7 +36,6 @@ public class GameAriaBuilder {
         currentPlayer.setTime(Double.parseDouble(timer.getText()));
     }));
     private final Timeline randomTask = new Timeline(new KeyFrame(Duration.seconds(15),e-> {
-//        gameMap.getChildren().add(new Bullet(Direction.RIGHT,3,120,120));
         int x;
         int y;
         do {

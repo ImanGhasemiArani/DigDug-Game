@@ -1,5 +1,6 @@
 package ir.ac.kntu.gameobjects;
 
+import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -57,9 +58,11 @@ public class Stone extends Parent implements NotMovingGameObject{
                 GameData.MAP_DATA[y][x] = GameData.EMPTY_BLOCK;
             }
             y += 1;
+            if (GameData.MAP_DATA[y][x] == GameData.PLAYER_CHARACTER) {
+                GameAriaBuilder.getPlayerCharacter().die();
+            }
             GameData.MAP_DATA[y][x] = GameData.STONE;
             stone.setY(GameData.calculateRealXY(y));
-
         }
     }
 

@@ -128,7 +128,7 @@ public class Bullet extends Parent implements MovingGameObject {
     }
 
     @Override
-    public void stopMove() {
+    public void die() {
 
     }
 

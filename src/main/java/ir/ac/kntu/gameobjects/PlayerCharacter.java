@@ -1,5 +1,7 @@
 package ir.ac.kntu.gameobjects;
 
+import ir.ac.kntu.audio.AudioBuilder;
+import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.model.Direction;
 import javafx.animation.KeyFrame;
@@ -8,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+
+import java.util.Random;
 
 
 public class PlayerCharacter extends Parent implements MovingGameObject {
@@ -265,14 +269,31 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     }
 
     @Override
-    public void stopMove() {
-//        move(0.0,Direction.RIGHT);
-//        animationOfMovement.stop();
+    public void die() {
+        AudioBuilder.playDiePlayerAudio();
+        GameAriaBuilder.getCurrentPlayer().decreaseOneHealth();
+        GameAriaBuilder.showHealthOrUpdate();
+        remove();
+        if (GameAriaBuilder.getCurrentPlayer().getHealth() == -1) {
+            GameData.gameOverGame();
+        }else {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500),e->{
+                int x;
+                int y;
+                do {
+                    x = new Random().nextInt(GameData.MAP_DATA.length);
+                    y = new Random().nextInt(GameData.MAP_DATA[0].length);
+                }while (GameData.MAP_DATA[y][x] != GameData.EMPTY_BLOCK);
+                setPosition(GameData.calculateRealXY(x),GameData.calculateRealXY(y));
+                GameAriaBuilder.getGameMap().getChildren().add(this);
+            }));
+            timeline.play();
+        }
     }
 
     @Override
     public void remove() {
-
+        GameAriaBuilder.getGameMap().getChildren().remove(this);
     }
 
     public void increaseSpeed() {

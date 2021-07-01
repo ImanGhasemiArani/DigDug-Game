@@ -8,8 +8,12 @@ public class AudioBuilder {
 
     private static File selectingOption = new File("src/main/resources/audios/1.wav");
     private static File countDownTimer = new File("src/main/resources/audios/4.wav");
+    private static File useRandom = new File("src/main/resources/audios/coin.wav");
+    private static File winPlayer = new File("src/main/resources/audios/done.wav");
+    private static File diePlayer = new File("src/main/resources/audios/die.wav");
+    private static File theme = new File("src/main/resources/audios/theme.wav");
     private static AudioInputStream audioInputStream;
-    private static Clip audio;
+    private static Clip themeAudio;
 
 
     public static void playSelectingOptionAudio() {
@@ -20,13 +24,37 @@ public class AudioBuilder {
         playSound(countDownTimer);
     }
 
-    private static void playSound(File soundFile) {
+    public static void playUseRandomAudio() {
+        playSound(useRandom);
+    }
+
+    public static void playDiePlayerAudio() {
+        playSound(diePlayer);
+    }
+
+    public static void playWinPlayerAudio() {
+        playSound(winPlayer);
+    }
+
+    public static void playThemeAudio() {
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(soundFile);
-            audio = AudioSystem.getClip();
-            audio.open(audioInputStream);
-//            audio.start();
+            themeAudio = AudioSystem.getClip();
+            themeAudio.open(AudioSystem.getAudioInputStream(theme));
+//            themeAudio.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ignored) {
         }
+    }
+
+    private static void playSound(File soundFile) {
+        try {
+            Clip audio = AudioSystem.getClip();
+            audio.open(AudioSystem.getAudioInputStream(soundFile));
+            audio.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ignored) {
+        }
+    }
+
+    public static void stopSound() {
+        themeAudio.stop();
     }
 }

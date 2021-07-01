@@ -58,7 +58,7 @@ public class GameStarter extends Application {
             gameMenu();
 
 //        continueGamePage();
-
+//
             Player newPlayer = new Player("Iman");
             GameData.addPlayer(newPlayer);
             player = newPlayer;
@@ -165,8 +165,10 @@ public class GameStarter extends Application {
                 GameData.runGame();
                 GameData.gameControlOn();
                 GameData.stopControlOn();
+                AudioBuilder.playThemeAudio();
                 currentGameAriaBuilder.startThreadForTimer();
                 currentGameAriaBuilder.startThreadRandomObject();
+                creatingThreadForEndingGame().start();
             }));
             Timeline mainLine = new Timeline(new KeyFrame(Duration.ONE,e-> {
                 MAIN.getChildren().add(game);
@@ -176,6 +178,31 @@ public class GameStarter extends Application {
             mainLine.play();
         });
     }
+
+    private static final Timeline mainLine = new Timeline(new KeyFrame(Duration.seconds(1),e-> {
+        if (GameData.gameStatus().equals(GameStatus.GAMEOVER)) {
+            stopTimeLineForEndGame();
+            currentGameAriaBuilder.stopTimer();
+            // GameOverGame
+        } else if (GameData.gameStatus().equals(GameStatus.WIN)) {
+            stopTimeLineForEndGame();
+            currentGameAriaBuilder.stopTimer();
+            // win Game
+        }
+    }));
+
+    private static Thread creatingThreadForEndingGame() {
+        return new Thread( () -> {
+            mainLine.setCycleCount(Timeline.INDEFINITE);
+            mainLine.play();
+        });
+    }
+
+    private static void stopTimeLineForEndGame() {
+        mainLine.stop();
+    }
+
+
 
     private static void playCountDownTimer() {
         Arc arcOuter = new Arc();
@@ -422,9 +449,11 @@ public class GameStarter extends Application {
 
     public static void showOrRemoveStopMenu() {
         if (GameData.gameStatus().equals(GameStatus.STOP)) {
+            AudioBuilder.playThemeAudio();
             MAIN.getChildren().remove(MAIN.getChildren().size()-1);
             resumeGame();
         } else {
+            AudioBuilder.stopSound();
             stopGame();
             stopMenu();
         }

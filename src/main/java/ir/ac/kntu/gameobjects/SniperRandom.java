@@ -1,5 +1,6 @@
 package ir.ac.kntu.gameobjects;
 
+import ir.ac.kntu.audio.AudioBuilder;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import javafx.animation.KeyFrame;
@@ -62,6 +63,7 @@ public class SniperRandom extends Parent implements NotMovingGameObject,RandomOb
 
     @Override
     public void use() {
+        AudioBuilder.playUseRandomAudio();
         remove();
         GameAriaBuilder.getPlayerCharacter().increaseRangeOfBullets();
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),e->{

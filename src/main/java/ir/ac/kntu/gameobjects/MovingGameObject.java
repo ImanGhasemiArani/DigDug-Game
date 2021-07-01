@@ -6,7 +6,7 @@ public interface MovingGameObject {
 
     void move(Direction direction);
 
-    void stopMove();
+    void die();
 
     void remove();
 
