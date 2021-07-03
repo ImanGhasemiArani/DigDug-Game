@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 
-public class Stone extends Parent implements NotMovingGameObject{
+public class Stone extends Parent implements NotMovingGameObject {
 
     private final ImageView stone;
     private int x;

@@ -1,6 +1,5 @@
 package ir.ac.kntu.gameobjects;
 
-import ir.ac.kntu.audio.AudioBuilder;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import javafx.animation.KeyFrame;
@@ -10,9 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-import java.util.Map;
-
-public class Block extends Parent implements NotMovingGameObject{
+public class Block extends Parent implements NotMovingGameObject {
 
     private final ImageView block;
     private final int x;

@@ -98,6 +98,12 @@ public class Bullet extends Parent implements MovingGameObject {
         if ( y - GameData.GAP >= 0 &&
                 GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] != GameData.BLOCK &&
                 GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] != GameData.STONE) {
+
+            if (    GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] == GameData.Enemy_simple ||
+                    GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] == GameData.Enemy_DEADLY) {
+                GameData.ENEMIES[y/GameData.GAP -1][x/GameData.GAP].inflating();
+            }
+
             setY(y - GameData.GAP);
         }
     }
@@ -107,6 +113,12 @@ public class Bullet extends Parent implements MovingGameObject {
         if ( y + GameData.GAP <= GameData.END_Y_GAME_ACTION_ARIA &&
                 GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] != GameData.BLOCK &&
                 GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] != GameData.STONE) {
+
+            if (    GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] == GameData.Enemy_simple ||
+                    GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] == GameData.Enemy_DEADLY) {
+                GameData.ENEMIES[y/GameData.GAP +1][x/GameData.GAP].inflating();
+            }
+
             setY(y + GameData.GAP);
         }
     }
@@ -115,6 +127,12 @@ public class Bullet extends Parent implements MovingGameObject {
         if ( x - GameData.GAP >= 0 &&
                 GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP -1 ] != GameData.BLOCK &&
                 GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP -1 ] != GameData.STONE) {
+
+            if (    GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP -1 ] == GameData.Enemy_simple ||
+                    GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP -1 ] == GameData.Enemy_DEADLY) {
+                GameData.ENEMIES[ y/GameData.GAP ][ x/GameData.GAP -1 ].inflating();
+            }
+
             setX(x - GameData.GAP);
         }
     }
@@ -123,6 +141,12 @@ public class Bullet extends Parent implements MovingGameObject {
         if ( x + GameData.GAP <= GameData.END_X_GAME_ACTION_ARIA &&
                 GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP +1 ] != GameData.BLOCK &&
                 GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP +1 ] != GameData.STONE) {
+
+            if (    GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP +1 ] == GameData.Enemy_simple ||
+                    GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP +1 ] == GameData.Enemy_DEADLY) {
+                GameData.ENEMIES[ y/GameData.GAP ][ x/GameData.GAP +1 ].inflating();
+            }
+
             setX(x + GameData.GAP);
         }
     }

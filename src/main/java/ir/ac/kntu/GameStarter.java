@@ -156,6 +156,7 @@ public class GameStarter extends Application {
         return new Thread( () -> {
             currentGameAriaBuilder = new GameAriaBuilder(player);
             GameData.gameControlOff();
+            GameData.aiControlOff();
             GameData.stopControlOff();
             game = new StackPane(currentGameAriaBuilder.getGameAria());
             game.setOpacity(0.1);
@@ -164,6 +165,7 @@ public class GameStarter extends Application {
                 game.setOpacity(1);
                 GameData.runGame();
                 GameData.gameControlOn();
+                GameData.aiControlOn();
                 GameData.stopControlOn();
                 AudioBuilder.playThemeAudio();
                 currentGameAriaBuilder.startThreadForTimer();

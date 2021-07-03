@@ -2,7 +2,8 @@ package ir.ac.kntu.gamedata;
 
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gameobjects.Block;
-import ir.ac.kntu.gameobjects.RandomObject;
+import ir.ac.kntu.gameobjects.enemy.SimpleEnemy;
+import ir.ac.kntu.gameobjects.randomObject.RandomObject;
 import ir.ac.kntu.model.GameStatus;
 import ir.ac.kntu.model.Player;
 
@@ -18,6 +19,7 @@ public class GameData {
     private static boolean gameControl = false;
     private static boolean shootControl = true;
     private static boolean stopControl = false;
+    private static boolean aiControl = false;
     private static int currentScore = 0;
     public final static int FIRST_HEALTH_OF_PLAYER = 3;
     public final static int NUMBER_OF_LEVELS = 3;
@@ -40,7 +42,22 @@ public class GameData {
     public final static int[][] MAP_DATA = new int[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     public final static Block[][] BLOCKS = new Block[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     public final static RandomObject[][] NOT_MOVING_GAME_OBJECTS = new RandomObject[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
+    public final static SimpleEnemy[][] ENEMIES = new SimpleEnemy[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
+    private static int xPositionPlayerCharacter;
+    private static int yPositionPlayerCharacter;
 
+    public static void setPositionXYPLayerCharacter(int x, int y) {
+        xPositionPlayerCharacter = x;
+        yPositionPlayerCharacter = y;
+    }
+
+    public static int getXPositionPlayerCharacter() {
+        return xPositionPlayerCharacter;
+    }
+
+    public static int getYPositionPlayerCharacter() {
+        return yPositionPlayerCharacter;
+    }
 
     public static int calculateRealXY(int fake) {
         return fake * GAP;
@@ -62,6 +79,18 @@ public class GameData {
         gameControl = false;
     }
 
+    public static void aiControlOn() {
+        aiControl = true;
+    }
+
+    public static void aiControlOff() {
+        aiControl = false;
+    }
+
+    public static boolean isAiControl() {
+        return aiControl;
+    }
+
     public static Block getBlockInSpecificFakeXY(int x, int y) {
         return BLOCKS[x][y];
     }
@@ -73,11 +102,13 @@ public class GameData {
     public static void stopGame() {
         gameStatus = GameStatus.STOP;
         gameControlOff();
+        aiControlOff();
     }
 
     public static void runGame() {
         gameStatus = GameStatus.RUNNING;
         gameControlOn();
+        aiControlOn();
     }
 
     public static void gameOverGame() {

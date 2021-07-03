@@ -1,8 +1,9 @@
-package ir.ac.kntu.gameobjects;
+package ir.ac.kntu.gameobjects.randomObject;
 
 import ir.ac.kntu.audio.AudioBuilder;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
+import ir.ac.kntu.gameobjects.NotMovingGameObject;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -10,7 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class SniperRandom extends Parent implements NotMovingGameObject,RandomObject{
+public class SniperRandom extends Parent implements NotMovingGameObject, RandomObject {
 
     private final ImageView sniper;
     private int x;

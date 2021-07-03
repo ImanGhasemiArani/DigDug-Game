@@ -1,10 +1,12 @@
 package ir.ac.kntu.gamebuilder;
 
-import ir.ac.kntu.EventHandler.GameKeyControlHandler;
+import ir.ac.kntu.controller.GameKeyControlHandler;
 import ir.ac.kntu.GameStarter;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.gameobjects.*;
-import ir.ac.kntu.model.Direction;
+import ir.ac.kntu.gameobjects.randomObject.HeartRandom;
+import ir.ac.kntu.gameobjects.randomObject.MushroomRandom;
+import ir.ac.kntu.gameobjects.randomObject.SniperRandom;
 import ir.ac.kntu.model.Player;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

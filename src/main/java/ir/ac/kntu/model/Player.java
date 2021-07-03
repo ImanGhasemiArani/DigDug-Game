@@ -1,5 +1,6 @@
 package ir.ac.kntu.model;
 
+import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 
 import java.io.Serializable;
@@ -61,10 +62,12 @@ public class Player implements Serializable {
 
     public void decreaseOneHealth() {
         health--;
+        GameAriaBuilder.showHealthOrUpdate();
     }
 
     public void increaseOneHealth() {
         health++;
+        GameAriaBuilder.showHealthOrUpdate();
     }
 
     public void assignNewHealth() {
