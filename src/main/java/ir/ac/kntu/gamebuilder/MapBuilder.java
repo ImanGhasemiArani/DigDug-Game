@@ -1,13 +1,10 @@
 package ir.ac.kntu.gamebuilder;
 
-import com.sun.javafx.collections.MappingChange;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.gameobjects.*;
 import ir.ac.kntu.gameobjects.enemy.DeadlyEnemy;
 import ir.ac.kntu.gameobjects.enemy.SimpleEnemy;
 import javafx.scene.Group;
-
-import java.util.Map;
 
 
 public class MapBuilder {
@@ -63,10 +60,10 @@ public class MapBuilder {
         for (int i = 0; i < GameData.MAP_DATA.length; i++) {
             for (int j = 0; j < GameData.MAP_DATA[0].length; j++) {
                 switch (GameData.MAP_DATA[i][j]) {
-                    case GameData.Enemy_simple:
+                    case GameData.ENEMY_SIMPLE:
                         group.getChildren().add(new SimpleEnemy(j,i));
                         break;
-                    case GameData.Enemy_DEADLY:
+                    case GameData.ENEMY_DEADLY:
                         group.getChildren().add(new DeadlyEnemy(j,i));
                         break;
                     default:

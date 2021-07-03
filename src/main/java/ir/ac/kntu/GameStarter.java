@@ -181,7 +181,7 @@ public class GameStarter extends Application {
         });
     }
 
-    private static final Timeline mainLine = new Timeline(new KeyFrame(Duration.seconds(1),e-> {
+    private static final Timeline MAIN_LINE = new Timeline(new KeyFrame(Duration.seconds(1), e-> {
         if (GameData.gameStatus().equals(GameStatus.GAMEOVER)) {
             stopTimeLineForEndGame();
             currentGameAriaBuilder.stopTimer();
@@ -195,13 +195,13 @@ public class GameStarter extends Application {
 
     private static Thread creatingThreadForEndingGame() {
         return new Thread( () -> {
-            mainLine.setCycleCount(Timeline.INDEFINITE);
-            mainLine.play();
+            MAIN_LINE.setCycleCount(Timeline.INDEFINITE);
+            MAIN_LINE.play();
         });
     }
 
     private static void stopTimeLineForEndGame() {
-        mainLine.stop();
+        MAIN_LINE.stop();
     }
 
 

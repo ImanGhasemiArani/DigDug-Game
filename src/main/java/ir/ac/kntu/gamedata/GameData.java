@@ -31,8 +31,8 @@ public class GameData {
     public final static int HEART = 4;
     public final static int MUSHROOM = 5;
     public final static int SNIPER = 6;
-    public final static int Enemy_simple = 7;
-    public final static int Enemy_DEADLY = 8;
+    public final static int ENEMY_SIMPLE = 7;
+    public final static int ENEMY_DEADLY = 8;
     public final static int GAP = 40;
     public final static int SIZE_OF_GAME_ACTION_ARIA = 18;
     public final static int REAL_SIZE_OF_GAME_ACTION_ARIA = SIZE_OF_GAME_ACTION_ARIA * GAP;

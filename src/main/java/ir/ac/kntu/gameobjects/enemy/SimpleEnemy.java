@@ -111,7 +111,7 @@ public class SimpleEnemy extends Parent implements MovingGameObject,Enemy {
             runImage = upRunImage;
         }
         if ( GameData.MAP_DATA[ getFakeY() +directHelp ][ getFakeX() ] == GameData.EMPTY_BLOCK) {
-            GameData.MAP_DATA[ getFakeY() + directHelp ][ getFakeX() ] = GameData.Enemy_simple;
+            GameData.MAP_DATA[ getFakeY() + directHelp ][ getFakeX() ] = GameData.ENEMY_SIMPLE;
             GameData.ENEMIES[getFakeY() + directHelp][getFakeX()] = this;
             moveHelperMethod(getYPosition() + directHelp * GameData.GAP, tUpDown);
         }
@@ -126,7 +126,7 @@ public class SimpleEnemy extends Parent implements MovingGameObject,Enemy {
             runImage = leftRunImage;
         }
         if ( GameData.MAP_DATA[ getFakeY() ][ getFakeX() +directHelp ] == GameData.EMPTY_BLOCK) {
-            GameData.MAP_DATA[ getFakeY() ][ getFakeX() +directHelp ] = GameData.Enemy_simple;
+            GameData.MAP_DATA[ getFakeY() ][ getFakeX() +directHelp ] = GameData.ENEMY_SIMPLE;
             GameData.ENEMIES[getFakeY()][getFakeX() +directHelp] = this;
             moveHelperMethod(getXPosition() +directHelp * GameData.GAP,tLeftRight);
         }
