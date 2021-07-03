@@ -17,6 +17,7 @@ public class Bullet extends Parent implements MovingGameObject {
     private int y;
     private int range;
     private int counter;
+    private boolean temp;
 
     public Bullet(Direction direction, int range, int startX, int startY) {
         counter = 0;
@@ -28,11 +29,12 @@ public class Bullet extends Parent implements MovingGameObject {
         bullet.setOpacity(0);
         getChildren().add(bullet);
         GameAriaBuilder.getGameMap().getChildren().add(this);
+        temp = true;
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(80),e->{
             counter++;
             bullet.setOpacity(bullet.getOpacity() + 0.3);
             move(direction);
-            if (counter == range) {
+            if (counter == range || !temp) {
                 remove();
                 GameData.shootControlOn();
             }
@@ -102,6 +104,7 @@ public class Bullet extends Parent implements MovingGameObject {
             if (    GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] == GameData.Enemy_simple ||
                     GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] == GameData.Enemy_DEADLY) {
                 GameData.ENEMIES[y/GameData.GAP -1][x/GameData.GAP].inflating();
+                temp = false;
             }
 
             setY(y - GameData.GAP);
@@ -117,6 +120,7 @@ public class Bullet extends Parent implements MovingGameObject {
             if (    GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] == GameData.Enemy_simple ||
                     GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] == GameData.Enemy_DEADLY) {
                 GameData.ENEMIES[y/GameData.GAP +1][x/GameData.GAP].inflating();
+                temp = false;
             }
 
             setY(y + GameData.GAP);
@@ -131,6 +135,7 @@ public class Bullet extends Parent implements MovingGameObject {
             if (    GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP -1 ] == GameData.Enemy_simple ||
                     GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP -1 ] == GameData.Enemy_DEADLY) {
                 GameData.ENEMIES[ y/GameData.GAP ][ x/GameData.GAP -1 ].inflating();
+                temp = false;
             }
 
             setX(x - GameData.GAP);
@@ -145,6 +150,7 @@ public class Bullet extends Parent implements MovingGameObject {
             if (    GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP +1 ] == GameData.Enemy_simple ||
                     GameData.MAP_DATA[ y/GameData.GAP ][ x/GameData.GAP +1 ] == GameData.Enemy_DEADLY) {
                 GameData.ENEMIES[ y/GameData.GAP ][ x/GameData.GAP +1 ].inflating();
+                temp = false;
             }
 
             setX(x + GameData.GAP);

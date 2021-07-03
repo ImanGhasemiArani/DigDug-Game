@@ -8,7 +8,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class AIGame {
+public class AISimpleEnemy implements AI{
 
     private SimpleEnemy enemy;
     private int x;
@@ -16,12 +16,13 @@ public class AIGame {
     private int lastXPosition;
     private int lastYPosition;
 
-    public AIGame(SimpleEnemy enemy) {
+    public AISimpleEnemy(SimpleEnemy enemy) {
         this.enemy = enemy;
         lastXPosition = enemy.getFakeX();
         lastYPosition = enemy.getFakeY();
     }
 
+    @Override
     public void startAI() {
         Thread thread = new Thread(()-> {
             x = GameData.getXPositionPlayerCharacter();

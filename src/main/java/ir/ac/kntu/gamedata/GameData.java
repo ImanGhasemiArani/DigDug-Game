@@ -2,6 +2,7 @@ package ir.ac.kntu.gamedata;
 
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gameobjects.Block;
+import ir.ac.kntu.gameobjects.enemy.Enemy;
 import ir.ac.kntu.gameobjects.enemy.SimpleEnemy;
 import ir.ac.kntu.gameobjects.randomObject.RandomObject;
 import ir.ac.kntu.model.GameStatus;
@@ -42,7 +43,7 @@ public class GameData {
     public final static int[][] MAP_DATA = new int[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     public final static Block[][] BLOCKS = new Block[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     public final static RandomObject[][] NOT_MOVING_GAME_OBJECTS = new RandomObject[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
-    public final static SimpleEnemy[][] ENEMIES = new SimpleEnemy[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
+    public final static Enemy[][] ENEMIES = new Enemy[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     private static int xPositionPlayerCharacter;
     private static int yPositionPlayerCharacter;
 

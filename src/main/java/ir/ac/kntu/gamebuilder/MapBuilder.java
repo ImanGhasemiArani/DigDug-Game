@@ -3,6 +3,7 @@ package ir.ac.kntu.gamebuilder;
 import com.sun.javafx.collections.MappingChange;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.gameobjects.*;
+import ir.ac.kntu.gameobjects.enemy.DeadlyEnemy;
 import ir.ac.kntu.gameobjects.enemy.SimpleEnemy;
 import javafx.scene.Group;
 
@@ -64,6 +65,9 @@ public class MapBuilder {
                 switch (GameData.MAP_DATA[i][j]) {
                     case GameData.Enemy_simple:
                         group.getChildren().add(new SimpleEnemy(j,i));
+                        break;
+                    case GameData.Enemy_DEADLY:
+                        group.getChildren().add(new DeadlyEnemy(j,i));
                         break;
                     default:
                         break;

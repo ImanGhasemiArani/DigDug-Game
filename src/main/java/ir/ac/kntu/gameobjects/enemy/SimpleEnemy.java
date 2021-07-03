@@ -1,6 +1,6 @@
 package ir.ac.kntu.gameobjects.enemy;
 
-import ir.ac.kntu.controller.AIGame;
+import ir.ac.kntu.controller.AISimpleEnemy;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.gameobjects.MovingGameObject;
@@ -14,7 +14,7 @@ import javafx.util.Duration;
 
 
 
-public class SimpleEnemy extends Parent implements MovingGameObject {
+public class SimpleEnemy extends Parent implements MovingGameObject,Enemy {
     private Image rightStandImage = new Image("assets/simpleBalloonRight1.png");
     private Image rightRunImage = new Image("assets/simpleBalloonRight2.png");
     private Image leftStandImage = new Image("assets/simpleBalloonLeft1.png");
@@ -23,18 +23,18 @@ public class SimpleEnemy extends Parent implements MovingGameObject {
     private Image upRunImage = new Image("assets/simpleBalloonUp2.png");
     private Image downStandImage = new Image("assets/simpleBalloonDown1.png");
     private Image downRunImage = new Image("assets/simpleBalloonDown2.png");
-    private Image inflating1RightImage = new Image("assets/inflating1Right.png");
-    private Image inflating1LeftImage = new Image("assets/inflating1Left.png");
-    private Image inflating1UpImage = new Image("assets/inflating1Up.png");
-    private Image inflating1DownImage = new Image("assets/inflating1Down.png");
-    private Image inflating2RightImage = new Image("assets/inflating2Right.png");
-    private Image inflating2LeftImage = new Image("assets/inflating2Left.png");
-    private Image inflating2UpImage = new Image("assets/inflating2Up.png");
-    private Image inflating2DownImage = new Image("assets/inflating2Down.png");
-    private Image inflating3RightImage = new Image("assets/inflating3Right.png");
-    private Image inflating3LeftImage = new Image("assets/inflating3Left.png");
-    private Image inflating3UpImage = new Image("assets/inflating3Up.png");
-    private Image inflating3DownImage = new Image("assets/inflating3Down.png");
+    private final Image inflating1RightImage = new Image("assets/inflating1Right.png");
+    private final Image inflating1LeftImage = new Image("assets/inflating1Left.png");
+    private final Image inflating1UpImage = new Image("assets/inflating1Up.png");
+    private final Image inflating1DownImage = new Image("assets/inflating1Down.png");
+    private final Image inflating2RightImage = new Image("assets/inflating2Right.png");
+    private final Image inflating2LeftImage = new Image("assets/inflating2Left.png");
+    private final Image inflating2UpImage = new Image("assets/inflating2Up.png");
+    private final Image inflating2DownImage = new Image("assets/inflating2Down.png");
+    private final Image inflating3RightImage = new Image("assets/inflating3Right.png");
+    private final Image inflating3LeftImage = new Image("assets/inflating3Left.png");
+    private final Image inflating3UpImage = new Image("assets/inflating3Up.png");
+    private final Image inflating3DownImage = new Image("assets/inflating3Down.png");
 
     private Image standImage = rightStandImage;
     private Image runImage = rightRunImage;
@@ -44,7 +44,7 @@ public class SimpleEnemy extends Parent implements MovingGameObject {
     private int tempMoveHelper;
     private int directHelp;
     private int health;
-    private final AIGame ai = new AIGame(this);
+    private final AISimpleEnemy ai = new AISimpleEnemy(this);
     private final Timeline aiLoop = new Timeline(new KeyFrame(Duration.millis(1000), e->{
         if (GameData.isAiControl()) {
             ai.startAI();
@@ -151,6 +151,7 @@ public class SimpleEnemy extends Parent implements MovingGameObject {
         timeline.play();
     }
 
+    @Override
     public void inflating() {
         if (health == 3) {
             health--;
