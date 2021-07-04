@@ -16,6 +16,7 @@ public class Stone extends Parent implements NotMovingGameObject {
     private final int x;
     private int y;
     private boolean firstMove;
+    private Timeline checkMove;
 
 
     public Stone(int xx, int yy) {
@@ -28,7 +29,7 @@ public class Stone extends Parent implements NotMovingGameObject {
         firstMove = true;
         Timeline moveAnimation = new Timeline(new KeyFrame(Duration.millis(300),e-> changeImage()));
         moveAnimation.setCycleCount(5);
-        Timeline checkMove = new Timeline(new KeyFrame(Duration.millis(500),e-> {
+        checkMove = new Timeline(new KeyFrame(Duration.millis(500),e-> {
             GameData.MAP_DATA[y][x] = GameData.STONE;
             if (y+1 < GameData.SIZE_OF_GAME_ACTION_ARIA && GameData.MAP_DATA[y+1][x] != GameData.BLOCK && GameData.MAP_DATA[y+1][x] != GameData.STONE && GameData.isAiControl()) {
                 moveAnimation.play();
@@ -69,11 +70,13 @@ public class Stone extends Parent implements NotMovingGameObject {
         stone.setX(GameData.calculateRealXY(x)-5);
         stone.setY(GameData.calculateRealXY(y));
         getChildren().add(stone);
+        GameData.STONES.add(this);
     }
 
     @Override
     public void destroy() {
-        // this object is not removable
+        GameAriaBuilder.getGameMap().getChildren().remove(this);
+        checkMove.stop();
     }
 
 }

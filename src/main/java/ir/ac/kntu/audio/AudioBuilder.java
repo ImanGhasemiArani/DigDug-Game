@@ -11,6 +11,8 @@ public class AudioBuilder {
     private static File useRandom = new File("src/main/resources/audios/coin.wav");
     private static File winPlayer = new File("src/main/resources/audios/done.wav");
     private static File diePlayer = new File("src/main/resources/audios/die.wav");
+    private static File killEnemy = new File("src/main/resources/audios/kill.wav");
+    private static File inflatingEnemy = new File("src/main/resources/audios/inflating.wav");
     private static File theme = new File("src/main/resources/audios/theme.wav");
     private static AudioInputStream audioInputStream;
     private static Clip themeAudio;
@@ -36,11 +38,19 @@ public class AudioBuilder {
         playSound(winPlayer);
     }
 
+    public static void playKillEnemyAudio() {
+        playSound(killEnemy);
+    }
+
+    public static void playInflatingEnemyAudio() {
+        playSound(inflatingEnemy);
+    }
+
     public static void playThemeAudio() {
         try {
             themeAudio = AudioSystem.getClip();
             themeAudio.open(AudioSystem.getAudioInputStream(theme));
-//            themeAudio.start();
+            themeAudio.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ignored) {
         }
     }

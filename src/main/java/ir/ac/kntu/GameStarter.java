@@ -24,6 +24,7 @@ import javafx.scene.shape.ArcType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 
@@ -51,7 +52,7 @@ public class GameStarter extends Application {
         STAGE.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         STAGE.setTitle("DigDig");
         STAGE.setScene(SCENE);
-//        stage.initStyle(StageStyle.UNDECORATED);
+//        STAGE.initStyle(StageStyle.UNDECORATED);
 
         GameData.readOrImportFileToPlayers();
         try {
@@ -59,11 +60,11 @@ public class GameStarter extends Application {
 
 //        continueGamePage();
 //
-            Player newPlayer = new Player("Iman");
-            GameData.addPlayer(newPlayer);
-            player = newPlayer;
-            MAIN.getChildren().clear();
-            creatingGameAria().start();
+//            Player newPlayer = new Player("Iman");
+//            GameData.addPlayer(newPlayer);
+//            player = newPlayer;
+//            MAIN.getChildren().clear();
+//            creatingGameAria().start();
         } catch (Exception ignored) {
         }
 
@@ -170,7 +171,6 @@ public class GameStarter extends Application {
                 AudioBuilder.playThemeAudio();
                 currentGameAriaBuilder.startThreadForTimer();
                 currentGameAriaBuilder.startThreadRandomObject();
-//                creatingThreadForEndingGame().start();
             }));
             Timeline mainLine = new Timeline(new KeyFrame(Duration.ONE,e-> {
                 MAIN.getChildren().add(game);
@@ -181,34 +181,15 @@ public class GameStarter extends Application {
         });
     }
 
-//    private static final Timeline MAIN_LINE = new Timeline(new KeyFrame(Duration.seconds(1), e-> {
-//        if (GameData.gameStatus().equals(GameStatus.GAMEOVER)) {
-//            stopTimeLineForEndGame();
-//            currentGameAriaBuilder.stopTimer();
-//            // GameOverGame
-//        } else if (GameData.gameStatus().equals(GameStatus.WIN)) {
-//            stopTimeLineForEndGame();
-//            currentGameAriaBuilder.stopTimer();
-//            // win Game
-//        }
-//    }));
-//
-//    private static Thread creatingThreadForEndingGame() {
-//        return new Thread( () -> {
-//            MAIN_LINE.setCycleCount(Timeline.INDEFINITE);
-//            MAIN_LINE.play();
-//        });
-//    }
-//
-//    private static void stopTimeLineForEndGame() {
-//        MAIN_LINE.stop();
-//    }
+    private static Timeline end = new Timeline(new KeyFrame(Duration.seconds(1),e-> continueGamePage()));
 
     public static void endGame() {
+        AudioBuilder.stopSound();
+        AudioBuilder.playDiePlayerAudio();
         stopGame();
         saveGame();
-        game.setOpacity(0.1);
-        continueGamePage();
+        end.setCycleCount(1);
+        end.play();
     }
 
     private static void playCountDownTimer() {
@@ -284,7 +265,11 @@ public class GameStarter extends Application {
             if (tableView.getSelectionModel().getSelectedItem() != null)  {
                 selectedPlayer.setText("Selected Player:\t\t" + tableView.getSelectionModel().getSelectedItem().getPlayerName());
                 newGameLabel.setDisable(false);
-                continueGameLabel.setDisable(false);
+                if (tableView.getSelectionModel().getSelectedItem().getHealth() >= 0) {
+                    continueGameLabel.setDisable(false);
+                } else {
+                    continueGameLabel.setDisable(true);
+                }
             }
         });
         newGameLabel.setOnMouseClicked(e-> {

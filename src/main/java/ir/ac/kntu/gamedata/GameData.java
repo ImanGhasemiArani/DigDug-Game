@@ -2,6 +2,7 @@ package ir.ac.kntu.gamedata;
 
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gameobjects.Block;
+import ir.ac.kntu.gameobjects.Stone;
 import ir.ac.kntu.gameobjects.enemy.Enemy;
 import ir.ac.kntu.gameobjects.randomObject.RandomObject;
 import ir.ac.kntu.model.GameStatus;
@@ -46,6 +47,7 @@ public class GameData {
     public final static int END_Y_GAME_ACTION_ARIA = REAL_SIZE_OF_GAME_ACTION_ARIA;
     public final static int[][] MAP_DATA = new int[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     public final static Block[][] BLOCKS = new Block[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
+    public final static ArrayList<Stone> STONES = new ArrayList<>();
     public final static RandomObject[][] NOT_MOVING_GAME_OBJECTS = new RandomObject[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     public final static Enemy[][] ENEMIES = new Enemy[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     private static int xPositionPlayerCharacter;
@@ -186,6 +188,8 @@ public class GameData {
     }
 
     public static void assignCurrentMapData(int[][] mapData) {
+        STONES.forEach(Stone::destroy);
+        STONES.clear();
         IntStream.range(0, mapData.length).forEach(i -> System.arraycopy(mapData[i], 0, MAP_DATA[i], 0, mapData[0].length));
         for (int i = 0; i < BLOCKS.length; i++) {
             for (int j = 0; j < BLOCKS[0].length; j++) {

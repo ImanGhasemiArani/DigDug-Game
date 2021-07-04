@@ -59,7 +59,9 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     }
 
     private final Timeline tUpDown = new Timeline(new KeyFrame(Duration.millis(50), e->{
-        setYPosition(getYPosition() + directHelp * speedTemp * GameData.GAP / 10);
+        if (!GameData.isGameControl()) {
+            setYPosition(getYPosition() + directHelp * speedTemp * GameData.GAP / 10);
+        }
         if (getYPosition() == tempMoveHelper) {
             animationOfMovement.stop();
             GameData.gameControlOn();
@@ -67,7 +69,9 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     }));
 
     private final Timeline tLeftRight = new Timeline(new KeyFrame(Duration.millis(50), e->{
-        setXPosition(getXPosition() + directHelp * speedTemp * GameData.GAP / 10);
+        if (!GameData.isGameControl()) {
+            setXPosition(getXPosition() + directHelp * speedTemp * GameData.GAP / 10);
+        }
         if (getXPosition() == tempMoveHelper) {
             animationOfMovement.stop();
             GameData.gameControlOn();
@@ -100,6 +104,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         lastDirection = Direction.UP;
         standImage = upStandImage;
         runImage = upRunImage;
+        changeImageToCreateAnimation();
         digging();
         useRandomObject();
         if ( getFakeY() - 1 >= 0 &&
@@ -115,6 +120,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         lastDirection = Direction.DOWN;
         standImage = downStandImage;
         runImage = downRunImage;
+        changeImageToCreateAnimation();
         digging();
         useRandomObject();
         if ( getFakeY() + 1 < GameData.SIZE_OF_GAME_ACTION_ARIA &&
@@ -129,6 +135,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         lastDirection = Direction.LEFT;
         standImage = leftStandImage;
         runImage = leftRunImage;
+        changeImageToCreateAnimation();
         digging();
         useRandomObject();
         if ( getFakeX() - 1 >= 0 &&
@@ -143,6 +150,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         lastDirection = Direction.RIGHT;
         standImage = rightStandImage;
         runImage = rightRunImage;
+        changeImageToCreateAnimation();
         digging();
         useRandomObject();
         if ( getFakeX() + 1 < GameData.SIZE_OF_GAME_ACTION_ARIA &&
@@ -247,13 +255,13 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     }
 
     public void doneLevel() {
-
+        AudioBuilder.playWinPlayerAudio();
     }
 
     @Override
     public void die() {
-        GameData.gameControlOff();
         GameData.MAP_DATA[getFakeY()][getFakeX()] = GameData.EMPTY_BLOCK;
+        GameData.gameControlOff();
         AudioBuilder.playDiePlayerAudio();
         GameAriaBuilder.getCurrentPlayer().decreaseOneHealth();
         remove();

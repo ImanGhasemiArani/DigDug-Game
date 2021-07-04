@@ -1,5 +1,6 @@
 package ir.ac.kntu.gameobjects.enemy;
 
+import ir.ac.kntu.audio.AudioBuilder;
 import ir.ac.kntu.controller.AIDeadlyEnemy;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
@@ -238,6 +239,8 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
 
     @Override
     public void inflating() {
+        aiLoop.stop();
+        AudioBuilder.playInflatingEnemyAudio();
         if (health == 3) {
             health--;
             standImage = runImage =rightStandImage = rightRunImage = inflating1RightImage;
@@ -245,6 +248,7 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
             downStandImage = downRunImage = inflating1DownImage;
             upStandImage = upRunImage = inflating1UpImage;
             enemyCharacter.setImage(runImage);
+            aiLoop.play();
         } else if(health == 2) {
             health--;
             standImage = runImage =rightStandImage = rightRunImage = inflating2RightImage;
@@ -252,6 +256,7 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
             downStandImage = downRunImage = inflating2DownImage;
             upStandImage = upRunImage = inflating2UpImage;
             enemyCharacter.setImage(runImage);
+            aiLoop.play();
         }else if(health == 1) {
             health--;
             standImage = runImage =rightStandImage = rightRunImage = inflating3RightImage;
@@ -265,6 +270,7 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
 
     @Override
     public void remove() {
+        AudioBuilder.playKillEnemyAudio();
         GameData.decreaseNumberOfEnemy();
         GameData.MAP_DATA[getFakeY()][getFakeX()] = GameData.EMPTY_BLOCK;
         GameAriaBuilder.getGameMap().getChildren().remove(this);

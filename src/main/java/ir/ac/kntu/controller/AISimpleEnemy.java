@@ -1,5 +1,6 @@
 package ir.ac.kntu.controller;
 
+import ir.ac.kntu.GameStarter;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.gameobjects.enemy.SimpleEnemy;
@@ -31,6 +32,10 @@ public class AISimpleEnemy implements AI{
                     enemy.getFakeY() -1 < 0 || enemy.getFakeY() +1 >= GameData.SIZE_OF_GAME_ACTION_ARIA ) {
                 Timeline timeline = new Timeline(new KeyFrame(Duration.ONE,e->{
                     GameAriaBuilder.getCurrentPlayer().decreaseOneHealth();
+                    if (GameAriaBuilder.getCurrentPlayer().getHealth() == -1) {
+                        GameData.gameOverGame();
+                        GameStarter.endGame();
+                    }
                     enemy.remove();
                     enemy.getAiLoop().stop();
                 }));

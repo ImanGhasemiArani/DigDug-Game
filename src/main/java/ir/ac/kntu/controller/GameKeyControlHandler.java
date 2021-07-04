@@ -24,6 +24,13 @@ public class GameKeyControlHandler {
             }else if(GameData.isGameControl()) {
                 GameAriaBuilder.getPlayerCharacter().move(Direction.DOWN.valueOfCustomize(k.getCode().toString()));
             }
+            if(k.getCode().equals(KeyCode.SPACE)) {
+                GameData.printGameDate();
+                System.out.println("\n\n\n\n");
+            }
+            if(k.getCode().equals(KeyCode.D)) {
+                System.out.println(GameAriaBuilder.getCurrentPlayer().getHealth());
+            }
         });
     }
 

@@ -100,8 +100,9 @@ public class Bullet extends Parent implements MovingGameObject {
                 GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] != GameData.BLOCK &&
                 GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] != GameData.STONE) {
 
-            if (    GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] == GameData.ENEMY_SIMPLE ||
-                    GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] == GameData.ENEMY_DEADLY) {
+            if (    GameData.ENEMIES[y/GameData.GAP -1][x/GameData.GAP] != null &&
+                    (GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] == GameData.ENEMY_SIMPLE ||
+                    GameData.MAP_DATA[ y/GameData.GAP -1 ][ x/GameData.GAP ] == GameData.ENEMY_DEADLY)) {
                 GameData.ENEMIES[y/GameData.GAP -1][x/GameData.GAP].inflating();
                 temp = false;
             }
@@ -116,8 +117,9 @@ public class Bullet extends Parent implements MovingGameObject {
                 GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] != GameData.BLOCK &&
                 GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] != GameData.STONE) {
 
-            if (    GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] == GameData.ENEMY_SIMPLE ||
-                    GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] == GameData.ENEMY_DEADLY) {
+            if (    GameData.ENEMIES[y/GameData.GAP +1][x/GameData.GAP] != null &&
+                    (GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] == GameData.ENEMY_SIMPLE ||
+                    GameData.MAP_DATA[ y/GameData.GAP +1 ][ x/GameData.GAP ] == GameData.ENEMY_DEADLY)) {
                 GameData.ENEMIES[y/GameData.GAP +1][x/GameData.GAP].inflating();
                 temp = false;
             }
