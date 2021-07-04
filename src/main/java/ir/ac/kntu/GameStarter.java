@@ -95,7 +95,7 @@ public class GameStarter extends Application {
 
         newPlayerLabel.setOnMouseClicked(e-> newPlayerPage());
         continueLabel.setOnMouseClicked(e-> continueGamePage());
-        gameGuideLabel.setOnMouseClicked(e-> gameGuidePage());
+        gameGuideLabel.setOnMouseClicked(e-> gameSettingPage());
         exitLabel.setOnMouseClicked(e-> stage.close());
     }
 
@@ -337,7 +337,7 @@ public class GameStarter extends Application {
         return playersList;
     }
 
-    private static void gameGuidePage() {
+    private static void gameSettingPage() {
         GameData.stopControlOff();
         MAIN.getChildren().clear();
         Label soundsLabel = new Label("Sounds");
