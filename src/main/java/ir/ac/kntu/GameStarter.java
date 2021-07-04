@@ -375,7 +375,7 @@ public class GameStarter extends Application {
         shoot.setAlignment(Pos.CENTER);
         Label backLabel = new Label("Back");
         backLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-        setStyleLabel2(soundsLabel ,fullScreenLabel ,movementLabel ,stopGame);
+        setStyleLabel2(soundsLabel,fullScreenLabel,movementLabel,stopGame);
         VBox vBox = new VBox(options,movementStop,shoot,backLabel);
         vBox.setSpacing(50);
         vBox.setAlignment(Pos.CENTER);
