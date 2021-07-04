@@ -30,7 +30,7 @@ import javafx.util.Duration;
 
 public class GameStarter extends Application {
 
-    private final static Stage STAGE = new Stage();
+    private static Stage stage;
     private final static StackPane MAIN = new StackPane();
     public final static Scene SCENE = new Scene(MAIN, 1000, 850, Color.rgb(0,0,0));
     private static Player player;
@@ -42,34 +42,26 @@ public class GameStarter extends Application {
     }
 
     public void start(Stage st){
-
+        stage = new Stage();
         MAIN.setStyle("-fx-border-width: 0 0 5 0;");
         MAIN.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-//        STAGE.setFullScreen(true);
-        STAGE.setResizable(false);
-        STAGE.setFullScreenExitHint("");
-        STAGE.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
-        STAGE.setTitle("DigDig");
-        STAGE.setScene(SCENE);
-//        STAGE.initStyle(StageStyle.UNDECORATED);
+        stage.setFullScreen(true);
+        stage.setResizable(false);
+        stage.setFullScreenExitHint("");
+        stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+        stage.setTitle("DigDig");
+        stage.setScene(SCENE);
+        stage.initStyle(StageStyle.UNDECORATED);
 
         GameData.readOrImportFileToPlayers();
         try {
             gameMenu();
-
-//        continueGamePage();
-//
-//            Player newPlayer = new Player("Iman");
-//            GameData.addPlayer(newPlayer);
-//            player = newPlayer;
-//            MAIN.getChildren().clear();
-//            creatingGameAria().start();
         } catch (Exception ignored) {
         }
 
 
-        STAGE.show();
+        stage.show();
     }
 
     public static void gameMenu() {
@@ -84,7 +76,7 @@ public class GameStarter extends Application {
         Label continueLabel = new Label("Continue Game");
         continueLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
 
-        Label gameGuideLabel = new Label("Game Guide");
+        Label gameGuideLabel = new Label("Settings");
         gameGuideLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
 
         Label exitLabel = new Label("Exit");
@@ -104,7 +96,7 @@ public class GameStarter extends Application {
         newPlayerLabel.setOnMouseClicked(e-> newPlayerPage());
         continueLabel.setOnMouseClicked(e-> continueGamePage());
         gameGuideLabel.setOnMouseClicked(e-> gameGuidePage());
-        exitLabel.setOnMouseClicked(e-> STAGE.close());
+        exitLabel.setOnMouseClicked(e-> stage.close());
     }
 
     private static void newPlayerPage() {
@@ -238,7 +230,7 @@ public class GameStarter extends Application {
         countDown.play();
     }
 
-    private static void setStyleLabel(Label l1,Label l2,Label l3,Label l4) {
+    private static void setStyleLabel1(Label l1, Label l2, Label l3, Label l4) {
         l1.setStyle("-fx-text-fill: Wheat;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         l2.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         l3.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
@@ -253,7 +245,7 @@ public class GameStarter extends Application {
         Label backLabel = new Label("Back");
         Label newGameLabel = new Label("New Game");
         Label continueGameLabel = new Label("Continue");
-        setStyleLabel(selectedPlayer,backLabel,newGameLabel,continueGameLabel);
+        setStyleLabel1(selectedPlayer,backLabel,newGameLabel,continueGameLabel);
         HBox hBox = new HBox(backLabel,newGameLabel,continueGameLabel);
         hBox.setSpacing(165);
         hBox.setAlignment(Pos.CENTER_RIGHT);
@@ -345,44 +337,60 @@ public class GameStarter extends Application {
 
     private static void gameGuidePage() {
         MAIN.getChildren().clear();
+        Label soundsLabel = new Label("Sounds");
+        CheckBox soundsButton = new CheckBox("ON/OFF");
+        soundsButton.setSelected(GameData.isPlaySound());
+        soundsButton.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 15px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        Label fullScreenLabel = new Label("FullScreen");
+        CheckBox fullScreenButton = new CheckBox("ON/OFF");
+        fullScreenButton.setSelected(stage.isFullScreen());
+        fullScreenButton.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 15px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        HBox options = new HBox(soundsLabel,soundsButton,fullScreenLabel,fullScreenButton);
+        options.setSpacing(20);
+        options.setAlignment(Pos.CENTER);
         Label movementLabel = new Label("Movement");
-        movementLabel.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         ImageView arrowsKey = new ImageView(new Image("assets/arrowsKey.png"));
         arrowsKey.setFitWidth(250);
         arrowsKey.setFitHeight(170);
         VBox movement = new VBox(movementLabel,arrowsKey);
         movement.setSpacing(20);
-        Label shootLabel = new Label("Shoot");
-        shootLabel.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-        ImageView aKey = new ImageView(new Image("assets/aKey.png"));
-        aKey.setFitWidth(80);
-        aKey.setFitHeight(81);
-        VBox shoot = new VBox(shootLabel,aKey);
-        shoot.setSpacing(20);
+        movement.setAlignment(Pos.CENTER);
         Label stopGame = new Label("Stop Game");
-        stopGame.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         ImageView dKey = new ImageView(new Image("assets/EscKey.png"));
         dKey.setFitWidth(80);
         dKey.setFitHeight(84);
-        VBox dig = new VBox(stopGame,dKey);
-        dig.setSpacing(20);
+        VBox stop = new VBox(stopGame,dKey);
+        stop.setSpacing(20);
+        stop.setAlignment(Pos.CENTER);
+        HBox movementStop = new HBox(movement,stop);
+        movementStop.setSpacing(20);
+        movementStop.setAlignment(Pos.CENTER);
+        Label shootLabel = new Label("Shoot");
+        shootLabel.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        ImageView aKey = new ImageView(new Image("assets/spaceKey.png"));
+        aKey.setFitWidth(400);
+        aKey.setFitHeight(81);
+        VBox shoot = new VBox(shootLabel,aKey);
+        shoot.setSpacing(20);
+        shoot.setAlignment(Pos.CENTER);
         Label backLabel = new Label("Back");
         backLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-        HBox hBox = new HBox(movement,shoot,dig);
-        hBox.setSpacing(50);
-        movement.setAlignment(Pos.CENTER);
-        shoot.setAlignment(Pos.CENTER);
-        dig.setAlignment(Pos.CENTER);
-        hBox.setAlignment(Pos.CENTER);
-        VBox vBox = new VBox(hBox,backLabel);
+        setStyleLabel2(soundsLabel ,fullScreenLabel ,movementLabel ,stopGame);
+        VBox vBox = new VBox(options,movementStop,shoot,backLabel);
         vBox.setSpacing(50);
         vBox.setAlignment(Pos.CENTER);
-
+        fullScreenButton.setOnMouseClicked(e-> stage.setFullScreen(fullScreenButton.isSelected()));
+        soundsButton.setOnMouseClicked(e-> GameData.setPlaySound(soundsButton.isSelected()));
         mouseEnterExitLabelOptionAction(backLabel);
-
         backLabel.setOnMouseClicked(e-> gameMenu());
-
         MAIN.getChildren().addAll(vBox);
+    }
+
+    private static void setStyleLabel2(Label l1, Label l2, Label l3, Label l4) {
+        l1.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 20px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        l2.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 20px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        l3.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        l4.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
     }
 
     private static void stopMenu() {
@@ -415,7 +423,7 @@ public class GameStarter extends Application {
         });
         exitLabel.setOnMouseClicked(e-> {
             saveGame();
-            STAGE.close();
+            stage.close();
         });
 
 
@@ -465,7 +473,7 @@ public class GameStarter extends Application {
     }
 
     public static Stage getStage() {
-        return STAGE;
+        return stage;
     }
 
     public static StackPane getMain() {

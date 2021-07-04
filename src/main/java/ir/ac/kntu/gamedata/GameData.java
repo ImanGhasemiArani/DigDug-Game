@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 public class GameData {
 
+    private static boolean playSound = true;
     public static final int[][] MAP_1 = importMap("src/main/resources/maps/map_1.txt");
     public static final int[][] MAP_2 = importMap("src/main/resources/maps/map_2.txt");
     public static final int[][] MAP_3 = importMap("src/main/resources/maps/map_3.txt");
@@ -64,6 +65,14 @@ public class GameData {
 
     public static int getYPositionPlayerCharacter() {
         return yPositionPlayerCharacter;
+    }
+
+    public static boolean isPlaySound() {
+        return playSound;
+    }
+
+    public static void setPlaySound(boolean playSound) {
+        GameData.playSound = playSound;
     }
 
     public static int calculateRealXY(int fake) {

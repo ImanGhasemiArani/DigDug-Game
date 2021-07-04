@@ -1,5 +1,7 @@
 package ir.ac.kntu.audio;
 
+import ir.ac.kntu.gamedata.GameData;
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
@@ -50,7 +52,9 @@ public class AudioBuilder {
         try {
             themeAudio = AudioSystem.getClip();
             themeAudio.open(AudioSystem.getAudioInputStream(theme));
-            themeAudio.start();
+            if (GameData.isPlaySound()) {
+                themeAudio.start();
+            }
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ignored) {
         }
     }
@@ -59,7 +63,9 @@ public class AudioBuilder {
         try {
             Clip audio = AudioSystem.getClip();
             audio.open(AudioSystem.getAudioInputStream(soundFile));
-            audio.start();
+            if (GameData.isPlaySound()) {
+                audio.start();
+            }
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ignored) {
         }
     }
