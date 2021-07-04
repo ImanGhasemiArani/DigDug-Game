@@ -238,18 +238,22 @@ public class GameStarter extends Application {
         countDown.play();
     }
 
+    private static void setStyleLabel(Label l1,Label l2,Label l3,Label l4) {
+        l1.setStyle("-fx-text-fill: Wheat;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        l2.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        l3.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        l4.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+    }
+
     private static void continueGamePage() {
         MAIN.getChildren().clear();
         TableView<Player> tableView = createTableList();
         Label selectedPlayer = new Label("Selected Player: ");
-        selectedPlayer.setStyle("-fx-text-fill: Wheat;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         selectedPlayer.setMinWidth(562);
         Label backLabel = new Label("Back");
-        backLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         Label newGameLabel = new Label("New Game");
-        newGameLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         Label continueGameLabel = new Label("Continue");
-        continueGameLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        setStyleLabel(selectedPlayer,backLabel,newGameLabel,continueGameLabel);
         HBox hBox = new HBox(backLabel,newGameLabel,continueGameLabel);
         hBox.setSpacing(165);
         hBox.setAlignment(Pos.CENTER_RIGHT);
