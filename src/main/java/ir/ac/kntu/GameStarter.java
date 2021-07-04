@@ -369,7 +369,6 @@ public class GameStarter extends Application {
         movementStop.setSpacing(20);
         movementStop.setAlignment(Pos.CENTER);
         Label shootLabel = new Label("Shoot");
-        shootLabel.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         ImageView aKey = new ImageView(new Image("assets/spaceKey.png"));
         aKey.setFitWidth(400);
         aKey.setFitHeight(81);
@@ -378,7 +377,7 @@ public class GameStarter extends Application {
         shoot.setAlignment(Pos.CENTER);
         Label backLabel = new Label("Back");
         backLabel.setStyle("-fx-text-fill: RED;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-        setStyleLabel2(soundsLabel,fullScreenLabel,movementLabel,stopGame);
+        setStyleLabel2(new Label[]{soundsLabel,fullScreenLabel,movementLabel,stopGame,shootLabel});
         VBox vBox = new VBox(options,movementStop,shoot,backLabel);
         vBox.setSpacing(50);
         vBox.setAlignment(Pos.CENTER);
@@ -389,11 +388,12 @@ public class GameStarter extends Application {
         MAIN.getChildren().addAll(vBox);
     }
 
-    private static void setStyleLabel2(Label l1, Label l2, Label l3, Label l4) {
-        l1.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 20px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-        l2.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 20px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-        l3.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
-        l4.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+    private static void setStyleLabel2(Label[] l) {
+        l[0].setStyle("-fx-text-fill: WHEAT;-fx-font-size: 20px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        l[1].setStyle("-fx-text-fill: WHEAT;-fx-font-size: 20px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        l[2].setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        l[3].setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
+        l[4].setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
     }
 
     private static void stopMenu() {
