@@ -121,7 +121,7 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
             runImage = upRunImage;
         }
         if ( GameData.MAP_DATA[ getFakeY() +directHelp ][ getFakeX() ] == GameData.EMPTY_BLOCK) {
-            GameData.MAP_DATA[ getFakeY() + directHelp ][ getFakeX() ] = GameData.ENEMY_SIMPLE;
+            GameData.MAP_DATA[ getFakeY() + directHelp ][ getFakeX() ] = GameData.ENEMY_DEADLY;
             GameData.ENEMIES[getFakeY() + directHelp][getFakeX()] = this;
             moveHelperMethod(getYPosition() + directHelp * GameData.GAP, tUpDown);
         }
@@ -138,7 +138,7 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
             runImage = leftRunImage;
         }
         if ( GameData.MAP_DATA[ getFakeY() ][ getFakeX() +directHelp ] == GameData.EMPTY_BLOCK) {
-            GameData.MAP_DATA[ getFakeY() ][ getFakeX() +directHelp ] = GameData.ENEMY_SIMPLE;
+            GameData.MAP_DATA[ getFakeY() ][ getFakeX() +directHelp ] = GameData.ENEMY_DEADLY;
             GameData.ENEMIES[getFakeY()][getFakeX() +directHelp] = this;
             moveHelperMethod(getXPosition() +directHelp * GameData.GAP,tLeftRight);
         }
@@ -152,14 +152,14 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
         animationOfMovement.play();
     }
 
-    public void fire() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500),e->{
+    public void fire(Direction direction) {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100),e->{
             GameAriaBuilder.getGameMap().getChildren().remove(fire);
         }));
         timeline.setCycleCount(1);
-        switch (lastDirection) {
+        switch (direction) {
             case UP:
-                fire.setImage(fireUpImage);
+                changeImageForFire(Direction.UP);
                 if ( getFakeY() - 1 >= 0 && (GameData.MAP_DATA[ getFakeY() -1 ][ getFakeX() ] == GameData.EMPTY_BLOCK || GameData.MAP_DATA[ getFakeY() -1 ][ getFakeX() ] == GameData.PLAYER_CHARACTER) ) {
                     fire.setY(GameData.calculateRealXY(getFakeY() -1));
                     fire.setX(GameData.calculateRealXY(getFakeX()));
@@ -169,7 +169,7 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
                 }
                 break;
             case DOWN:
-                fire.setImage(fireDownImage);
+                changeImageForFire(Direction.DOWN);
                 if ( getFakeY() + 1 < GameData.SIZE_OF_GAME_ACTION_ARIA && (GameData.MAP_DATA[ getFakeY() +1 ][ getFakeX() ] == GameData.EMPTY_BLOCK || GameData.MAP_DATA[ getFakeY() +1 ][ getFakeX() ] == GameData.PLAYER_CHARACTER) ) {
                     fire.setY(GameData.calculateRealXY(getFakeY() +1));
                     fire.setX(GameData.calculateRealXY(getFakeX()));
@@ -179,7 +179,7 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
                 }
                 break;
             case LEFT:
-                fire.setImage(fireLeftImage);
+                changeImageForFire(Direction.LEFT);
                 if ( getFakeX() -1 >= 0 && (GameData.MAP_DATA[ getFakeY() ][ getFakeX() -1 ] == GameData.EMPTY_BLOCK || GameData.MAP_DATA[ getFakeY() ][ getFakeX() -1 ] == GameData.PLAYER_CHARACTER )) {
                     fire.setY(GameData.calculateRealXY(getFakeY()));
                     fire.setX(GameData.calculateRealXY(getFakeX() -1));
@@ -189,7 +189,7 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
                 }
                 break;
             case RIGHT:
-                fire.setImage(fireRightImage);
+                changeImageForFire(Direction.RIGHT);
                 if ( getFakeX() +1 < GameData.SIZE_OF_GAME_ACTION_ARIA && (GameData.MAP_DATA[ getFakeY() ][ getFakeX() +1 ] == GameData.EMPTY_BLOCK || GameData.MAP_DATA[ getFakeY() ][ getFakeX() +1 ] == GameData.PLAYER_CHARACTER )) {
                     fire.setY(GameData.calculateRealXY(getFakeY()));
                     fire.setX(GameData.calculateRealXY(getFakeX() +1));
@@ -197,6 +197,29 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
                     checkFireHitPlayer(getFakeY(),getFakeX() +1);
                     timeline.play();
                 }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void changeImageForFire(Direction direction) {
+        switch (direction) {
+            case UP:
+                fire.setImage(fireUpImage);
+                enemyCharacter.setImage(upStandImage);
+                break;
+            case DOWN:
+                fire.setImage(fireDownImage);
+                enemyCharacter.setImage(downStandImage);
+                break;
+            case LEFT:
+                fire.setImage(fireLeftImage);
+                enemyCharacter.setImage(leftStandImage);
+                break;
+            case RIGHT:
+                fire.setImage(fireRightImage);
+                enemyCharacter.setImage(rightStandImage);
                 break;
             default:
                 break;
@@ -214,7 +237,7 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
         aiLoop.stop();
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500),e->{
             remove();
-            GameData.increaseScore(150);
+            GameData.increaseScore(300);
         }));
         timeline.setCycleCount(1);
         timeline.play();

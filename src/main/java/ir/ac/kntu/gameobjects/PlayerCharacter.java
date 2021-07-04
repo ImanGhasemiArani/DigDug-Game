@@ -248,6 +248,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
 
     @Override
     public void die() {
+        GameData.MAP_DATA[getFakeY()][getFakeX()] = GameData.EMPTY_BLOCK;
         AudioBuilder.playDiePlayerAudio();
         GameAriaBuilder.getCurrentPlayer().decreaseOneHealth();
         remove();
