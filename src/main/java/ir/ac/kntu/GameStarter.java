@@ -170,7 +170,7 @@ public class GameStarter extends Application {
                 AudioBuilder.playThemeAudio();
                 currentGameAriaBuilder.startThreadForTimer();
                 currentGameAriaBuilder.startThreadRandomObject();
-                creatingThreadForEndingGame().start();
+//                creatingThreadForEndingGame().start();
             }));
             Timeline mainLine = new Timeline(new KeyFrame(Duration.ONE,e-> {
                 MAIN.getChildren().add(game);
@@ -181,30 +181,35 @@ public class GameStarter extends Application {
         });
     }
 
-    private static final Timeline MAIN_LINE = new Timeline(new KeyFrame(Duration.seconds(1), e-> {
-        if (GameData.gameStatus().equals(GameStatus.GAMEOVER)) {
-            stopTimeLineForEndGame();
-            currentGameAriaBuilder.stopTimer();
-            // GameOverGame
-        } else if (GameData.gameStatus().equals(GameStatus.WIN)) {
-            stopTimeLineForEndGame();
-            currentGameAriaBuilder.stopTimer();
-            // win Game
-        }
-    }));
+//    private static final Timeline MAIN_LINE = new Timeline(new KeyFrame(Duration.seconds(1), e-> {
+//        if (GameData.gameStatus().equals(GameStatus.GAMEOVER)) {
+//            stopTimeLineForEndGame();
+//            currentGameAriaBuilder.stopTimer();
+//            // GameOverGame
+//        } else if (GameData.gameStatus().equals(GameStatus.WIN)) {
+//            stopTimeLineForEndGame();
+//            currentGameAriaBuilder.stopTimer();
+//            // win Game
+//        }
+//    }));
+//
+//    private static Thread creatingThreadForEndingGame() {
+//        return new Thread( () -> {
+//            MAIN_LINE.setCycleCount(Timeline.INDEFINITE);
+//            MAIN_LINE.play();
+//        });
+//    }
+//
+//    private static void stopTimeLineForEndGame() {
+//        MAIN_LINE.stop();
+//    }
 
-    private static Thread creatingThreadForEndingGame() {
-        return new Thread( () -> {
-            MAIN_LINE.setCycleCount(Timeline.INDEFINITE);
-            MAIN_LINE.play();
-        });
+    public static void endGame() {
+        stopGame();
+        saveGame();
+        game.setOpacity(0.1);
+        continueGamePage();
     }
-
-    private static void stopTimeLineForEndGame() {
-        MAIN_LINE.stop();
-    }
-
-
 
     private static void playCountDownTimer() {
         Arc arcOuter = new Arc();

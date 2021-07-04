@@ -1,5 +1,6 @@
 package ir.ac.kntu.gameobjects;
 
+import ir.ac.kntu.GameStarter;
 import ir.ac.kntu.audio.AudioBuilder;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
@@ -245,14 +246,20 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         new Bullet(lastDirection,rangeOfBullets,getXPosition(),getYPosition());
     }
 
+    public void doneLevel() {
+
+    }
+
     @Override
     public void die() {
+        GameData.gameControlOff();
         GameData.MAP_DATA[getFakeY()][getFakeX()] = GameData.EMPTY_BLOCK;
         AudioBuilder.playDiePlayerAudio();
         GameAriaBuilder.getCurrentPlayer().decreaseOneHealth();
         remove();
         if (GameAriaBuilder.getCurrentPlayer().getHealth() == -1) {
             GameData.gameOverGame();
+            GameStarter.endGame();
         }else {
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500),e->{
                 int x;
@@ -263,6 +270,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
                 }while (GameData.MAP_DATA[y][x] != GameData.EMPTY_BLOCK);
                 setPosition(GameData.calculateRealXY(x),GameData.calculateRealXY(y));
                 GameAriaBuilder.getGameMap().getChildren().add(this);
+                GameData.gameControlOn();
             }));
             timeline.play();
         }

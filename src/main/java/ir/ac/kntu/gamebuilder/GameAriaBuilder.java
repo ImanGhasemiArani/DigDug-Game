@@ -25,7 +25,7 @@ public class GameAriaBuilder {
 
     private static Player currentPlayer = null;
     private final StackPane gameAria;
-    private MapBuilder mapBuilder;
+    private static MapBuilder mapBuilder;
     private static AnchorPane gameMap;
     private final HBox upHBox;
     private final VBox gameInformationAria;
@@ -33,6 +33,7 @@ public class GameAriaBuilder {
     private static PlayerCharacter playerCharacter;
     private static Label score;
     private static VBox healthBar;
+    private static Label roundLabel;
     private final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), e-> {
         timer.setText(String.format("%.2f",(Double.parseDouble(timer.getText()) + 0.01)));
         currentPlayer.setTime(Double.parseDouble(timer.getText()));
@@ -79,11 +80,11 @@ public class GameAriaBuilder {
         addObjectToGameInformationAria();
     }
 
-    private void addObjectToGameMap() {
+    private static void addObjectToGameMap() {
+        gameMap.getChildren().clear();
         mapBuilder = new MapBuilder(currentPlayer.getLastSavedMapData());
         gameMap.getChildren().addAll(mapBuilder.getGroup().getChildren());
         playerCharacter = mapBuilder.getPlayerCharacter();
-//        GameData.resetScore(currentPlayer.getScore());
         GameKeyControlHandler.getInstance().attachEventHandlers();
     }
 
@@ -137,7 +138,7 @@ public class GameAriaBuilder {
         healthBar.setPadding(new Insets(100,25,100,0));
         showHealthOrUpdate();
 
-        Label roundLabel = new Label("Round " + currentPlayer.getCurrentRound());
+        roundLabel = new Label("Round " + currentPlayer.getCurrentRound());
         roundLabel.setPrefWidth(120);
         roundLabel.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 25px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
 
@@ -167,6 +168,21 @@ public class GameAriaBuilder {
             }
             ImageView imageView = new ImageView(new Image("assets/heart.png"));
             temp.getChildren().add(imageView);
+        }
+    }
+
+    public static void checkForNextLevel() {
+        if (GameData.getNumberOfEnemy() == 0) {
+            if (GameData.NUMBER_OF_LEVELS  == currentPlayer.getCurrentRound()) {
+                GameData.gameWin();
+                GameStarter.endGame();
+            }else {
+                playerCharacter.doneLevel();
+                currentPlayer.setCurrentRound(currentPlayer.getCurrentRound() + 1);
+                roundLabel.setText("Round " + currentPlayer.getCurrentRound());
+                currentPlayer.nextLevelMap();
+                addObjectToGameMap();
+            }
         }
     }
 

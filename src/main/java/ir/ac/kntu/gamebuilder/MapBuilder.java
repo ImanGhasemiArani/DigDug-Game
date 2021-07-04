@@ -57,9 +57,11 @@ public class MapBuilder {
             for (int j = 0; j < GameData.MAP_DATA[0].length; j++) {
                 switch (GameData.MAP_DATA[i][j]) {
                     case GameData.ENEMY_SIMPLE:
+                        GameData.increaseNumberOfEnemy();
                         group.getChildren().add(new SimpleEnemy(j,i));
                         break;
                     case GameData.ENEMY_DEADLY:
+                        GameData.increaseNumberOfEnemy();
                         group.getChildren().add(new DeadlyEnemy(j,i));
                         break;
                     default:

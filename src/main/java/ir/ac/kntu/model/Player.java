@@ -32,7 +32,6 @@ public class Player implements Serializable {
         highScore = 0;
         assignNewHealth();
         numberOfGames = 0;
-        currentRound = 0;
         lastSavedMapData = new int[GameData.SIZE_OF_GAME_ACTION_ARIA][GameData.SIZE_OF_GAME_ACTION_ARIA];
         assignNewGame();
     }
@@ -68,6 +67,25 @@ public class Player implements Serializable {
     public void increaseOneHealth() {
         health++;
         GameAriaBuilder.showHealthOrUpdate();
+    }
+
+    public void nextLevelMap() {
+        switch (currentRound) {
+            case 2:
+                assignMap(GameData.MAP_2);
+                break;
+            case 3:
+                assignMap(GameData.MAP_3);
+                break;
+            case 4:
+                assignMap(GameData.MAP_4);
+                break;
+            case 5:
+                assignMap(GameData.MAP_5);
+                break;
+            default:
+                break;
+        }
     }
 
     public void assignNewHealth() {

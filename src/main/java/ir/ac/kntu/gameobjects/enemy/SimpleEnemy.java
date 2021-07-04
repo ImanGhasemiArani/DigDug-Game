@@ -180,8 +180,10 @@ public class SimpleEnemy extends Parent implements MovingGameObject,Enemy {
 
     @Override
     public void remove() {
+        GameData.decreaseNumberOfEnemy();
         GameData.MAP_DATA[getFakeY()][getFakeX()] = GameData.EMPTY_BLOCK;
         GameAriaBuilder.getGameMap().getChildren().remove(this);
+        GameAriaBuilder.checkForNextLevel();
     }
 
     private void changeImageToCreateAnimation() {

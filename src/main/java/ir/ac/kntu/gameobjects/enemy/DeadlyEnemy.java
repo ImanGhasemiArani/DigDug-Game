@@ -220,6 +220,7 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
 
     private void checkFireHitPlayer(int x, int y) {
         if (GameData.MAP_DATA[x][y] == GameData.PLAYER_CHARACTER) {
+            GameData.MAP_DATA[x][y] = GameData.EMPTY_BLOCK;
             GameAriaBuilder.getPlayerCharacter().die();
         }
     }
@@ -264,8 +265,10 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
 
     @Override
     public void remove() {
+        GameData.decreaseNumberOfEnemy();
         GameData.MAP_DATA[getFakeY()][getFakeX()] = GameData.EMPTY_BLOCK;
         GameAriaBuilder.getGameMap().getChildren().remove(this);
+        GameAriaBuilder.checkForNextLevel();
     }
 
     private void changeImageToCreateAnimation() {

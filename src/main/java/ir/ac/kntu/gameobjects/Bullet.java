@@ -31,13 +31,14 @@ public class Bullet extends Parent implements MovingGameObject {
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(80),e->{
             counter++;
             bullet.setOpacity(bullet.getOpacity() + 0.3);
-            move(direction);
-            if (counter == range || !temp) {
+            if (counter == range+1 || !temp) {
                 remove();
                 GameData.shootControlOn();
+            }else {
+                move(direction);
             }
         }));
-        timeline.setCycleCount(range);
+        timeline.setCycleCount(range+1);
         timeline.play();
     }
 

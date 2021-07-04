@@ -14,6 +14,11 @@ import java.util.stream.IntStream;
 public class GameData {
 
     public static final int[][] MAP_1 = importMap("src/main/resources/maps/map_1.txt");
+    public static final int[][] MAP_2 = importMap("src/main/resources/maps/map_2.txt");
+    public static final int[][] MAP_3 = importMap("src/main/resources/maps/map_3.txt");
+    public static final int[][] MAP_4 = importMap("src/main/resources/maps/map_4.txt");
+    public static final int[][] MAP_5 = importMap("src/main/resources/maps/map_5.txt");
+    public final static int NUMBER_OF_LEVELS = 5;
     private static ArrayList<Player> players = new ArrayList<>();
     private static GameStatus gameStatus = GameStatus.STOP;
     private static boolean gameControl = false;
@@ -21,8 +26,8 @@ public class GameData {
     private static boolean stopControl = false;
     private static boolean aiControl = false;
     private static int currentScore = 0;
+    private static int numberOfEnemy = 0;
     public final static int FIRST_HEALTH_OF_PLAYER = 3;
-    public final static int NUMBER_OF_LEVELS = 3;
     public final static int EMPTY_BLOCK = 0;
     public final static int BLOCK = 1;
     public final static int PLAYER_CHARACTER = 2;
@@ -71,6 +76,18 @@ public class GameData {
         players.add(newPlayer);
     }
 
+    public static void increaseNumberOfEnemy() {
+        numberOfEnemy++;
+    }
+
+    public static void decreaseNumberOfEnemy() {
+        numberOfEnemy--;
+    }
+
+    public static int getNumberOfEnemy() {
+        return numberOfEnemy;
+    }
+
     public static void gameControlOn() {
         gameControl = true;
     }
@@ -114,6 +131,13 @@ public class GameData {
     public static void gameOverGame() {
         gameStatus = GameStatus.GAMEOVER;
         gameControlOff();
+        aiControlOff();
+    }
+
+    public static void gameWin() {
+        gameStatus = GameStatus.WIN;
+        gameControlOff();
+        aiControlOff();
     }
 
     public static GameStatus gameStatus() {
@@ -163,6 +187,21 @@ public class GameData {
 
     public static void assignCurrentMapData(int[][] mapData) {
         IntStream.range(0, mapData.length).forEach(i -> System.arraycopy(mapData[i], 0, MAP_DATA[i], 0, mapData[0].length));
+        for (int i = 0; i < BLOCKS.length; i++) {
+            for (int j = 0; j < BLOCKS[0].length; j++) {
+                BLOCKS[i][j] = null;
+            }
+        }
+        for (int i = 0; i < NOT_MOVING_GAME_OBJECTS.length; i++) {
+            for (int j = 0; j < NOT_MOVING_GAME_OBJECTS[0].length; j++) {
+                NOT_MOVING_GAME_OBJECTS[i][j] = null;
+            }
+        }
+        for (int i = 0; i < ENEMIES.length; i++) {
+            for (int j = 0; j < ENEMIES[0].length; j++) {
+                ENEMIES[i][j] = null;
+            }
+        }
     }
 
     private static int[][] importMap(String fileURLAddress) {

@@ -30,7 +30,7 @@ public class Stone extends Parent implements NotMovingGameObject {
         moveAnimation.setCycleCount(5);
         Timeline checkMove = new Timeline(new KeyFrame(Duration.millis(500),e-> {
             GameData.MAP_DATA[y][x] = GameData.STONE;
-            if (y+1 < GameData.SIZE_OF_GAME_ACTION_ARIA && GameData.MAP_DATA[y+1][x] != GameData.BLOCK) {
+            if (y+1 < GameData.SIZE_OF_GAME_ACTION_ARIA && GameData.MAP_DATA[y+1][x] != GameData.BLOCK && GameData.MAP_DATA[y+1][x] != GameData.STONE && GameData.isAiControl()) {
                 moveAnimation.play();
             }
         }));
