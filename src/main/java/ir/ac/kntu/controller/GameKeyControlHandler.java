@@ -19,17 +19,10 @@ public class GameKeyControlHandler {
         GameStarter.SCENE.setOnKeyPressed(k -> {
             if(k.getCode().equals(KeyCode.ESCAPE) && GameData.isStopControl()) {
                 GameStarter.showOrRemoveStopMenu();
-            }else if (GameData.isGameControl() && GameData.isShootControl() && k.getCode().equals(KeyCode.A)) {
+            }else if (GameData.isGameControl() && GameData.isShootControl() && k.getCode().equals(KeyCode.SPACE)) {
                 GameAriaBuilder.getPlayerCharacter().shoot();
             }else if(GameData.isGameControl()) {
                 GameAriaBuilder.getPlayerCharacter().move(Direction.DOWN.valueOfCustomize(k.getCode().toString()));
-            }
-            if(k.getCode().equals(KeyCode.SPACE)) {
-                GameData.printGameDate();
-                System.out.println("\n\n\n\n");
-            }
-            if(k.getCode().equals(KeyCode.D)) {
-                System.out.println(GameAriaBuilder.getCurrentPlayer().getHealth());
             }
         });
     }

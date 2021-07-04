@@ -65,7 +65,7 @@ public class GameStarter extends Application {
     }
 
     public static void gameMenu() {
-
+        GameData.stopControlOff();
         MAIN.getChildren().clear();
         ImageView digDugLogo = new ImageView(new Image("assets/digDugText.png"));
         digDugLogo.setFitWidth(470);
@@ -100,6 +100,7 @@ public class GameStarter extends Application {
     }
 
     private static void newPlayerPage() {
+        GameData.stopControlOff();
         MAIN.getChildren().clear();
 
         TextField playerNameTextField = new TextField();
@@ -238,6 +239,7 @@ public class GameStarter extends Application {
     }
 
     private static void continueGamePage() {
+        GameData.stopControlOff();
         MAIN.getChildren().clear();
         TableView<Player> tableView = createTableList();
         Label selectedPlayer = new Label("Selected Player: ");
@@ -336,6 +338,7 @@ public class GameStarter extends Application {
     }
 
     private static void gameGuidePage() {
+        GameData.stopControlOff();
         MAIN.getChildren().clear();
         Label soundsLabel = new Label("Sounds");
         CheckBox soundsButton = new CheckBox("ON/OFF");
