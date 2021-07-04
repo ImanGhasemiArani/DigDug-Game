@@ -35,7 +35,6 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
 
     private Image standImage = rightStandImage;
     private Image runImage = rightRunImage;
-    private Image digImage = digRightImage;
 
     private final ImageView playerCharacter = new ImageView(standImage);
     private final Timeline animationOfMovement = new Timeline(new KeyFrame(Duration.millis(80),e-> changeImageToCreateAnimation()));

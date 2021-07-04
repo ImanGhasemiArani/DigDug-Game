@@ -12,16 +12,14 @@ import javafx.util.Duration;
 
 public class Bullet extends Parent implements MovingGameObject {
 
-    private ImageView bullet;
+    private final ImageView bullet;
     private int x;
     private int y;
-    private int range;
     private int counter;
     private boolean temp;
 
     public Bullet(Direction direction, int range, int startX, int startY) {
         counter = 0;
-        this.range = range;
         x = startX;
         y = startY;
         bullet = new ImageView();
@@ -164,9 +162,7 @@ public class Bullet extends Parent implements MovingGameObject {
 
     @Override
     public void remove() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(80),e->{
-            GameAriaBuilder.getGameMap().getChildren().remove(this);
-        }));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(80),e-> GameAriaBuilder.getGameMap().getChildren().remove(this)));
         timeline.play();
     }
 

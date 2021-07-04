@@ -10,7 +10,7 @@ import javafx.util.Duration;
 
 public class AIDeadlyEnemy implements AI{
 
-    private DeadlyEnemy enemy;
+    private final DeadlyEnemy enemy;
     private int x;
     private int y;
     private int lastXPosition;

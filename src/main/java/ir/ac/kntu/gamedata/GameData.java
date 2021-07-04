@@ -3,7 +3,6 @@ package ir.ac.kntu.gamedata;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gameobjects.Block;
 import ir.ac.kntu.gameobjects.enemy.Enemy;
-import ir.ac.kntu.gameobjects.enemy.SimpleEnemy;
 import ir.ac.kntu.gameobjects.randomObject.RandomObject;
 import ir.ac.kntu.model.GameStatus;
 import ir.ac.kntu.model.Player;
@@ -186,12 +185,10 @@ public class GameData {
     }
 
     public static void printGameDate() {
-        for (int i = 0; i < MAP_DATA.length; i++) {
-            for (int j = 0; j < MAP_DATA[0].length; j++) {
-                System.out.print(MAP_DATA[i][j] + " ");
-            }
+        Arrays.stream(MAP_DATA).forEach(mapDatum -> {
+            IntStream.range(0, MAP_DATA[0].length).mapToObj(j -> mapDatum[j] + " ").forEach(System.out::print);
             System.out.println();
-        }
+        });
     }
 
     public static void saveOrUpdatePlayersToFile() {

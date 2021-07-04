@@ -10,7 +10,7 @@ import javafx.util.Duration;
 
 public class AISimpleEnemy implements AI{
 
-    private SimpleEnemy enemy;
+    private final SimpleEnemy enemy;
     private int x;
     private int y;
     private int lastXPosition;

@@ -22,22 +22,22 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
     private Image upRunImage = new Image("assets/deadlyBalloonUp2.png");
     private Image downStandImage = new Image("assets/deadlyBalloonDown1.png");
     private Image downRunImage = new Image("assets/deadlyBalloonDown2.png");
-    private Image inflating1RightImage = new Image("assets/inflating4Right.png");
-    private Image inflating1LeftImage = new Image("assets/inflating4Left.png");
-    private Image inflating1UpImage = new Image("assets/inflating4Up.png");
-    private Image inflating1DownImage = new Image("assets/inflating4Down.png");
-    private Image inflating2RightImage = new Image("assets/inflating5Right.png");
-    private Image inflating2LeftImage = new Image("assets/inflating5Left.png");
-    private Image inflating2UpImage = new Image("assets/inflating5Up.png");
-    private Image inflating2DownImage = new Image("assets/inflating5Down.png");
-    private Image inflating3RightImage = new Image("assets/inflating6Right.png");
-    private Image inflating3LeftImage = new Image("assets/inflating6Left.png");
-    private Image inflating3UpImage = new Image("assets/inflating6Up.png");
-    private Image inflating3DownImage = new Image("assets/inflating6Down.png");
-    private Image fireRightImage = new Image("assets/fireRight.png");
-    private Image fireLeftImage = new Image("assets/fireLeft.png");
-    private Image fireUpImage = new Image("assets/fireUp.png");
-    private Image fireDownImage = new Image("assets/fireDown.png");
+    private final Image inflating1RightImage = new Image("assets/inflating4Right.png");
+    private final Image inflating1LeftImage = new Image("assets/inflating4Left.png");
+    private final Image inflating1UpImage = new Image("assets/inflating4Up.png");
+    private final Image inflating1DownImage = new Image("assets/inflating4Down.png");
+    private final Image inflating2RightImage = new Image("assets/inflating5Right.png");
+    private final Image inflating2LeftImage = new Image("assets/inflating5Left.png");
+    private final Image inflating2UpImage = new Image("assets/inflating5Up.png");
+    private final Image inflating2DownImage = new Image("assets/inflating5Down.png");
+    private final Image inflating3RightImage = new Image("assets/inflating6Right.png");
+    private final Image inflating3LeftImage = new Image("assets/inflating6Left.png");
+    private final Image inflating3UpImage = new Image("assets/inflating6Up.png");
+    private final Image inflating3DownImage = new Image("assets/inflating6Down.png");
+    private final Image fireRightImage = new Image("assets/fireRight.png");
+    private final Image fireLeftImage = new Image("assets/fireLeft.png");
+    private final Image fireUpImage = new Image("assets/fireUp.png");
+    private final Image fireDownImage = new Image("assets/fireDown.png");
 
     private Image standImage = rightStandImage;
     private Image runImage = rightRunImage;
@@ -47,7 +47,6 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
     private final Timeline animationOfMovement = new Timeline(new KeyFrame(Duration.millis(80), e-> changeImageToCreateAnimation()));
     private int tempMoveHelper;
     private int directHelp;
-    private Direction lastDirection;
     private int health;
     private final AIDeadlyEnemy ai = new AIDeadlyEnemy(this);
     private final Timeline aiLoop = new Timeline(new KeyFrame(Duration.millis(1000), e->{
@@ -62,7 +61,6 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
         setPosition(GameData.calculateRealXY(x)+5,GameData.calculateRealXY(y)+5);
         GameData.ENEMIES[x][y] = this;
         getChildren().add(enemyCharacter);
-        lastDirection = Direction.RIGHT;
         fire.setFitWidth(GameData.GAP*3/4);
         fire.setFitHeight(GameData.GAP*3/4);
         directHelp = 1;
@@ -112,11 +110,9 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
 
     private void moveUpDown() {
         if (directHelp == 1) {
-            lastDirection = Direction.DOWN;
             standImage = downStandImage;
             runImage = downRunImage;
         } else {
-            lastDirection = Direction.UP;
             standImage = upStandImage;
             runImage = upRunImage;
         }
@@ -129,11 +125,9 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
 
     private void moveLeftRight() {
         if (directHelp == 1) {
-            lastDirection = Direction.RIGHT;
             standImage = rightStandImage;
             runImage = rightRunImage;
         } else {
-            lastDirection = Direction.LEFT;
             standImage = leftStandImage;
             runImage = leftRunImage;
         }
@@ -153,9 +147,7 @@ public class DeadlyEnemy extends Parent implements MovingGameObject,Enemy {
     }
 
     public void fire(Direction direction) {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100),e->{
-            GameAriaBuilder.getGameMap().getChildren().remove(fire);
-        }));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(100),e-> GameAriaBuilder.getGameMap().getChildren().remove(fire)));
         timeline.setCycleCount(1);
         switch (direction) {
             case UP:

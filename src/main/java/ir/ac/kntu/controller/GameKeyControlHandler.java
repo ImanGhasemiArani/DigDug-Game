@@ -2,16 +2,15 @@ package ir.ac.kntu.controller;
 
 import ir.ac.kntu.GameStarter;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
-import ir.ac.kntu.gamebuilder.MapBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.model.Direction;
 import javafx.scene.input.KeyCode;
 
 public class GameKeyControlHandler {
-    private static GameKeyControlHandler instance = new GameKeyControlHandler();
+    private static final GameKeyControlHandler INSTANCE = new GameKeyControlHandler();
 
     public static GameKeyControlHandler getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     private GameKeyControlHandler() {}

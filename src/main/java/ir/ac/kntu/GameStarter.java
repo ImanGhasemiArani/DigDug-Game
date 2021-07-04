@@ -429,9 +429,9 @@ public class GameStarter extends Application {
     }
 
     private static void saveGame() {
-        currentGameAriaBuilder.getCurrentPlayer().updateHighScore(GameData.getCurrentScore());
-        currentGameAriaBuilder.getCurrentPlayer().updateScore();
-        currentGameAriaBuilder.getCurrentPlayer().saveOrUpdateLastSavedData();
+        GameAriaBuilder.getCurrentPlayer().updateHighScore(GameData.getCurrentScore());
+        GameAriaBuilder.getCurrentPlayer().updateScore();
+        GameAriaBuilder.getCurrentPlayer().saveOrUpdateLastSavedData();
         GameData.saveOrUpdatePlayersToFile();
     }
 

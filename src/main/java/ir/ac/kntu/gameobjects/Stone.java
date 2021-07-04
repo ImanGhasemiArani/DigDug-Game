@@ -13,7 +13,7 @@ import javafx.util.Duration;
 public class Stone extends Parent implements NotMovingGameObject {
 
     private final ImageView stone;
-    private int x;
+    private final int x;
     private int y;
     private boolean firstMove;
 
@@ -26,9 +26,7 @@ public class Stone extends Parent implements NotMovingGameObject {
         stone.setFitWidth(GameData.GAP + 10);
         appear();
         firstMove = true;
-        Timeline moveAnimation = new Timeline(new KeyFrame(Duration.millis(300),e-> {
-            changeImage();
-        }));
+        Timeline moveAnimation = new Timeline(new KeyFrame(Duration.millis(300),e-> changeImage()));
         moveAnimation.setCycleCount(5);
         Timeline checkMove = new Timeline(new KeyFrame(Duration.millis(500),e-> {
             GameData.MAP_DATA[y][x] = GameData.STONE;

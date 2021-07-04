@@ -9,8 +9,8 @@ import javafx.scene.Group;
 
 public class MapBuilder {
 
-    private Group group;
-    private PlayerCharacter playerCharacter;
+    private final Group group;
+    private final PlayerCharacter playerCharacter;
 
     public MapBuilder(int[][] mapData) {
         GameData.assignCurrentMapData(mapData);
@@ -45,12 +45,8 @@ public class MapBuilder {
     private void createObjects2() {
         for (int i = 0; i < GameData.MAP_DATA.length; i++) {
             for (int j = 0; j < GameData.MAP_DATA[0].length; j++) {
-                switch (GameData.MAP_DATA[i][j]) {
-                    case GameData.STONE:
-                        group.getChildren().add(new Stone(j,i));
-                        break;
-                    default:
-                        break;
+                if (GameData.MAP_DATA[i][j] == GameData.STONE) {
+                    group.getChildren().add(new Stone(j, i));
                 }
             }
         }
