@@ -65,6 +65,7 @@ public class MushroomRandom extends Parent implements NotMovingGameObject, Rando
     @Override
     public void use() {
         AudioBuilder.playUseRandomAudio();
+        GameData.increaseScore(30);
         remove();
         GameAriaBuilder.getPlayerCharacter().increaseSpeed();
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),e->{

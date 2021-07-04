@@ -65,6 +65,7 @@ public class HeartRandom extends Parent implements NotMovingGameObject, RandomOb
     @Override
     public void use() {
         AudioBuilder.playUseRandomAudio();
+        GameData.increaseScore(30);
         remove();
         GameAriaBuilder.getCurrentPlayer().increaseOneHealth();
         GameAriaBuilder.showHealthOrUpdate();

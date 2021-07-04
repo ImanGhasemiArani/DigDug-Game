@@ -179,8 +179,10 @@ public class GameData {
     }
 
     public static void increaseScore(int value) {
-        currentScore += value;
-        GameAriaBuilder.getScore().setText("" + currentScore);
+        if (currentScore + value >= 0) {
+            currentScore += value;
+            GameAriaBuilder.getScore().setText("" + currentScore);
+        }
     }
 
     public static void resetScore(int value) {

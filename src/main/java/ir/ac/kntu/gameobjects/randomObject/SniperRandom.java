@@ -65,6 +65,7 @@ public class SniperRandom extends Parent implements NotMovingGameObject, RandomO
     @Override
     public void use() {
         AudioBuilder.playUseRandomAudio();
+        GameData.increaseScore(30);
         remove();
         GameAriaBuilder.getPlayerCharacter().increaseRangeOfBullets();
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10),e->{

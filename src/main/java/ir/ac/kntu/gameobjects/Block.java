@@ -58,7 +58,7 @@ public class Block extends Parent implements NotMovingGameObject {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
         GameData.MAP_DATA[y][x] = GameData.EMPTY_BLOCK;
-        GameData.increaseScore(50);
+        GameData.increaseScore(-10);
     }
 
     private void remove() {
