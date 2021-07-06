@@ -46,22 +46,27 @@ public class GameStarter extends Application {
         MAIN.setStyle("-fx-border-width: 0 0 5 0;");
         MAIN.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        stage.setFullScreen(true);
+//        stage.setFullScreen(true);
         stage.setResizable(false);
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.setTitle("DigDig");
         stage.setScene(SCENE);
-        stage.initStyle(StageStyle.UNDECORATED);
+//        stage.initStyle(StageStyle.UNDECORATED);
 
         GameData.readOrImportFileToPlayers();
         try {
             gameMenu();
+
+            player = new Player("Iman");
+            GameData.addPlayer(player);
+            MAIN.getChildren().clear();
+            playCountDownTimer();
+            creatingGameAria().start();
+
+            stage.show();
         } catch (Exception ignored) {
         }
-
-
-        stage.show();
     }
 
     public static void gameMenu() {

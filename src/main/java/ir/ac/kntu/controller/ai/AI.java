@@ -1,4 +1,4 @@
-package ir.ac.kntu.controller;
+package ir.ac.kntu.controller.ai;
 
 public interface AI {
 

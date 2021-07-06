@@ -1,6 +1,6 @@
 package ir.ac.kntu.gamebuilder;
 
-import ir.ac.kntu.controller.GameKeyControlHandler;
+import ir.ac.kntu.controller.keyboard.GameKeyControlHandler;
 import ir.ac.kntu.GameStarter;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.gameobjects.*;

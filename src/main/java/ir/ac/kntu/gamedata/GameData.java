@@ -3,7 +3,7 @@ package ir.ac.kntu.gamedata;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gameobjects.Block;
 import ir.ac.kntu.gameobjects.Stone;
-import ir.ac.kntu.gameobjects.enemy.Enemy;
+import ir.ac.kntu.gameobjects.enemy.EnemyInterface;
 import ir.ac.kntu.gameobjects.randomObject.RandomObject;
 import ir.ac.kntu.model.GameStatus;
 import ir.ac.kntu.model.Player;
@@ -50,7 +50,7 @@ public class GameData {
     public final static Block[][] BLOCKS = new Block[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     public final static ArrayList<Stone> STONES = new ArrayList<>();
     public final static RandomObject[][] NOT_MOVING_GAME_OBJECTS = new RandomObject[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
-    public final static Enemy[][] ENEMIES = new Enemy[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
+    public final static EnemyInterface[][] ENEMIES = new EnemyInterface[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     private static int xPositionPlayerCharacter;
     private static int yPositionPlayerCharacter;
 

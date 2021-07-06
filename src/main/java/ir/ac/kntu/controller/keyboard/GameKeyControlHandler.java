@@ -1,4 +1,4 @@
-package ir.ac.kntu.controller;
+package ir.ac.kntu.controller.keyboard;
 
 import ir.ac.kntu.GameStarter;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
@@ -23,6 +23,10 @@ public class GameKeyControlHandler {
                 GameAriaBuilder.getPlayerCharacter().shoot();
             }else if(GameData.isGameControl()) {
                 GameAriaBuilder.getPlayerCharacter().move(Direction.DOWN.valueOfCustomize(k.getCode().toString()));
+            }
+            if (k.getCode().equals(KeyCode.A)) {
+                GameData.printGameDate();
+                System.out.println("\n\n\n\n");
             }
         });
     }
