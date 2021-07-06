@@ -49,6 +49,7 @@ public class Block extends Parent implements NotMovingGameObject {
 
     @Override
     public void destroy() {
+        GameData.MAP_DATA[y][x] = GameData.EMPTY_BLOCK;
         timeline = new Timeline(new KeyFrame(Duration.millis(20),e->{
             block.setOpacity(block.getOpacity()-0.1);
             if (block.getOpacity() <= 0) {
@@ -57,7 +58,6 @@ public class Block extends Parent implements NotMovingGameObject {
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-        GameData.MAP_DATA[y][x] = GameData.EMPTY_BLOCK;
         GameData.increaseScore(-10);
     }
 

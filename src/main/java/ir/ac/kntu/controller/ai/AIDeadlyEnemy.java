@@ -4,32 +4,28 @@ import ir.ac.kntu.GameStarter;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.gameobjects.enemy.DeadlyEnemy;
+import ir.ac.kntu.gameobjects.enemy.Enemy;
 import ir.ac.kntu.model.Direction;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class AIDeadlyEnemy implements AI{
+public class AIDeadlyEnemy extends AI {
 
     private final DeadlyEnemy enemy;
-    private int x;
-    private int y;
-    private int lastXPosition;
-    private int lastYPosition;
     private boolean fire;
 
-    public AIDeadlyEnemy(DeadlyEnemy enemy) {
-        this.enemy = enemy;
-        lastXPosition = enemy.getFakeX();
-        lastYPosition = enemy.getFakeY();
+    public AIDeadlyEnemy(Enemy enemy) {
+        super(enemy);
+        this.enemy = (DeadlyEnemy) enemy;
         fire = false;
     }
 
     @Override
     public void startAI() {
         Thread thread = new Thread(()-> {
-            x = GameData.getXPositionPlayerCharacter();
-            y = GameData.getYPositionPlayerCharacter();
+            setX(GameData.getXPositionPlayerCharacter());
+            setY(GameData.getYPositionPlayerCharacter());
             if (enemy.getFakeX() -1 < 0 || enemy.getFakeX() +1 >= GameData.SIZE_OF_GAME_ACTION_ARIA ||
                     enemy.getFakeY() -1 < 0 || enemy.getFakeY() +1 >= GameData.SIZE_OF_GAME_ACTION_ARIA ) {
                 Timeline timeline = new Timeline(new KeyFrame(Duration.ONE,e->{
@@ -45,15 +41,15 @@ public class AIDeadlyEnemy implements AI{
             } else if (!fire || !selectFire() ) {
                 fire = true;
                 selectActionOnLeftRight();
-                lastXPosition = enemy.getFakeX();
-                lastYPosition = enemy.getFakeY();
+                setLastXPosition(enemy.getFakeX());
+                setLastYPosition(enemy.getFakeY());
             }
         });
         thread.start();
     }
 
     private boolean selectFire() {
-        if ((enemy.getFakeX() - x <= 3 && enemy.getFakeX() - x >= -3) && (enemy.getFakeY() - y <= 3 && enemy.getFakeY() - y >= -3)) {
+        if ((enemy.getFakeX() - getX() <= 3 && enemy.getFakeX() - getX() >= -3) && (enemy.getFakeY() - getY() <= 3 && enemy.getFakeY() - getY() >= -3)) {
             if (GameData.MAP_DATA[enemy.getFakeY()][enemy.getFakeX() +1] == GameData.PLAYER_CHARACTER) {
                 new Timeline(new KeyFrame(Duration.ONE,e-> enemy.fire(Direction.RIGHT))).play();
             } else if (GameData.MAP_DATA[enemy.getFakeY()][enemy.getFakeX() -1] == GameData.PLAYER_CHARACTER) {
@@ -70,68 +66,6 @@ public class AIDeadlyEnemy implements AI{
         }else {
             return false;
         }
-    }
-
-    private void selectActionOnLeftRight() {
-        if (enemy.getFakeX() - x > 0) {
-            if ( GameData.MAP_DATA[ enemy.getFakeY() ][ enemy.getFakeX() +1 ] == GameData.EMPTY_BLOCK && enemy.getFakeX()+1 != lastXPosition) {
-                enemy.move(Direction.RIGHT);
-            } else {
-                if (!selectActionOnDownUp()) {
-                    enemy.move(Direction.LEFT);
-                }
-            }
-        }else if (enemy.getFakeX() - x < 0){
-            if ( GameData.MAP_DATA[ enemy.getFakeY() ][ enemy.getFakeX() -1 ] == GameData.EMPTY_BLOCK && enemy.getFakeX()-1 != lastXPosition) {
-                enemy.move(Direction.LEFT);
-            }else {
-                if (!selectActionOnDownUp()) {
-                    enemy.move(Direction.RIGHT);
-                }
-            }
-        }else {
-            if ( GameData.MAP_DATA[ enemy.getFakeY() ][ enemy.getFakeX() +1 ] == GameData.EMPTY_BLOCK && enemy.getFakeX()+1 != lastXPosition) {
-                enemy.move(Direction.RIGHT);
-            } else if ( GameData.MAP_DATA[ enemy.getFakeY() ][ enemy.getFakeX() -1 ] == GameData.EMPTY_BLOCK && enemy.getFakeX()-1 != lastXPosition) {
-                enemy.move(Direction.LEFT);
-            } else {
-                selectActionOnDownUp();
-            }
-        }
-    }
-
-    private boolean selectActionOnDownUp() {
-        if (enemy.getFakeY() - y > 0) {
-            if ( GameData.MAP_DATA[ enemy.getFakeY() +1 ][ enemy.getFakeX() ] == GameData.EMPTY_BLOCK && enemy.getFakeY() + 1 != lastYPosition) {
-                enemy.move(Direction.DOWN);
-                return true;
-            }else if ( GameData.MAP_DATA[ enemy.getFakeY() -1 ][ enemy.getFakeX() ] == GameData.EMPTY_BLOCK && enemy.getFakeY() - 1 != lastYPosition) {
-                enemy.move(Direction.UP);
-                return true;
-            }else {
-                return false;
-            }
-
-        } else if(enemy.getFakeY() - y < 0){
-            if ( GameData.MAP_DATA[ enemy.getFakeY() -1 ][ enemy.getFakeX() ] == GameData.EMPTY_BLOCK && enemy.getFakeY() - 1 != lastYPosition) {
-                enemy.move(Direction.UP);
-                return true;
-            } else if ( GameData.MAP_DATA[ enemy.getFakeY() +1 ][ enemy.getFakeX() ] == GameData.EMPTY_BLOCK && enemy.getFakeY() + 1 != lastYPosition) {
-                enemy.move(Direction.DOWN);
-                return true;
-            }else {
-                return false;
-            }
-        }else {
-            if ( GameData.MAP_DATA[ enemy.getFakeY() +1 ][ enemy.getFakeX() ] == GameData.EMPTY_BLOCK && enemy.getFakeY() + 1 != lastYPosition) {
-                enemy.move(Direction.DOWN);
-                return true;
-            }else if ( GameData.MAP_DATA[ enemy.getFakeY() -1 ][ enemy.getFakeX() ] == GameData.EMPTY_BLOCK && enemy.getFakeY() - 1 != lastYPosition) {
-                enemy.move(Direction.UP);
-                return true;
-            }
-        }
-        return false;
     }
 
 }

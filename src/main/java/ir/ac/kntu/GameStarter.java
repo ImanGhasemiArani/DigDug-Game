@@ -46,27 +46,24 @@ public class GameStarter extends Application {
         MAIN.setStyle("-fx-border-width: 0 0 5 0;");
         MAIN.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-//        stage.setFullScreen(true);
+        stage.setFullScreen(true);
         stage.setResizable(false);
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
         stage.setTitle("DigDig");
         stage.setScene(SCENE);
-//        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.UNDECORATED);
 
         GameData.readOrImportFileToPlayers();
-        try {
-            gameMenu();
+        gameMenu();
 
-            player = new Player("Iman");
-            GameData.addPlayer(player);
-            MAIN.getChildren().clear();
-            playCountDownTimer();
-            creatingGameAria().start();
+//        player = new Player("Iman");
+//        GameData.addPlayer(player);
+//        MAIN.getChildren().clear();
+//        playCountDownTimer();
+//        creatingGameAria().start();
 
-            stage.show();
-        } catch (Exception ignored) {
-        }
+        stage.show();
     }
 
     public static void gameMenu() {
@@ -268,7 +265,7 @@ public class GameStarter extends Application {
             if (tableView.getSelectionModel().getSelectedItem() != null)  {
                 selectedPlayer.setText("Selected Player:\t\t" + tableView.getSelectionModel().getSelectedItem().getPlayerName());
                 newGameLabel.setDisable(false);
-                if (tableView.getSelectionModel().getSelectedItem().getHealth() >= 0) {
+                if (tableView.getSelectionModel().getSelectedItem().getHealth() >= 0 && tableView.getSelectionModel().getSelectedItem().getCurrentRound() <= 5) {
                     continueGameLabel.setDisable(false);
                 } else {
                     continueGameLabel.setDisable(true);
@@ -446,7 +443,8 @@ public class GameStarter extends Application {
     }
 
     private static void stopGame() {
-        GameData.stopGame();
+        new Timeline(new KeyFrame(Duration.seconds(1),e->GameData.stopGame())).play();
+//        GameData.stopGame();
         currentGameAriaBuilder.stopTimer();
         currentGameAriaBuilder.stopRandomTask();
         game.setOpacity(0.1);

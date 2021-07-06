@@ -61,20 +61,24 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
     private final Timeline tUpDown = new Timeline(new KeyFrame(Duration.millis(50), e->{
         if (!GameData.isGameControl()) {
             setYPosition(getYPosition() + directHelp * speedTemp * GameData.GAP / 10);
-        }
-        if (getYPosition() == tempMoveHelper) {
+            if (getYPosition() == tempMoveHelper) {
+                animationOfMovement.stop();
+                GameData.gameControlOn();
+            }
+        }else {
             animationOfMovement.stop();
-            GameData.gameControlOn();
         }
     }));
 
     private final Timeline tLeftRight = new Timeline(new KeyFrame(Duration.millis(50), e->{
         if (!GameData.isGameControl()) {
             setXPosition(getXPosition() + directHelp * speedTemp * GameData.GAP / 10);
-        }
-        if (getXPosition() == tempMoveHelper) {
+            if (getXPosition() == tempMoveHelper) {
+                animationOfMovement.stop();
+                GameData.gameControlOn();
+            }
+        }else {
             animationOfMovement.stop();
-            GameData.gameControlOn();
         }
     }));
 
@@ -110,6 +114,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         if ( getFakeY() - 1 >= 0 &&
                 GameData.MAP_DATA[ getFakeY() -1 ][ getFakeX() ] == GameData.EMPTY_BLOCK) {
             GameData.setPositionXYPLayerCharacter(getFakeX(),getFakeY()-1);
+            GameData.MAP_DATA[ getFakeY() ][ getFakeX() ] = GameData.EMPTY_BLOCK;
             GameData.MAP_DATA[ getFakeY() -1 ][ getFakeX() ] = GameData.PLAYER_CHARACTER;
             moveHelperMethod(getYPosition() - GameData.GAP, tUpDown,-1);
         }
@@ -126,6 +131,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         if ( getFakeY() + 1 < GameData.SIZE_OF_GAME_ACTION_ARIA &&
                 GameData.MAP_DATA[ getFakeY() +1 ][ getFakeX() ] == GameData.EMPTY_BLOCK) {
             GameData.setPositionXYPLayerCharacter(getFakeX(),getFakeY()+1);
+            GameData.MAP_DATA[ getFakeY() ][ getFakeX() ] = GameData.EMPTY_BLOCK;
             GameData.MAP_DATA[ getFakeY() +1 ][ getFakeX() ] = GameData.PLAYER_CHARACTER;
             moveHelperMethod(getYPosition() + GameData.GAP,tUpDown,1);
         }
@@ -141,6 +147,7 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         if ( getFakeX() - 1 >= 0 &&
                 GameData.MAP_DATA[ getFakeY() ][ getFakeX() -1 ] == GameData.EMPTY_BLOCK) {
             GameData.setPositionXYPLayerCharacter(getFakeX() -1,getFakeY());
+            GameData.MAP_DATA[ getFakeY() ][ getFakeX() ] = GameData.EMPTY_BLOCK;
             GameData.MAP_DATA[ getFakeY() ][ getFakeX() -1 ] = GameData.PLAYER_CHARACTER;
             moveHelperMethod(getXPosition() - GameData.GAP, tLeftRight,-1);
         }
@@ -156,13 +163,14 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
         if ( getFakeX() + 1 < GameData.SIZE_OF_GAME_ACTION_ARIA &&
                 GameData.MAP_DATA[ getFakeY() ][ getFakeX() +1 ] == GameData.EMPTY_BLOCK) {
             GameData.setPositionXYPLayerCharacter(getFakeX() +1,getFakeY());
+            GameData.MAP_DATA[ getFakeY() ][ getFakeX() ] = GameData.EMPTY_BLOCK;
             GameData.MAP_DATA[ getFakeY() ][ getFakeX() +1 ] = GameData.PLAYER_CHARACTER;
             moveHelperMethod(getXPosition() + GameData.GAP,tLeftRight,1);
         }
     }
 
     private void moveHelperMethod(int result,Timeline t,int d) {
-        GameData.MAP_DATA[ getFakeY() ][ getFakeX() ] = GameData.EMPTY_BLOCK;
+//        GameData.MAP_DATA[ getFakeY() ][ getFakeX() ] = GameData.EMPTY_BLOCK;
         tempMoveHelper = result;
         directHelp = d;
         t.setCycleCount(10/ speedTemp);
@@ -260,8 +268,8 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
 
     @Override
     public void die() {
-        GameData.MAP_DATA[getFakeY()][getFakeX()] = GameData.EMPTY_BLOCK;
         GameData.gameControlOff();
+        GameData.MAP_DATA[getFakeY()][getFakeX()] = GameData.EMPTY_BLOCK;
         AudioBuilder.playDiePlayerAudio();
         GameAriaBuilder.getCurrentPlayer().decreaseOneHealth();
         remove();
@@ -277,8 +285,10 @@ public class PlayerCharacter extends Parent implements MovingGameObject {
                     y = new Random().nextInt(GameData.MAP_DATA[0].length);
                 }while (GameData.MAP_DATA[y][x] != GameData.EMPTY_BLOCK);
                 setPosition(GameData.calculateRealXY(x),GameData.calculateRealXY(y));
+                GameData.MAP_DATA[y][x] = GameData.PLAYER_CHARACTER;
                 GameAriaBuilder.getGameMap().getChildren().add(this);
-                GameData.gameControlOn();
+                Timeline timeline1 = new Timeline(new KeyFrame(Duration.millis(1000),ee->GameData.gameControlOn()));
+                timeline1.play();
             }));
             timeline.play();
         }

@@ -24,6 +24,9 @@ public class GameKeyControlHandler {
             }else if(GameData.isGameControl()) {
                 GameAriaBuilder.getPlayerCharacter().move(Direction.DOWN.valueOfCustomize(k.getCode().toString()));
             }
+            if (k.getCode().equals(KeyCode.F3)) {
+                GameAriaBuilder.cheatLevel();
+            }
             if (k.getCode().equals(KeyCode.A)) {
                 GameData.printGameDate();
                 System.out.println("\n\n\n\n");

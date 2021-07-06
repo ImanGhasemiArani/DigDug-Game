@@ -56,10 +56,11 @@ public class MushroomRandom extends Parent implements NotMovingGameObject, Rando
         t2.play();
     }
 
-    private void remove() {
+    @Override
+    public void remove() {
         GameData.MAP_DATA[y][x] = GameData.EMPTY_BLOCK;
         GameData.NOT_MOVING_GAME_OBJECTS[x][y] = null;
-        GameAriaBuilder.getGameMap().getChildren().remove(this);
+        new Timeline(new KeyFrame(Duration.ONE, e-> GameAriaBuilder.getGameMap().getChildren().remove(this))).play();
     }
 
     @Override

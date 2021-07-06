@@ -17,6 +17,7 @@ public class MapBuilder {
         group = new Group();
         group.setLayoutX(GameData.START_X_GAME_ACTION_ARIA);
         group.setLayoutY(GameData.START_Y_GAME_ACTION_ARIA);
+        GameData.resetNumberOfEnemy();
         createObjects();
         createObjects2();
         createObjects3();

@@ -172,8 +172,10 @@ public class GameAriaBuilder {
     }
 
     public static void checkForNextLevel() {
+        System.out.println(GameData.getNumberOfEnemy());
         if (GameData.getNumberOfEnemy() == 0) {
             if (GameData.NUMBER_OF_LEVELS  == currentPlayer.getCurrentRound()) {
+                currentPlayer.setCurrentRound(currentPlayer.getCurrentRound() + 1);
                 GameData.gameWin();
                 GameStarter.endGame();
             }else {
@@ -184,6 +186,14 @@ public class GameAriaBuilder {
                 addObjectToGameMap();
             }
         }
+    }
+
+    public static void cheatLevel() {
+        playerCharacter.doneLevel();
+        currentPlayer.setCurrentRound(currentPlayer.getCurrentRound() + 1);
+        roundLabel.setText("Round " + currentPlayer.getCurrentRound());
+        currentPlayer.nextLevelMap();
+        addObjectToGameMap();
     }
 
     private Thread creatingThreadForRandomObject() {

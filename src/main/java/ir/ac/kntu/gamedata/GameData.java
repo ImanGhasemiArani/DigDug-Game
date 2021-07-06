@@ -1,7 +1,10 @@
 package ir.ac.kntu.gamedata;
 
+import ir.ac.kntu.controller.ai.AI;
+import ir.ac.kntu.controller.ai.AIInterface;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gameobjects.Block;
+import ir.ac.kntu.gameobjects.NotMovingGameObject;
 import ir.ac.kntu.gameobjects.Stone;
 import ir.ac.kntu.gameobjects.enemy.EnemyInterface;
 import ir.ac.kntu.gameobjects.randomObject.RandomObject;
@@ -51,6 +54,7 @@ public class GameData {
     public final static ArrayList<Stone> STONES = new ArrayList<>();
     public final static RandomObject[][] NOT_MOVING_GAME_OBJECTS = new RandomObject[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
     public final static EnemyInterface[][] ENEMIES = new EnemyInterface[SIZE_OF_GAME_ACTION_ARIA][SIZE_OF_GAME_ACTION_ARIA];
+    public final static ArrayList<AIInterface> AIS = new ArrayList<>();
     private static int xPositionPlayerCharacter;
     private static int yPositionPlayerCharacter;
 
@@ -97,6 +101,10 @@ public class GameData {
 
     public static int getNumberOfEnemy() {
         return numberOfEnemy;
+    }
+
+    public static void resetNumberOfEnemy() {
+        numberOfEnemy = 0;
     }
 
     public static void gameControlOn() {
@@ -201,22 +209,19 @@ public class GameData {
     public static void assignCurrentMapData(int[][] mapData) {
         STONES.forEach(Stone::destroy);
         STONES.clear();
+        AIS.forEach(AIInterface::endAI);
+        AIS.clear();
         IntStream.range(0, mapData.length).forEach(i -> System.arraycopy(mapData[i], 0, MAP_DATA[i], 0, mapData[0].length));
-        for (int i = 0; i < BLOCKS.length; i++) {
-            for (int j = 0; j < BLOCKS[0].length; j++) {
-                BLOCKS[i][j] = null;
+        for (int i = 0; i < MAP_DATA.length; i++) {
+            for (int j = 0; j < MAP_DATA[0].length; j++) {
+                if (MAP_DATA[i][j] == MUSHROOM || MAP_DATA[i][j] == HEART ||MAP_DATA[i][j] == SNIPER) {
+                    MAP_DATA[i][j] = EMPTY_BLOCK;
+                }
             }
         }
-        for (int i = 0; i < NOT_MOVING_GAME_OBJECTS.length; i++) {
-            for (int j = 0; j < NOT_MOVING_GAME_OBJECTS[0].length; j++) {
-                NOT_MOVING_GAME_OBJECTS[i][j] = null;
-            }
-        }
-        for (int i = 0; i < ENEMIES.length; i++) {
-            for (int j = 0; j < ENEMIES[0].length; j++) {
-                ENEMIES[i][j] = null;
-            }
-        }
+        IntStream.range(0, BLOCKS.length).forEach(i -> Arrays.fill(BLOCKS[i], null));
+        Arrays.stream(NOT_MOVING_GAME_OBJECTS).forEach(notMovingGameObject -> Arrays.fill(notMovingGameObject, null));
+        IntStream.range(0, ENEMIES.length).forEach(i -> Arrays.fill(ENEMIES[i], null));
     }
 
     private static int[][] importMap(String fileURLAddress) {

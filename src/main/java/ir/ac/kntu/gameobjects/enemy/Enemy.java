@@ -1,8 +1,7 @@
 package ir.ac.kntu.gameobjects.enemy;
 
 import ir.ac.kntu.audio.AudioBuilder;
-import ir.ac.kntu.controller.ai.AI;
-import ir.ac.kntu.controller.ai.AISimpleEnemy;
+import ir.ac.kntu.controller.ai.AIInterface;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.gameobjects.MovingGameObject;
@@ -47,7 +46,7 @@ public class Enemy extends Parent implements MovingGameObject,EnemyInterface {
     private int directHelp;
     private int health;
 
-    private AI ai;
+    private AIInterface ai;
     private final Timeline aiLoop;
     private final int relatedNumber;
 
@@ -89,7 +88,7 @@ public class Enemy extends Parent implements MovingGameObject,EnemyInterface {
         directHelp = 1;
         health = 3;
         animationOfMovement.setCycleCount(Timeline.INDEFINITE);
-        aiLoop = new Timeline(new KeyFrame(Duration.millis(1000), e->{
+        aiLoop = new Timeline(new KeyFrame(Duration.millis(1200), e->{
             if (GameData.isAiControl()) {
                 ai.startAI();
             }
@@ -97,9 +96,10 @@ public class Enemy extends Parent implements MovingGameObject,EnemyInterface {
         aiLoop.setCycleCount(Timeline.INDEFINITE);
     }
 
-    public void configureAI(AI ai) {
+    protected void configureAI(AIInterface ai) {
         this.ai = ai;
-        new Timeline(new KeyFrame(Duration.seconds(2),e->aiLoop.play())).play();
+        GameData.AIS.add(ai);
+        new Timeline(new KeyFrame(Duration.seconds(1),e->aiLoop.play())).play();
     }
 
     private final Timeline tUpDown = new Timeline(new KeyFrame(Duration.millis(80), e->{
@@ -149,9 +149,12 @@ public class Enemy extends Parent implements MovingGameObject,EnemyInterface {
             runImage = upRunImage;
         }
         if ( GameData.MAP_DATA[ getFakeY() +directHelp ][ getFakeX() ] == GameData.EMPTY_BLOCK) {
+
+            GameData.MAP_DATA[ getFakeY() ][ getFakeX() ] = GameData.EMPTY_BLOCK;
             GameData.MAP_DATA[ getFakeY() + directHelp ][ getFakeX() ] = relatedNumber;
             GameData.ENEMIES[getFakeY() + directHelp][getFakeX()] = this;
             moveHelperMethod(getYPosition() + directHelp * GameData.GAP, tUpDown);
+
         }
     }
 
@@ -164,14 +167,17 @@ public class Enemy extends Parent implements MovingGameObject,EnemyInterface {
             runImage = leftRunImage;
         }
         if ( GameData.MAP_DATA[ getFakeY() ][ getFakeX() +directHelp ] == GameData.EMPTY_BLOCK) {
+
+            GameData.MAP_DATA[ getFakeY() ][ getFakeX() ] = GameData.EMPTY_BLOCK;
             GameData.MAP_DATA[ getFakeY() ][ getFakeX() +directHelp ] = relatedNumber;
             GameData.ENEMIES[getFakeY()][getFakeX() +directHelp] = this;
             moveHelperMethod(getXPosition() +directHelp * GameData.GAP,tLeftRight);
+
         }
     }
 
     private void moveHelperMethod(int result,Timeline t) {
-        GameData.MAP_DATA[ getFakeY() ][ getFakeX() ] = GameData.EMPTY_BLOCK;
+//        GameData.MAP_DATA[ getFakeY() ][ getFakeX() ] = GameData.EMPTY_BLOCK;
         tempMoveHelper = result;
         t.setCycleCount(10);
         t.play();
