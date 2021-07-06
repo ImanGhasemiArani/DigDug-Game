@@ -5,6 +5,7 @@ import ir.ac.kntu.audio.AudioBuilder;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.model.Direction;
+import ir.ac.kntu.picture.PictureBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -17,22 +18,22 @@ import java.util.Random;
 
 public class PlayerCharacter extends Parent implements MovingGameObject {
 
-    private final Image rightStandImage = new Image("assets/rightStand.png");
-    private final Image rightRunImage = new Image("assets/rightRun.png");
-    private final Image leftStandImage = new Image("assets/leftStand.png");
-    private final Image leftRunImage = new Image("assets/leftRun.png");
-    private final Image upStandImage = new Image("assets/upStand.png");
-    private final Image upRunImage = new Image("assets/upRun.png");
-    private final Image downStandImage = new Image("assets/downStand.png");
-    private final Image downRunImage = new Image("assets/downRun.png");
-    private final Image digRightImage = new Image("assets/digRight.png");
-    private final Image dig2RightImage = new Image("assets/dig2Right.png");
-    private final Image digLeftImage = new Image("assets/digLeft.png");
-    private final Image dig2LeftImage = new Image("assets/dig2Left.png");
-    private final Image digUpImage = new Image("assets/digUp.png");
-    private final Image dig2UpImage = new Image("assets/dig2Up.png");
-    private final Image digDownImage = new Image("assets/digDown.png");
-    private final Image dig2DownImage = new Image("assets/dig2Down.png");
+    private final Image rightStandImage = PictureBuilder.RIGHT_STAND_IMAGE_PLAYER_CHARACTER;
+    private final Image rightRunImage = PictureBuilder.RIGHT_RUN_IMAGE_PLAYER_CHARACTER;
+    private final Image leftStandImage = PictureBuilder.LEFT_STAND_IMAGE_PLAYER_CHARACTER;
+    private final Image leftRunImage = PictureBuilder.LEFT_RUN_IMAGE_PLAYER_CHARACTER;
+    private final Image upStandImage = PictureBuilder.UP_STAND_IMAGE_PLAYER_CHARACTER;
+    private final Image upRunImage = PictureBuilder.UP_RUN_IMAGE_PLAYER_CHARACTER;
+    private final Image downStandImage = PictureBuilder.DOWN_STAND_IMAGE_PLAYER_CHARACTER;
+    private final Image downRunImage = PictureBuilder.DOWN_RUN_IMAGE_PLAYER_CHARACTER;
+    private final Image digRightImage = PictureBuilder.DIG_RIGHT_IMAGE_PLAYER_CHARACTER;
+    private final Image dig2RightImage = PictureBuilder.DIG_2_RIGHT_IMAGE_PLAYER_CHARACTER;
+    private final Image digLeftImage = PictureBuilder.DIG_LEFT_IMAGE_PLAYER_CHARACTER;
+    private final Image dig2LeftImage = PictureBuilder.DIG_2_LEFT_IMAGE_PLAYER_CHARACTER;
+    private final Image digUpImage = PictureBuilder.DIG_UP_IMAGE_PLAYER_CHARACTER;
+    private final Image dig2UpImage = PictureBuilder.DIG_2_UP_IMAGE_PLAYER_CHARACTER;
+    private final Image digDownImage = PictureBuilder.DIG_DOWN_IMAGE_PLAYER_CHARACTER;
+    private final Image dig2DownImage = PictureBuilder.DIG_2_DOWN_IMAGE_PLAYER_CHARACTER;
 
     private Image standImage = rightStandImage;
     private Image runImage = rightRunImage;

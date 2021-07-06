@@ -3,6 +3,7 @@ package ir.ac.kntu.gameobjects;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.model.Direction;
+import ir.ac.kntu.picture.PictureBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -45,28 +46,28 @@ public class Bullet extends Parent implements MovingGameObject {
     private void selectImage(Direction direction) {
         switch (direction) {
             case LEFT:
-                bullet.setImage(new Image("assets/bulletLeft.png"));
+                bullet.setImage(PictureBuilder.BULLET_LEFT_IMAGE);
                 bullet.setFitWidth(GameData.GAP);
                 bullet.setFitHeight(GameData.GAP/4);
                 bullet.setX(x);
                 bullet.setY(y + 17.5);
                 break;
             case DOWN:
-                bullet.setImage(new Image("assets/bulletDown.png"));
+                bullet.setImage(PictureBuilder.BULLET_DOWN_IMAGE);
                 bullet.setFitWidth(GameData.GAP/4);
                 bullet.setFitHeight(GameData.GAP);
                 bullet.setX(x + 17.5);
                 bullet.setY(y);
                 break;
             case UP:
-                bullet.setImage(new Image("assets/bulletUp.png"));
+                bullet.setImage(PictureBuilder.BULLET_UP_IMAGE);
                 bullet.setFitWidth(GameData.GAP/4);
                 bullet.setFitHeight(GameData.GAP);
                 bullet.setX(x + 17.5);
                 bullet.setY(y);
                 break;
             default:
-                bullet.setImage(new Image("assets/bulletRight.png"));
+                bullet.setImage(PictureBuilder.BULLET_RIGHT_IMAGE);
                 bullet.setFitWidth(GameData.GAP);
                 bullet.setFitHeight(GameData.GAP/4);
                 bullet.setX(x);

@@ -4,6 +4,7 @@ import ir.ac.kntu.audio.AudioBuilder;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.gameobjects.NotMovingGameObject;
+import ir.ac.kntu.picture.PictureBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -23,7 +24,7 @@ public class SniperRandom extends Parent implements NotMovingGameObject, RandomO
     public SniperRandom(int xx, int yy) {
         x = xx;
         y = yy;
-        sniper = new ImageView(new Image("assets/sniper.png"));
+        sniper = new ImageView(PictureBuilder.SNIPER);
         sniper.setOpacity(0);
         appear();
     }

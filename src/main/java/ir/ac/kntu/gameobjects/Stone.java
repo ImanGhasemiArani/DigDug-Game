@@ -22,7 +22,7 @@ public class Stone extends Parent implements NotMovingGameObject {
     public Stone(int xx, int yy) {
         x = xx;
         y = yy;
-        stone = new ImageView(new Image("assets/stone.png"));
+        stone = new ImageView();
         stone.setFitHeight(GameData.GAP);
         stone.setFitWidth(GameData.GAP + 10);
         appear();

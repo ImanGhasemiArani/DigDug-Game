@@ -4,6 +4,7 @@ import ir.ac.kntu.audio.AudioBuilder;
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
 import ir.ac.kntu.gameobjects.NotMovingGameObject;
+import ir.ac.kntu.picture.PictureBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -23,7 +24,7 @@ public class MushroomRandom extends Parent implements NotMovingGameObject, Rando
     public MushroomRandom(int xx, int yy) {
         x = xx;
         y = yy;
-        mushroom = new ImageView(new Image("assets/mushroom.png"));
+        mushroom = new ImageView(PictureBuilder.MUSHROOM);
         mushroom.setOpacity(0);
         appear();
     }

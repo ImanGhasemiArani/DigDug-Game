@@ -17,12 +17,12 @@ public class DeadlyEnemy extends Enemy implements MovingGameObject, EnemyInterfa
 
     public DeadlyEnemy(int x, int y) {
         super(x, y, GameData.ENEMY_DEADLY,
-                PictureBuilder.rightStandImage, PictureBuilder.rightRunImage, PictureBuilder.leftStandImage, PictureBuilder.leftRunImage,
-                PictureBuilder.upStandImage, PictureBuilder.upRunImage, PictureBuilder.downStandImage, PictureBuilder.downRunImage,
-                PictureBuilder.inflating1RightImage, PictureBuilder.inflating1LeftImage, PictureBuilder.inflating1UpImage, PictureBuilder.inflating1DownImage,
-                PictureBuilder.inflating2RightImage, PictureBuilder.inflating2LeftImage, PictureBuilder.inflating2UpImage, PictureBuilder.inflating2DownImage,
-                PictureBuilder.inflating3RightImage, PictureBuilder.inflating3LeftImage, PictureBuilder.inflating3UpImage, PictureBuilder.inflating3DownImage);
-        fire = new ImageView(PictureBuilder.fireRightImage);
+                PictureBuilder.RIGHT_STAND_IMAGE_DEADLY, PictureBuilder.RIGHT_RUN_IMAGE_DEADLY, PictureBuilder.LEFT_STAND_IMAGE_DEADLY, PictureBuilder.LEFT_RUN_IMAGE_DEADLY,
+                PictureBuilder.UP_STAND_IMAGE_DEADLY, PictureBuilder.UP_RUN_IMAGE_DEADLY, PictureBuilder.DOWN_STAND_IMAGE_DEADLY, PictureBuilder.DOWN_RUN_IMAGE_DEADLY,
+                PictureBuilder.INFLATING_1_RIGHT_IMAGE_DEADLY, PictureBuilder.INFLATING_1_LEFT_IMAGE_DEADLY, PictureBuilder.INFLATING_1_UP_IMAGE_DEADLY, PictureBuilder.INFLATING_1_DOWN_IMAGE_DEADLY,
+                PictureBuilder.INFLATING_2_RIGHT_IMAGE_DEADLY, PictureBuilder.INFLATING_2_LEFT_IMAGE_DEADLY, PictureBuilder.INFLATING_2_UP_IMAGE_DEADLY, PictureBuilder.INFLATING_2_DOWN_IMAGE_DEADLY,
+                PictureBuilder.INFLATING_3_RIGHT_IMAGE_DEADLY, PictureBuilder.INFLATING_3_LEFT_IMAGE_DEADLY, PictureBuilder.INFLATING_3_UP_IMAGE_DEADLY, PictureBuilder.INFLATING_3_DOWN_IMAGE_DEADLY);
+        fire = new ImageView(PictureBuilder.FIRE_RIGHT_IMAGE_DEADLY);
         fire.setFitWidth(GameData.GAP*3/4);
         fire.setFitHeight(GameData.GAP*3/4);
         configureAI(new AIDeadlyEnemy(this));
@@ -78,20 +78,20 @@ public class DeadlyEnemy extends Enemy implements MovingGameObject, EnemyInterfa
     private void changeImageForFire(Direction direction) {
         switch (direction) {
             case UP:
-                fire.setImage(PictureBuilder.fireUpImage);
-                enemyCharacter.setImage(PictureBuilder.upStandImage);
+                fire.setImage(PictureBuilder.FIRE_UP_IMAGE_DEADLY);
+                getEnemyCharacter().setImage(PictureBuilder.UP_STAND_IMAGE_DEADLY);
                 break;
             case DOWN:
-                fire.setImage(PictureBuilder.fireDownImage);
-                enemyCharacter.setImage(PictureBuilder.downStandImage);
+                fire.setImage(PictureBuilder.FIRE_DOWN_IMAGE_DEADLY);
+                getEnemyCharacter().setImage(PictureBuilder.DOWN_STAND_IMAGE_DEADLY);
                 break;
             case LEFT:
-                fire.setImage(PictureBuilder.fireLeftImage);
-                enemyCharacter.setImage(PictureBuilder.leftStandImage);
+                fire.setImage(PictureBuilder.FIRE_LEFT_IMAGE_DEADLY);
+                getEnemyCharacter().setImage(PictureBuilder.LEFT_STAND_IMAGE_DEADLY);
                 break;
             default:
-                fire.setImage(PictureBuilder.fireRightImage);
-                enemyCharacter.setImage(PictureBuilder.rightStandImage);
+                fire.setImage(PictureBuilder.FIRE_RIGHT_IMAGE_DEADLY);
+                getEnemyCharacter().setImage(PictureBuilder.RIGHT_STAND_IMAGE_DEADLY);
                 break;
         }
     }

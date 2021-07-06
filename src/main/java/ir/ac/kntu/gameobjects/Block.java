@@ -2,6 +2,7 @@ package ir.ac.kntu.gameobjects;
 
 import ir.ac.kntu.gamebuilder.GameAriaBuilder;
 import ir.ac.kntu.gamedata.GameData;
+import ir.ac.kntu.picture.PictureBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -28,13 +29,13 @@ public class Block extends Parent implements NotMovingGameObject {
     private Image selectImage(int y) {
         Image image;
         if ( y >= 0 && y < GameData.SIZE_OF_GAME_ACTION_ARIA/4 ) {
-            image = new Image("assets/block1.jpg");
+            image = PictureBuilder.BLOCK_1;
         } else if( y >= GameData.SIZE_OF_GAME_ACTION_ARIA/4 && y < GameData.SIZE_OF_GAME_ACTION_ARIA*2/4 ) {
-            image = new Image("assets/block2.jpg");
+            image = PictureBuilder.BLOCK_2;
         } else if( y >= GameData.SIZE_OF_GAME_ACTION_ARIA*2/4 && y < GameData.SIZE_OF_GAME_ACTION_ARIA*3/4 ) {
-            image = new Image("assets/block3.jpg");
+            image = PictureBuilder.BLOCK_3;
         } else {
-            image = new Image("assets/block4.jpg");
+            image = PictureBuilder.BLOCK_4;
         }
         return image;
     }

@@ -40,7 +40,7 @@ public class Enemy extends Parent implements MovingGameObject,EnemyInterface {
     private Image standImage;
     private Image runImage;
 
-    protected final ImageView enemyCharacter;
+    private final ImageView enemyCharacter;
     private final Timeline animationOfMovement = new Timeline(new KeyFrame(Duration.millis(80),e-> changeImageToCreateAnimation()));
     private int tempMoveHelper;
     private int directHelp;
@@ -274,6 +274,10 @@ public class Enemy extends Parent implements MovingGameObject,EnemyInterface {
 
     public Timeline getAiLoop() {
         return aiLoop;
+    }
+
+    public ImageView getEnemyCharacter() {
+        return enemyCharacter;
     }
 }
 

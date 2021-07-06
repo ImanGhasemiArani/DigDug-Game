@@ -8,6 +8,7 @@ import ir.ac.kntu.gameobjects.randomObject.HeartRandom;
 import ir.ac.kntu.gameobjects.randomObject.MushroomRandom;
 import ir.ac.kntu.gameobjects.randomObject.SniperRandom;
 import ir.ac.kntu.model.Player;
+import ir.ac.kntu.picture.PictureBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -89,7 +90,7 @@ public class GameAriaBuilder {
     }
 
     private void addObjectToUpHBox() {
-        ImageView gameLogo = new ImageView(new Image("assets/digDugText.png"));
+        ImageView gameLogo = new ImageView(PictureBuilder.DIG_DUG_TEXT);
         Label timeLabel = new Label("Time: ");
         timeLabel.setStyle("-fx-text-fill: WHEAT;-fx-font-size: 22px;-fx-font-family: 'Evil Empire';-fx-font-weight: BOLD;");
         timeLabel.setPrefHeight(60);
@@ -110,7 +111,7 @@ public class GameAriaBuilder {
     }
 
     private void addObjectToGameInformationAria() {
-        ImageView stopMenuIcon = new ImageView(new Image("assets/menu.png"));
+        ImageView stopMenuIcon = new ImageView(PictureBuilder.STOP_MENU_ICON);
         stopMenuIcon.setFitWidth(40);
         stopMenuIcon.setFitHeight(40);
         Label highScoreLabel = new Label("High Score");
@@ -166,13 +167,12 @@ public class GameAriaBuilder {
                 hBox.setAlignment(Pos.TOP_RIGHT);
                 temp = hBox;
             }
-            ImageView imageView = new ImageView(new Image("assets/heart.png"));
+            ImageView imageView = new ImageView(PictureBuilder.HEART);
             temp.getChildren().add(imageView);
         }
     }
 
     public static void checkForNextLevel() {
-        System.out.println(GameData.getNumberOfEnemy());
         if (GameData.getNumberOfEnemy() == 0) {
             if (GameData.NUMBER_OF_LEVELS  == currentPlayer.getCurrentRound()) {
                 currentPlayer.setCurrentRound(currentPlayer.getCurrentRound() + 1);
