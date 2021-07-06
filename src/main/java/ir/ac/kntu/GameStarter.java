@@ -46,7 +46,7 @@ public class GameStarter extends Application {
         MAIN.setStyle("-fx-border-width: 0 0 5 0;");
         MAIN.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        stage.setFullScreen(true);
+//        stage.setFullScreen(true);
         stage.setResizable(false);
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
@@ -57,11 +57,11 @@ public class GameStarter extends Application {
         GameData.readOrImportFileToPlayers();
         gameMenu();
 
-//        player = new Player("Iman");
-//        GameData.addPlayer(player);
-//        MAIN.getChildren().clear();
-//        playCountDownTimer();
-//        creatingGameAria().start();
+        player = new Player("Iman");
+        GameData.addPlayer(player);
+        MAIN.getChildren().clear();
+        playCountDownTimer();
+        creatingGameAria().start();
 
         stage.show();
     }
