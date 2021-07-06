@@ -1,14 +1,13 @@
-package ir.ac.kntu.gameobjects.randomObject;
+package ir.ac.kntu.gameObjects.randomObject;
 
 import ir.ac.kntu.audio.AudioBuilder;
-import ir.ac.kntu.gamebuilder.GameAriaBuilder;
-import ir.ac.kntu.gamedata.GameData;
-import ir.ac.kntu.gameobjects.NotMovingGameObject;
+import ir.ac.kntu.gameBuilder.GameAriaBuilder;
+import ir.ac.kntu.gameData.GameData;
+import ir.ac.kntu.gameObjects.NotMovingGameObject;
 import ir.ac.kntu.picture.PictureBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 

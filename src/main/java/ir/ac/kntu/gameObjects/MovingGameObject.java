@@ -1,4 +1,4 @@
-package ir.ac.kntu.gameobjects;
+package ir.ac.kntu.gameObjects;
 
 import ir.ac.kntu.model.Direction;
 

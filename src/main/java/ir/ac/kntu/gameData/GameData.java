@@ -1,11 +1,11 @@
-package ir.ac.kntu.gamedata;
+package ir.ac.kntu.gameData;
 
 import ir.ac.kntu.controller.ai.AIInterface;
-import ir.ac.kntu.gamebuilder.GameAriaBuilder;
-import ir.ac.kntu.gameobjects.Block;
-import ir.ac.kntu.gameobjects.Stone;
-import ir.ac.kntu.gameobjects.enemy.EnemyInterface;
-import ir.ac.kntu.gameobjects.randomObject.RandomObject;
+import ir.ac.kntu.gameBuilder.GameAriaBuilder;
+import ir.ac.kntu.gameObjects.Block;
+import ir.ac.kntu.gameObjects.Stone;
+import ir.ac.kntu.gameObjects.enemy.EnemyInterface;
+import ir.ac.kntu.gameObjects.randomObject.RandomObject;
 import ir.ac.kntu.model.GameStatus;
 import ir.ac.kntu.model.Player;
 

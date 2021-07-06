@@ -1,6 +1,6 @@
 package ir.ac.kntu.controller.ai;
 
-import ir.ac.kntu.gameobjects.enemy.Enemy;
+import ir.ac.kntu.gameObjects.enemy.Enemy;
 
 public class AISimpleEnemy extends AI {
 

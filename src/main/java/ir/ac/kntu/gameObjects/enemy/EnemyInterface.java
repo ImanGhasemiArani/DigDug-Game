@@ -1,4 +1,4 @@
-package ir.ac.kntu.gameobjects.enemy;
+package ir.ac.kntu.gameObjects.enemy;
 
 public interface EnemyInterface {
     void inflating();

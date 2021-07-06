@@ -1,9 +1,9 @@
-package ir.ac.kntu.gamebuilder;
+package ir.ac.kntu.gameBuilder;
 
-import ir.ac.kntu.gamedata.GameData;
-import ir.ac.kntu.gameobjects.*;
-import ir.ac.kntu.gameobjects.enemy.DeadlyEnemy;
-import ir.ac.kntu.gameobjects.enemy.SimpleEnemy;
+import ir.ac.kntu.gameData.GameData;
+import ir.ac.kntu.gameObjects.*;
+import ir.ac.kntu.gameObjects.enemy.DeadlyEnemy;
+import ir.ac.kntu.gameObjects.enemy.SimpleEnemy;
 import javafx.scene.Group;
 
 

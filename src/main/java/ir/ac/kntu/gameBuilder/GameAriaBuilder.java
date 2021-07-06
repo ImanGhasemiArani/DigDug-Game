@@ -1,19 +1,18 @@
-package ir.ac.kntu.gamebuilder;
+package ir.ac.kntu.gameBuilder;
 
 import ir.ac.kntu.controller.keyboard.GameKeyControlHandler;
 import ir.ac.kntu.GameStarter;
-import ir.ac.kntu.gamedata.GameData;
-import ir.ac.kntu.gameobjects.*;
-import ir.ac.kntu.gameobjects.randomObject.HeartRandom;
-import ir.ac.kntu.gameobjects.randomObject.MushroomRandom;
-import ir.ac.kntu.gameobjects.randomObject.SniperRandom;
+import ir.ac.kntu.gameData.GameData;
+import ir.ac.kntu.gameObjects.*;
+import ir.ac.kntu.gameObjects.randomObject.HeartRandom;
+import ir.ac.kntu.gameObjects.randomObject.MushroomRandom;
+import ir.ac.kntu.gameObjects.randomObject.SniperRandom;
 import ir.ac.kntu.model.Player;
 import ir.ac.kntu.picture.PictureBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Duration;

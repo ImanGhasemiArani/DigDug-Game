@@ -1,6 +1,6 @@
 package ir.ac.kntu.audio;
 
-import ir.ac.kntu.gamedata.GameData;
+import ir.ac.kntu.gameData.GameData;
 
 import javax.sound.sampled.*;
 import java.io.File;

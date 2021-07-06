@@ -1,4 +1,4 @@
-package ir.ac.kntu.gameobjects.randomObject;
+package ir.ac.kntu.gameObjects.randomObject;
 
 public interface RandomObject {
     void use();

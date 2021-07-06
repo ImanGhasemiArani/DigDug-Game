@@ -1,7 +1,7 @@
 package ir.ac.kntu.model;
 
-import ir.ac.kntu.gamebuilder.GameAriaBuilder;
-import ir.ac.kntu.gamedata.GameData;
+import ir.ac.kntu.gameBuilder.GameAriaBuilder;
+import ir.ac.kntu.gameData.GameData;
 
 import java.io.Serializable;
 import java.util.stream.IntStream;

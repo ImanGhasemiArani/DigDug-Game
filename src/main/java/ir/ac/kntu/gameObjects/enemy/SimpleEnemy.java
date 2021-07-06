@@ -1,8 +1,8 @@
-package ir.ac.kntu.gameobjects.enemy;
+package ir.ac.kntu.gameObjects.enemy;
 
 import ir.ac.kntu.controller.ai.AISimpleEnemy;
-import ir.ac.kntu.gamedata.GameData;
-import ir.ac.kntu.gameobjects.MovingGameObject;
+import ir.ac.kntu.gameData.GameData;
+import ir.ac.kntu.gameObjects.MovingGameObject;
 import ir.ac.kntu.picture.PictureBuilder;
 
 

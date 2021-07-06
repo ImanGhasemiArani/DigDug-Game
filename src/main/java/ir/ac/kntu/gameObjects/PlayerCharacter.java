@@ -1,9 +1,9 @@
-package ir.ac.kntu.gameobjects;
+package ir.ac.kntu.gameObjects;
 
 import ir.ac.kntu.GameStarter;
 import ir.ac.kntu.audio.AudioBuilder;
-import ir.ac.kntu.gamebuilder.GameAriaBuilder;
-import ir.ac.kntu.gamedata.GameData;
+import ir.ac.kntu.gameBuilder.GameAriaBuilder;
+import ir.ac.kntu.gameData.GameData;
 import ir.ac.kntu.model.Direction;
 import ir.ac.kntu.picture.PictureBuilder;
 import javafx.animation.KeyFrame;
