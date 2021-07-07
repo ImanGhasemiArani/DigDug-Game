@@ -53,7 +53,7 @@ public class AudioBuilder {
             themeAudio = AudioSystem.getClip();
             themeAudio.open(AudioSystem.getAudioInputStream(theme));
             if (GameData.isPlaySound()) {
-//                themeAudio.start();
+                themeAudio.start();
             }
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ignored) {
         }
@@ -64,7 +64,7 @@ public class AudioBuilder {
             Clip audio = AudioSystem.getClip();
             audio.open(AudioSystem.getAudioInputStream(soundFile));
             if (GameData.isPlaySound()) {
-//                audio.start();
+                audio.start();
             }
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ignored) {
         }

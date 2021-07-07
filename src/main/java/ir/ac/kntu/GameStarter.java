@@ -57,12 +57,6 @@ public class GameStarter extends Application {
         GameData.readOrImportFileToPlayers();
         gameMenu();
 
-        player = new Player("Iman");
-        GameData.addPlayer(player);
-        MAIN.getChildren().clear();
-        playCountDownTimer();
-        creatingGameAria().start();
-
         stage.show();
     }
 
