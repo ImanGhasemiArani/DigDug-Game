@@ -21,8 +21,8 @@ public class Block extends Parent implements NotMovingGameObject {
         this.x = x;
         this.y = y;
         block = new ImageView(selectImage(y));
-        block.setFitHeight(GameData.GAP+8);
-        block.setFitWidth(GameData.GAP+8);
+        block.setFitHeight(GameData.GAP+7.7);
+        block.setFitWidth(GameData.GAP+7.7);
         appear();
     }
 

@@ -2,6 +2,7 @@ package ir.ac.kntu.gameObjects;
 
 import ir.ac.kntu.gameBuilder.GameAriaBuilder;
 import ir.ac.kntu.gameData.GameData;
+import ir.ac.kntu.picture.PictureBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -21,7 +22,7 @@ public class Stone extends Parent implements NotMovingGameObject {
     public Stone(int xx, int yy) {
         x = xx;
         y = yy;
-        stone = new ImageView();
+        stone = new ImageView(PictureBuilder.STONE);
         stone.setFitHeight(GameData.GAP);
         stone.setFitWidth(GameData.GAP + 10);
         appear();
