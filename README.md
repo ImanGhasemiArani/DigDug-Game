@@ -22,7 +22,7 @@ it can be found in [/src/main/resources/assets](https://git.ce.kntu.ac.ir/ap/hom
     <li> Upload it on a website (aparat, google drive and etc.</li>
     <li> Edit README.md and add your presentaion link below. (instead of ``YOUR_VIDEO_URL``)</li>
 </ul>
-[Project Description](https://1drv.ms/v/s!AjLswsF4D4Z0gSL5FvtSo9_RwS4C?e=2mOYcb)
+[intro clip uploaded to oneDrive](https://1drv.ms/v/s!AjLswsF4D4Z0gSL5FvtSo9_RwS4C?e=2mOYcb)
 
 # Images
 take screenshots from the outputs of your program and save it as images or gif into the images
