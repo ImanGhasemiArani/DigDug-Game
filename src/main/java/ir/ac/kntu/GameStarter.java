@@ -46,7 +46,7 @@ public class GameStarter extends Application {
         MAIN.setStyle("-fx-border-width: 0 0 5 0;");
         MAIN.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-//        stage.setFullScreen(true);
+        stage.setFullScreen(true);
         stage.setResizable(false);
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
@@ -259,11 +259,7 @@ public class GameStarter extends Application {
             if (tableView.getSelectionModel().getSelectedItem() != null)  {
                 selectedPlayer.setText("Selected Player:\t\t" + tableView.getSelectionModel().getSelectedItem().getPlayerName());
                 newGameLabel.setDisable(false);
-                if (tableView.getSelectionModel().getSelectedItem().getHealth() >= 0 && tableView.getSelectionModel().getSelectedItem().getCurrentRound() <= 5) {
-                    continueGameLabel.setDisable(false);
-                } else {
-                    continueGameLabel.setDisable(true);
-                }
+                continueGameLabel.setDisable(tableView.getSelectionModel().getSelectedItem().getHealth() < 0 || tableView.getSelectionModel().getSelectedItem().getCurrentRound() > 5);
             }
         });
         newGameLabel.setOnMouseClicked(e-> {
