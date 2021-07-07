@@ -1,9 +1,9 @@
 package ir.ac.kntu.controller.ai;
 
 import ir.ac.kntu.GameStarter;
-import ir.ac.kntu.gameBuilder.GameAriaBuilder;
-import ir.ac.kntu.gameData.GameData;
-import ir.ac.kntu.gameObjects.enemy.Enemy;
+import ir.ac.kntu.gamebuilder.GameAriaBuilder;
+import ir.ac.kntu.gamedata.GameData;
+import ir.ac.kntu.gameobjects.enemy.Enemy;
 import ir.ac.kntu.model.Direction;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
