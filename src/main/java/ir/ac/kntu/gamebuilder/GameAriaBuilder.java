@@ -34,6 +34,7 @@ public class GameAriaBuilder {
     private static Label score;
     private static VBox healthBar;
     private static Label roundLabel;
+    private static Thread timerThread;
     private final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), e-> {
         timer.setText(String.format("%.2f",(Double.parseDouble(timer.getText()) + 0.01)));
         currentPlayer.setTime(Double.parseDouble(timer.getText()));
@@ -214,6 +215,20 @@ public class GameAriaBuilder {
         randomTask.play();
     }
 
+//    private void threadForTimer() {
+//        timerThread = new Thread(() -> {
+//            while (true) {
+//                try {
+//                    Thread.sleep(10);
+//                    new Timeline(new KeyFrame(Duration.ONE,e-> timer.setText(String.format("%.2f",(Double.parseDouble(timer.getText()) + 0.01))))).play();
+//                    currentPlayer.setTime(Double.parseDouble(timer.getText()));
+//                } catch (InterruptedException ignored) {
+//                }
+//            }
+//        });
+//        timerThread.start();
+//    }
+
     private Thread threadForTimer() {
         return new Thread(() -> {
             timeline.setCycleCount(Timeline.INDEFINITE);
@@ -222,14 +237,17 @@ public class GameAriaBuilder {
     }
 
     public void startThreadForTimer() {
+//        threadForTimer();
         threadForTimer().start();
     }
 
     public void stopTimer() {
+//        timerThread.stop();
         timeline.stop();
     }
 
     public void resumeTimer() {
+//        threadForTimer();
         timeline.play();
     }
 
