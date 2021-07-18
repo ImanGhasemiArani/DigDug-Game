@@ -1,1 +1,1 @@
-<h1>Take some screenshots and gif from the gameplay and put them in this folder.</h1>
+<h1>ScreenShots from Game.</h1>
