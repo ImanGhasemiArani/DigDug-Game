@@ -9,7 +9,7 @@
 </p> 
 
 ## Main Map 
-<div align=center> [main map image](/images/main_map.png) </div>
+<div align=center> ![main map image](/images/main_map.png) </div>
 
 # Presention Video
 [intro clip uploaded to oneDrive](https://1drv.ms/v/s!AjLswsF4D4Z0gSMGBR1PFARI760w?e=CmC8UR)
